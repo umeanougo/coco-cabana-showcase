@@ -67,14 +67,16 @@ function ContactPage() {
             </div>
           </aside>
 
-          {/* HoneyBook embedded form */}
+          {/* HoneyBook embedded form (direct iframe to public form host) */}
           <div className="lg:col-span-2">
-            <div className="border border-gold-soft bg-cream p-4 md:p-6 shadow-luxe min-h-[900px]">
-              <div
-                className="hb-p-223521-1"
-                data-widget-type="placement_widget"
-                data-widget-id="223521"
-                data-placement-id="1"
+            <div className="border border-gold-soft bg-cream shadow-luxe overflow-hidden">
+              <iframe
+                src="https://public.honeybook.com/public_contact_form_app/b4b88d1/index.html?name=631af7ecf7bcf404cfac7ef9"
+                title="Coco Cabana contact form"
+                className="w-full block bg-cream"
+                style={{ minHeight: "1400px", border: 0 }}
+                allow="allow-top-navigation allow-top-navigation-by-user-activation"
+                loading="lazy"
               />
             </div>
             <p className="mt-4 text-xs text-muted-foreground text-center">
