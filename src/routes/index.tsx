@@ -158,7 +158,7 @@ function InstagramSection() {
     <section className="py-28 bg-card/30 border-y border-gold-soft">
       <div className="container mx-auto px-6">
         <SectionHeading
-          eyebrow="@coco_cabana"
+          eyebrow="@cococabana.htx"
           title="Live from our feed"
           subtitle="Follow along for behind-the-scenes magic, fresh inspiration and recent celebrations."
         />
@@ -166,14 +166,14 @@ function InstagramSection() {
           {/*
             Instagram widget placeholder.
             To enable the live feed, sign up for a free SnapWidget or EmbedSocial account,
-            connect the @coco_cabana Instagram, and paste the generated <iframe> here in
+            connect the @cococabana.htx Instagram, and paste the generated <iframe> here in
             place of this placeholder block.
           */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {[p1, p2, p3, heroImg, p2, p3, p1, heroImg].map((src, i) => (
               <a
                 key={i}
-                href="https://instagram.com/coco_cabana"
+                href="https://www.instagram.com/cococabana.htx/"
                 target="_blank"
                 rel="noreferrer"
                 className="group relative aspect-square overflow-hidden block"
@@ -192,8 +192,8 @@ function InstagramSection() {
           </div>
           <p className="text-center mt-10 text-xs text-muted-foreground tracking-wide">
             Follow{" "}
-            <a href="https://instagram.com/coco_cabana" target="_blank" rel="noreferrer" className="text-gold border-b border-gold/40">
-              @coco_cabana
+            <a href="https://www.instagram.com/cococabana.htx/" target="_blank" rel="noreferrer" className="text-gold border-b border-gold/40">
+              @cococabana.htx
             </a>{" "}
             on Instagram
           </p>
