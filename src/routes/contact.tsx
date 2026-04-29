@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Mail, Instagram, MapPin, Clock } from "lucide-react";
-import { useEffect } from "react";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -15,16 +14,6 @@ export const Route = createFileRoute("/contact")({
 });
 
 function ContactPage() {
-  useEffect(() => {
-    const id = "honeybook-embed-script";
-    if (document.getElementById(id)) return;
-    const s = document.createElement("script");
-    s.id = id;
-    s.src = "https://widget.honeybook.com/assets_users_production/websiteplacements/placement-controller.js";
-    s.async = true;
-    document.body.appendChild(s);
-  }, []);
-
   return (
     <>
       <section className="pt-40 pb-12 container mx-auto px-6 text-center">
@@ -78,14 +67,16 @@ function ContactPage() {
             </div>
           </aside>
 
-          {/* HoneyBook embedded form */}
+          {/* HoneyBook embedded form (direct iframe to public form host) */}
           <div className="lg:col-span-2">
-            <div className="border border-gold-soft bg-cream p-4 md:p-6 shadow-luxe min-h-[900px]">
-              <div
-                className="hb-p-223521-1"
-                data-widget-type="placement_widget"
-                data-widget-id="223521"
-                data-placement-id="1"
+            <div className="border border-gold-soft bg-cream shadow-luxe overflow-hidden">
+              <iframe
+                src="https://public.honeybook.com/public_contact_form_app/b4b88d1/index.html?name=631af7ecf7bcf404cfac7ef9"
+                title="Coco Cabana contact form"
+                className="w-full block bg-cream"
+                style={{ minHeight: "1400px", border: 0 }}
+                allow="allow-top-navigation allow-top-navigation-by-user-activation"
+                loading="lazy"
               />
             </div>
             <p className="mt-4 text-xs text-muted-foreground text-center">
