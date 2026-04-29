@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Mail, Instagram, MapPin, Clock } from "lucide-react";
-import { useEffect } from "react";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -15,16 +14,6 @@ export const Route = createFileRoute("/contact")({
 });
 
 function ContactPage() {
-  useEffect(() => {
-    const id = "honeybook-embed-script";
-    if (document.getElementById(id)) return;
-    const s = document.createElement("script");
-    s.id = id;
-    s.src = "https://widget.honeybook.com/assets_users_production/websiteplacements/placement-controller.js";
-    s.async = true;
-    document.body.appendChild(s);
-  }, []);
-
   return (
     <>
       <section className="pt-40 pb-12 container mx-auto px-6 text-center">
