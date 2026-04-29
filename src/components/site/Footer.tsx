@@ -34,8 +34,8 @@ export function Footer() {
           <h4 className="text-xs tracking-luxe uppercase text-gold mb-5">Connect</h4>
           <ul className="space-y-3 text-sm">
             <li>
-              <a href="https://instagram.com/coco_cabana" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-gold transition">
-                <Instagram size={16} /> @coco_cabana
+              <a href="https://www.instagram.com/cococabana.htx/" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-gold transition">
+                <Instagram size={16} /> @cococabana.htx
               </a>
             </li>
             <li>

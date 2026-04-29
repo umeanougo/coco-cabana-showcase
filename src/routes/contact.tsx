@@ -42,8 +42,8 @@ function ContactPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <Instagram className="text-gold mt-0.5 shrink-0" size={18} />
-                  <a href="https://instagram.com/coco_cabana" target="_blank" rel="noreferrer" className="hover:text-gold transition">
-                    @coco_cabana
+                  <a href="https://www.instagram.com/cococabana.htx/" target="_blank" rel="noreferrer" className="hover:text-gold transition">
+                    @cococabana.htx
                   </a>
                 </li>
                 <li className="flex items-start gap-3">
