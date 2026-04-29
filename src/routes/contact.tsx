@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Mail, Instagram, MapPin, Clock } from "lucide-react";
+import { useEffect } from "react";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -14,6 +15,16 @@ export const Route = createFileRoute("/contact")({
 });
 
 function ContactPage() {
+  useEffect(() => {
+    const id = "honeybook-embed-script";
+    if (document.getElementById(id)) return;
+    const s = document.createElement("script");
+    s.id = id;
+    s.src = "https://widget.honeybook.com/assets_users_production/websiteplacements/placement-controller.js";
+    s.async = true;
+    document.body.appendChild(s);
+  }, []);
+
   return (
     <>
       <section className="pt-40 pb-12 container mx-auto px-6 text-center">
@@ -69,13 +80,12 @@ function ContactPage() {
 
           {/* HoneyBook embedded form */}
           <div className="lg:col-span-2">
-            <div className="border border-gold-soft bg-card/30 p-2 md:p-4 shadow-luxe">
-              <iframe
-                src="https://www.honeybook.com/widget/coco_cabana_223521/cf_id/631af7ecf7bcf404cfac7ef9"
-                title="Coco Cabana contact form"
-                className="w-full border-0 bg-cream"
-                style={{ minHeight: "1100px" }}
-                loading="lazy"
+            <div className="border border-gold-soft bg-cream p-4 md:p-6 shadow-luxe min-h-[900px]">
+              <div
+                className="hb-p-223521-1"
+                data-widget-type="placement_widget"
+                data-widget-id="223521"
+                data-placement-id="1"
               />
             </div>
             <p className="mt-4 text-xs text-muted-foreground text-center">
