@@ -30,27 +30,27 @@ export function Header() {
           : "bg-transparent py-5"
       }`}
     >
-      <div className="container mx-auto px-6 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-3 group">
+      <div className="container mx-auto px-6 flex items-center justify-between gap-6">
+        <Link to="/" className="flex items-center gap-3 group shrink-0 min-w-0">
           <img
             src={logo}
             alt="Coco Cabana"
-            width={48}
-            height={48}
-            className="h-12 w-12 rounded-full object-cover ring-1 ring-gold/40 group-hover:ring-gold transition"
+            width={44}
+            height={44}
+            className="h-11 w-11 rounded-full object-cover ring-1 ring-gold/40 group-hover:ring-gold transition shrink-0"
           />
-          <span className="hidden sm:block">
-            <span className="block font-display text-lg tracking-wide text-foreground">Coco Cabana</span>
-            <span className="block text-[10px] tracking-luxe text-gold uppercase">Events · Decor · Rentals</span>
+          <span className="hidden sm:block min-w-0">
+            <span className="block font-display text-base lg:text-lg tracking-wide text-foreground leading-tight whitespace-nowrap">Coco Cabana</span>
+            <span className="hidden lg:block text-[10px] tracking-luxe text-gold uppercase leading-tight whitespace-nowrap">Events · Decor · Rentals</span>
           </span>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-10">
+        <nav className="hidden md:flex items-center gap-5 lg:gap-8 flex-1 justify-center">
           {links.map((l) => (
             <Link
               key={l.to}
               to={l.to}
-              className="text-sm tracking-[0.2em] uppercase text-foreground/80 hover:text-gold transition-colors relative"
+              className="text-[11px] lg:text-xs tracking-[0.2em] uppercase text-foreground/80 hover:text-gold transition-colors whitespace-nowrap"
               activeProps={{ className: "text-gold" }}
               activeOptions={{ exact: l.to === "/" }}
             >
@@ -61,7 +61,7 @@ export function Header() {
 
         <Link
           to="/contact"
-          className="hidden md:inline-flex items-center px-5 py-2.5 text-xs tracking-[0.25em] uppercase border border-gold text-gold hover:bg-gold hover:text-primary-foreground transition-all"
+          className="hidden md:inline-flex items-center px-4 py-2.5 text-[11px] tracking-[0.25em] uppercase border border-gold text-gold hover:bg-gold hover:text-primary-foreground transition-all whitespace-nowrap shrink-0"
         >
           Book Now
         </Link>
