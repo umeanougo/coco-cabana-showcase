@@ -67,29 +67,30 @@ function ContactPage() {
             </div>
           </aside>
 
-          {/* HoneyBook embedded form (direct iframe to public form host) */}
+          {/* HoneyBook contact form — opens in new tab (HoneyBook blocks iframe embedding) */}
           <div className="lg:col-span-2">
-            <div className="border border-gold-soft bg-cream shadow-luxe overflow-hidden">
-              <iframe
-                src="https://public.honeybook.com/public_contact_form_app/b4b88d1/index.html?name=631af7ecf7bcf404cfac7ef9"
-                title="Coco Cabana contact form"
-                className="w-full block bg-cream"
-                style={{ minHeight: "1400px", border: 0 }}
-                allow="allow-top-navigation allow-top-navigation-by-user-activation"
-                loading="lazy"
-              />
-            </div>
-            <p className="mt-4 text-xs text-muted-foreground text-center">
-              Form not loading?{" "}
+            <div className="border border-gold-soft bg-gradient-onyx p-10 md:p-16 shadow-luxe text-center">
+              <p className="divider-gold text-[11px] tracking-luxe uppercase mb-5">Inquiry form</p>
+              <h2 className="font-display text-3xl md:text-4xl mb-5">
+                Tell us about your <span className="italic text-gold-gradient">event</span>
+              </h2>
+              <p className="text-sm text-muted-foreground max-w-md mx-auto mb-8 leading-relaxed">
+                Click below to open our full inquiry form. You'll share details
+                about your date, guest count, vision, and budget — it takes just
+                a few minutes.
+              </p>
               <a
                 href="https://www.honeybook.com/widget/coco_cabana_223521/cf_id/631af7ecf7bcf404cfac7ef9"
                 target="_blank"
                 rel="noreferrer"
-                className="text-gold border-b border-gold/40"
+                className="inline-block bg-gradient-gold text-primary-foreground px-10 py-4 text-[11px] tracking-luxe uppercase font-medium hover:opacity-90 transition shadow-luxe"
               >
-                Open in a new tab
+                Open inquiry form
               </a>
-            </p>
+              <p className="mt-6 text-xs text-muted-foreground">
+                Powered by HoneyBook · Submissions go straight to our inbox
+              </p>
+            </div>
           </div>
         </div>
       </section>
