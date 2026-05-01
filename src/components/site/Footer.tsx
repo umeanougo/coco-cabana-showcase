@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { Instagram, Mail, Phone } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 import logo from "@/assets/coco-cabana-logo.png";
+import { SocialLinks } from "./SocialLinks";
 
 export function Footer() {
   return (
@@ -34,11 +35,6 @@ export function Footer() {
           <h4 className="text-xs tracking-luxe uppercase text-gold mb-5">Connect</h4>
           <ul className="space-y-3 text-sm">
             <li>
-              <a href="https://www.instagram.com/cococabana.htx/" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-gold transition">
-                <Instagram size={16} /> @cococabana.htx
-              </a>
-            </li>
-            <li>
               <a href="mailto:hello@cococabana.com" className="flex items-center gap-2 hover:text-gold transition">
                 <Mail size={16} /> hello@cococabana.com
               </a>
@@ -49,6 +45,10 @@ export function Footer() {
               </a>
             </li>
           </ul>
+          <div className="mt-6">
+            <p className="text-[10px] tracking-luxe uppercase text-gold/70 mb-3">Follow</p>
+            <SocialLinks iconSize={18} />
+          </div>
         </div>
       </div>
       <div className="border-t border-gold-soft">
