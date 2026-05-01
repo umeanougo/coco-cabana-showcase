@@ -56,6 +56,10 @@ function ContactPage() {
                   <span className="text-muted-foreground">By appointment only</span>
                 </li>
               </ul>
+              <div className="mt-8 pt-6 border-t border-gold-soft/50">
+                <p className="text-[10px] tracking-luxe uppercase text-gold/70 mb-4">Follow us</p>
+                <SocialLinks iconSize={20} />
+              </div>
             </div>
 
             <div className="p-8 border border-gold-soft bg-gradient-onyx">
