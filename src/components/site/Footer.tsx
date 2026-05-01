@@ -49,16 +49,6 @@ export function Footer() {
             <p className="text-[10px] tracking-luxe uppercase text-gold/70 mb-3">Follow</p>
             <SocialLinks iconSize={18} />
           </div>
-              <a href="mailto:hello@cococabana.com" className="flex items-center gap-2 hover:text-gold transition">
-                <Mail size={16} /> hello@cococabana.com
-              </a>
-            </li>
-            <li>
-              <a href="tel:+10000000000" className="flex items-center gap-2 hover:text-gold transition">
-                <Phone size={16} /> Available by appointment
-              </a>
-            </li>
-          </ul>
         </div>
       </div>
       <div className="border-t border-gold-soft">
