@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { Instagram, Mail, Phone } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 import logo from "@/assets/coco-cabana-logo.png";
+import { SocialLinks } from "./SocialLinks";
 
 export function Footer() {
   return (
