@@ -35,11 +35,20 @@ export function Footer() {
           <h4 className="text-xs tracking-luxe uppercase text-gold mb-5">Connect</h4>
           <ul className="space-y-3 text-sm">
             <li>
-              <a href="https://www.instagram.com/cococabana.htx/" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-gold transition">
-                <Instagram size={16} /> @cococabana.htx
+              <a href="mailto:hello@cococabana.com" className="flex items-center gap-2 hover:text-gold transition">
+                <Mail size={16} /> hello@cococabana.com
               </a>
             </li>
             <li>
+              <a href="tel:+10000000000" className="flex items-center gap-2 hover:text-gold transition">
+                <Phone size={16} /> Available by appointment
+              </a>
+            </li>
+          </ul>
+          <div className="mt-6">
+            <p className="text-[10px] tracking-luxe uppercase text-gold/70 mb-3">Follow</p>
+            <SocialLinks iconSize={18} />
+          </div>
               <a href="mailto:hello@cococabana.com" className="flex items-center gap-2 hover:text-gold transition">
                 <Mail size={16} /> hello@cococabana.com
               </a>
