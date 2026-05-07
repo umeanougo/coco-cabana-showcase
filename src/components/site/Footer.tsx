@@ -16,8 +16,9 @@ export function Footer() {
             </div>
           </div>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            Crafting unforgettable celebrations through bespoke event design,
-            luxe decor, and premium rentals — every detail, intentionally yours.
+            Houston's one-stop shop for events, decor and rentals. Bespoke
+            planning, luxe florals, flower walls and 360 photo booths, designed
+            with intention.
           </p>
         </div>
 
