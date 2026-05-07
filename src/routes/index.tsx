@@ -19,9 +19,9 @@ export const Route = createFileRoute("/")({
 });
 
 const services = [
-  { icon: Sparkles, title: "Event Planning", text: "Full-service planning, design and day-of coordination from intimate gatherings to grand celebrations." },
-  { icon: Flower2, title: "Event Decor", text: "Bespoke design, florals, draping and styling that transform spaces into immersive experiences." },
-  { icon: Crown, title: "Event Rentals", text: "A curated rental collection — chairs, tableware, linens, arches and statement pieces." },
+  { icon: Sparkles, title: "Event Planning", text: "Weddings, corporate gatherings and birthday celebrations, planned end-to-end so you can be present." },
+  { icon: Flower2, title: "Decor & Florals", text: "Fresh florals, luxury candle staging and bespoke design that turns any venue into an experience." },
+  { icon: Crown, title: "Rentals", text: "Statement flower walls, neon signs and our signature 360 photo booth, ready to elevate your event." },
 ];
 
 function HomePage() {

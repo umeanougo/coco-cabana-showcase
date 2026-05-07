@@ -37,8 +37,8 @@ function ContactPage() {
               <ul className="space-y-5 text-sm">
                 <li className="flex items-start gap-3">
                   <Mail className="text-gold mt-0.5 shrink-0" size={18} />
-                  <a href="mailto:hello@cococabana.com" className="hover:text-gold transition">
-                    hello@cococabana.com
+                  <a href="mailto:hello@cococabana.us" className="hover:text-gold transition">
+                    hello@cococabana.us
                   </a>
                 </li>
                 <li className="flex items-start gap-3">
@@ -49,7 +49,7 @@ function ContactPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <MapPin className="text-gold mt-0.5 shrink-0" size={18} />
-                  <span className="text-muted-foreground">Serving local & destination events</span>
+                  <span className="text-muted-foreground">Houston, TX · local & destination events</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Clock className="text-gold mt-0.5 shrink-0" size={18} />

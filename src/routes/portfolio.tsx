@@ -21,14 +21,14 @@ export const Route = createFileRoute("/portfolio")({
 });
 
 const projects = [
-  { src: p1, title: "Garden Ceremony", category: "Wedding" },
-  { src: p2, title: "Black & Gold Soirée", category: "Birthday" },
-  { src: p3, title: "Crystal Gala", category: "Corporate" },
-  { src: p4, title: "Blush Bridal Brunch", category: "Bridal Shower" },
-  { src: p5, title: "Soft Pastels", category: "Baby Shower" },
-  { src: p6, title: "Twilight Lounge", category: "Engagement" },
-  { src: heroImg, title: "Candlelit Reception", category: "Wedding" },
-  { src: p1, title: "Floral Arch Series", category: "Decor" },
+  { src: p1, title: "Mara Villa Katy", category: "Wedding" },
+  { src: p2, title: "Emeka's Lavish 30th", category: "Birthday" },
+  { src: p3, title: "Hotel Laura Gala", category: "Corporate" },
+  { src: p4, title: "Adrianne Michelle Bridal", category: "Bridal Shower" },
+  { src: p5, title: "Soft Pastels Baby Shower", category: "Baby Shower" },
+  { src: p6, title: "Rossy's Birthday Bash", category: "Birthday" },
+  { src: heroImg, title: "Moyi & Josh", category: "Wedding" },
+  { src: p1, title: "Flower Wall Series", category: "Rentals" },
 ];
 
 function PortfolioPage() {
