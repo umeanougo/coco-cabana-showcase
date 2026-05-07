@@ -35,8 +35,8 @@ export function Footer() {
           <h4 className="text-xs tracking-luxe uppercase text-gold mb-5">Connect</h4>
           <ul className="space-y-3 text-sm">
             <li>
-              <a href="mailto:hello@cococabana.com" className="flex items-center gap-2 hover:text-gold transition">
-                <Mail size={16} /> hello@cococabana.com
+              <a href="mailto:hello@cococabana.us" className="flex items-center gap-2 hover:text-gold transition">
+                <Mail size={16} /><span>hello@cococabana.us</span>
               </a>
             </li>
             <li>
