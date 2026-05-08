@@ -1,32 +1,70 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import aboutImg from "@/assets/about.jpg";
+import christineImg from "@/assets/team-christine.webp";
+import belemaImg from "@/assets/team-belema.avif";
 import { SectionHeading } from "@/components/site/SectionHeading";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — Coco Cabana | Our Story" },
-      { name: "description", content: "Meet the team behind Coco Cabana — passionate event designers crafting unforgettable celebrations." },
+      { title: "About — Coco Cabana | Curating Breathtaking Events" },
+      { name: "description", content: "Meet Coco Cabana — a Houston team of dedicated planners and decorators turning your vision into a breathtaking reality." },
       { property: "og:title", content: "About — Coco Cabana" },
-      { property: "og:description", content: "Meet the team behind Coco Cabana." },
+      { property: "og:description", content: "Curating breathtaking events with creativity, professionalism and a personal touch." },
       { property: "og:image", content: aboutImg },
     ],
   }),
   component: AboutPage,
 });
 
+const pillars = [
+  {
+    t: "Professionalism",
+    d: "Planning and coordinating an event can be a stressful experience. At Coco Cabana we bring the highest level of professionalism to every client we serve.",
+  },
+  {
+    t: "A Personal Touch",
+    d: "Building strong and enduring relationships with our clients is at our core. Every project is a collaborative effort, and our commitment to those connections is what sets us apart.",
+  },
+  {
+    t: "Creativity",
+    d: "Coco Cabana is all about creating an amazing and indelible impression on your guests, with our signature creative pixie dust, read 'Coco dust', for this very purpose.",
+  },
+  {
+    t: "Attention to Detail",
+    d: "A great event is a symphony of crucial little parts moving in harmony. We listen carefully to our clients' desires and bring every tittle to life.",
+  },
+];
+
+const team = [
+  {
+    name: "Christine Osakwe",
+    role: "Owner + Creative Director",
+    img: christineImg,
+    bio: "Christine is a professional event planner, event decorator and interior designer whose flair for sprinkling pixie dust on creative projects can only be matched by her deep interest in connecting with people and having a good time while at it. An artist at heart, she thoroughly enjoys the process of transforming any creative idea into a work of art.",
+  },
+  {
+    name: "Belema-Ruth Umeano",
+    role: "In-House Planner",
+    img: belemaImg,
+    bio: "Belema-Ruth is a professional event planner and decorator with a love for the details and structural side of things. She enjoys building together the pieces necessary to bring a client's vision to life. Her priority is ensuring you feel at ease from beginning to end, knowing you don't have to worry about the nitty gritty. With the theme in mind, she selects the items that create the right atmosphere, enhance the mood and complement the event's aesthetics.",
+  },
+];
+
 function AboutPage() {
   return (
     <>
       <section className="pt-40 pb-12 container mx-auto px-6 text-center">
-        <p className="divider-gold text-[11px] tracking-luxe uppercase mb-5">Our Story</p>
+        <p className="divider-gold text-[11px] tracking-luxe uppercase mb-5">About Coco Cabana</p>
         <h1 className="font-display text-5xl md:text-7xl">
-          Your vision, <span className="italic text-gold-gradient">our expertise</span>
+          Curating <span className="italic text-gold-gradient">breathtaking events</span>
         </h1>
         <p className="mt-6 max-w-2xl mx-auto text-muted-foreground">
-          Houston's one-stop shop for all things events: planning, decor and
-          rentals, executed with creativity, passion and care.
+          With a team of dedicated and creative planners and decorators, we take
+          pride in transforming your vision into a breathtaking reality. From
+          the perfect color palette to elegant tablescapes, we honor every
+          detail so your event becomes a true reflection of your dreams.
         </p>
       </section>
 
@@ -35,7 +73,7 @@ function AboutPage() {
           <div className="relative">
             <img
               src={aboutImg}
-              alt="Coco Cabana founder at work"
+              alt="Coco Cabana team styling an event"
               width={1280}
               height={1600}
               loading="lazy"
@@ -44,24 +82,20 @@ function AboutPage() {
             <div className="absolute -bottom-6 -right-6 hidden md:block w-40 h-40 border border-gold-soft" />
           </div>
           <div>
-            <p className="divider-gold text-[11px] tracking-luxe uppercase mb-5">The Studio</p>
+            <p className="divider-gold text-[11px] tracking-luxe uppercase mb-5">Services</p>
             <h2 className="font-display text-4xl mb-6">
-              Welcome to <span className="italic text-gold">Coco Cabana</span>
+              Passion <span className="italic text-gold">birthing impact</span>
             </h2>
             <div className="space-y-5 text-muted-foreground leading-relaxed">
               <p>
-                At Coco Cabana, we take the stress out of event planning and turn
-                your visions into reality. Whether you're dreaming of a
-                breathtaking wedding, a corporate gathering that wows, or a
-                memorable birthday celebration, we're your one-stop shop for all
-                things events.
+                Our passion for planning and decorating goes beyond just
+                coordinating logistics; it's about crafting unique experiences
+                that reflect your personality and style.
               </p>
               <p>
-                Our dedicated team of experienced planners and decorators ensures
-                every detail is meticulously executed, leaving you free to enjoy
-                your special day to the fullest. From concept to creation, we
-                handle it all with creativity, passion and a commitment to
-                exceeding your expectations.
+                Whether you're envisioning a glamorous wedding, a sophisticated
+                corporate affair or an intimate gathering among friends, we're
+                here to turn your ideas into exquisite realities.
               </p>
               <p>
                 Beyond planning and decor, our growing rental collection,
@@ -79,19 +113,53 @@ function AboutPage() {
 
       <section className="py-24 bg-card/30 border-y border-gold-soft">
         <div className="container mx-auto px-6">
-          <SectionHeading eyebrow="What we believe" title="Our Values" />
-          <div className="mt-16 grid md:grid-cols-3 gap-10">
-            {[
-              { t: "Meticulous Detail", d: "Every element executed with precision so your day radiates beauty and charm." },
-              { t: "Effortless Hospitality", d: "We carry the logistics so you can be fully present with your guests." },
-              { t: "Creative Vision", d: "From color palette to florals to floor plan, we bring your story to life." },
-            ].map((v) => (
-              <div key={v.t} className="text-center md:text-left">
-                <p className="font-display text-3xl text-gold mb-3">{v.t}</p>
-                <p className="text-muted-foreground">{v.d}</p>
+          <SectionHeading
+            eyebrow="Why choose us"
+            title="Why Coco Cabana"
+            subtitle="Our commitment to excellence, paired with meticulous attention to detail, ensures your event will not only be flawlessly executed but will also radiate beauty and charm."
+          />
+          <div className="mt-16 grid md:grid-cols-2 gap-10">
+            {pillars.map((v) => (
+              <div key={v.t} className="p-8 border border-gold-soft bg-background/40">
+                <p className="font-display text-2xl text-gold mb-3">{v.t}</p>
+                <p className="text-muted-foreground leading-relaxed">{v.d}</p>
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="py-24 container mx-auto px-6">
+        <SectionHeading eyebrow="The Studio" title="Meet the team" />
+        <div className="mt-16 grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+          {team.map((m) => (
+            <div key={m.name} className="text-center">
+              <div className="mx-auto w-48 h-48 rounded-full overflow-hidden border border-gold-soft shadow-luxe">
+                <img src={m.img} alt={m.name} width={384} height={384} loading="lazy" className="w-full h-full object-cover" />
+              </div>
+              <p className="mt-6 font-display text-2xl">{m.name}</p>
+              <p className="text-[11px] tracking-luxe uppercase text-gold mt-1">{m.role}</p>
+              <p className="mt-5 text-muted-foreground leading-relaxed text-sm">{m.bio}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="py-24 bg-card/30 border-t border-gold-soft">
+        <div className="container mx-auto px-6 text-center max-w-2xl">
+          <p className="divider-gold text-[11px] tracking-luxe uppercase mb-5">Featured Event</p>
+          <h2 className="font-display text-4xl md:text-5xl">
+            Love is <span className="italic text-gold-gradient">in the air</span>
+          </h2>
+          <p className="mt-6 text-muted-foreground leading-relaxed">
+            Every event is a once-in-a-lifetime occasion, and that's why we
+            embrace the art of curating beautiful moments. Let us create your
+            next event, one that captivates the senses, touches the heart and
+            becomes a cherished memory for a lifetime.
+          </p>
+          <Link to="/contact" className="mt-10 inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-gold border-b border-gold pb-1">
+            Start your event <ArrowRight size={14} />
+          </Link>
         </div>
       </section>
     </>
