@@ -68,49 +68,6 @@ function AboutPage() {
         </p>
       </section>
 
-      <section className="py-16 container mx-auto px-6">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
-          <div className="relative">
-            <img
-              src={aboutImg}
-              alt="Coco Cabana team styling an event"
-              width={1280}
-              height={1600}
-              loading="lazy"
-              className="w-full aspect-[4/5] object-cover shadow-luxe"
-            />
-            <div className="absolute -bottom-6 -right-6 hidden md:block w-40 h-40 border border-gold-soft" />
-          </div>
-          <div>
-            <p className="divider-gold text-[11px] tracking-luxe uppercase mb-5">Services</p>
-            <h2 className="font-display text-4xl mb-6">
-              Passion <span className="italic text-gold">birthing impact</span>
-            </h2>
-            <div className="space-y-5 text-muted-foreground leading-relaxed">
-              <p>
-                Our passion for planning and decorating goes beyond just
-                coordinating logistics; it's about crafting unique experiences
-                that reflect your personality and style.
-              </p>
-              <p>
-                Whether you're envisioning a glamorous wedding, a sophisticated
-                corporate affair or an intimate gathering among friends, we're
-                here to turn your ideas into exquisite realities.
-              </p>
-              <p>
-                Beyond planning and decor, our growing rental collection,
-                including statement flower walls, luxury candle staging and our
-                signature 360 photo booth, brings even the most ambitious
-                visions to life.
-              </p>
-            </div>
-            <Link to="/contact" className="mt-10 inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-gold border-b border-gold pb-1">
-              Work With Us <ArrowRight size={14} />
-            </Link>
-          </div>
-        </div>
-      </section>
-
       <section className="py-24 bg-card/30 border-y border-gold-soft">
         <div className="container mx-auto px-6">
           <SectionHeading
