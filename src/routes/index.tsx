@@ -36,7 +36,7 @@ function HomePage() {
           height={1080}
           className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/60 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/75 to-background" />
         <div className="relative z-10 container mx-auto px-6 text-center pt-24 animate-fade-up">
           <p className="divider-gold text-[11px] tracking-luxe uppercase mb-6">Coco Cabana</p>
           <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.05] max-w-5xl mx-auto">
@@ -75,7 +75,7 @@ function HomePage() {
       </section>
 
       {/* SERVICES */}
-      <section className="py-20 bg-card/40 border-y border-gold-soft">
+      <section className="py-20 bg-babyblue-light/50 border-y border-gold-soft">
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-3 gap-10">
             {services.map((s) => (
@@ -155,7 +155,7 @@ function HomePage() {
 
 function InstagramSection() {
   return (
-    <section className="py-28 bg-card/30 border-y border-gold-soft">
+    <section className="py-28 bg-babyblue-light/40 border-y border-gold-soft">
       <div className="container mx-auto px-6">
         <SectionHeading
           eyebrow="@cococabana.htx"

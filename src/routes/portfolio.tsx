@@ -35,7 +35,7 @@ function PortfolioPage() {
   return (
     <>
       <section className="relative pt-40 pb-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-onyx" />
+        <div className="absolute inset-0 bg-gradient-sky" />
         <div className="relative container mx-auto px-6 text-center">
           <p className="divider-gold text-[11px] tracking-luxe uppercase mb-5">Selected Works</p>
           <h1 className="font-display text-5xl md:text-7xl">

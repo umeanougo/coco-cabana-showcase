@@ -48,8 +48,11 @@
   --color-gold: var(--gold);
   --color-gold-bright: var(--gold-bright);
   --color-gold-dark: var(--gold-dark);
-  --color-onyx: var(--onyx);
   --color-cream: var(--cream);
+  --color-babyblue: var(--babyblue);
+  --color-babyblue-light: var(--babyblue-light);
+  --color-tan: var(--tan);
+  --color-tan-dark: var(--tan-dark);
 
   --font-display: "Playfair Display", Georgia, serif;
   --font-sans: "Inter", system-ui, sans-serif;
@@ -59,43 +62,48 @@
   --radius: 0.25rem;
 
   /* Brand */
-  --onyx: oklch(0.14 0.005 60);          /* deep near-black */
-  --gold: oklch(0.78 0.13 85);           /* champagne gold */
-  --gold-bright: oklch(0.88 0.14 90);
-  --gold-dark: oklch(0.55 0.11 75);
-  --cream: oklch(0.96 0.015 80);
+  --babyblue: oklch(0.87 0.055 240);      /* soft baby blue */
+  --babyblue-light: oklch(0.94 0.035 240);
+  --tan: oklch(0.74 0.06 70);             /* light brown */
+  --tan-dark: oklch(0.4 0.05 60);
+  --gold: oklch(0.72 0.13 85);            /* champagne gold */
+  --gold-bright: oklch(0.82 0.14 90);
+  --gold-dark: oklch(0.5 0.11 75);
+  --cream: oklch(0.97 0.015 80);
 
-  --background: oklch(0.08 0.005 60);    /* black canvas */
-  --foreground: oklch(0.96 0.015 80);    /* cream text */
+  --background: oklch(0.985 0.008 85);    /* warm white canvas */
+  --foreground: oklch(0.3 0.035 60);      /* deep brown text */
 
-  --card: oklch(0.12 0.008 60);
-  --card-foreground: oklch(0.96 0.015 80);
-  --popover: oklch(0.12 0.008 60);
-  --popover-foreground: oklch(0.96 0.015 80);
+  --card: oklch(1 0 0);                   /* white cards */
+  --card-foreground: oklch(0.3 0.035 60);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.3 0.035 60);
 
-  --primary: oklch(0.78 0.13 85);
-  --primary-foreground: oklch(0.1 0.005 60);
+  --primary: oklch(0.72 0.13 85);
+  --primary-foreground: oklch(0.2 0.03 60);
 
-  --secondary: oklch(0.18 0.01 60);
-  --secondary-foreground: oklch(0.96 0.015 80);
+  --secondary: var(--babyblue);           /* baby blue surfaces */
+  --secondary-foreground: oklch(0.3 0.04 250);
 
-  --muted: oklch(0.16 0.008 60);
-  --muted-foreground: oklch(0.7 0.02 80);
+  --muted: oklch(0.94 0.02 240);          /* light baby-blue gray */
+  --muted-foreground: oklch(0.47 0.035 60);
 
-  --accent: oklch(0.78 0.13 85);
-  --accent-foreground: oklch(0.1 0.005 60);
+  --accent: var(--tan);                   /* light brown accent */
+  --accent-foreground: oklch(0.2 0.03 60);
 
   --destructive: oklch(0.6 0.22 25);
   --destructive-foreground: oklch(0.98 0 0);
 
-  --border: oklch(0.78 0.13 85 / 18%);
-  --input: oklch(0.78 0.13 85 / 25%);
-  --ring: oklch(0.78 0.13 85 / 60%);
+  --border: oklch(0.74 0.06 70 / 30%);    /* soft tan border */
+  --input: oklch(0.74 0.06 70 / 40%);
+  --ring: oklch(0.72 0.13 85 / 50%);
 
   --gradient-gold: linear-gradient(135deg, oklch(0.55 0.11 75), oklch(0.88 0.14 90), oklch(0.55 0.11 75));
-  --gradient-onyx: linear-gradient(180deg, oklch(0.08 0.005 60), oklch(0.14 0.005 60));
-  --shadow-gold: 0 10px 40px -10px oklch(0.78 0.13 85 / 30%);
-  --shadow-luxe: 0 30px 80px -20px oklch(0 0 0 / 80%);
+  --gradient-gold-text: linear-gradient(135deg, oklch(0.42 0.1 75), oklch(0.62 0.12 85), oklch(0.42 0.1 75));
+  --gradient-onyx: linear-gradient(180deg, oklch(0.985 0.008 85), oklch(0.94 0.045 75));  /* warm white to light brown */
+  --gradient-sky: linear-gradient(180deg, oklch(0.985 0.008 85), oklch(0.9 0.045 240));   /* white to baby blue */
+  --shadow-gold: 0 10px 40px -10px oklch(0.72 0.13 85 / 30%);
+  --shadow-luxe: 0 30px 80px -20px oklch(0.4 0.05 60 / 25%);
 
   --sidebar: var(--card);
   --sidebar-foreground: var(--foreground);
@@ -121,13 +129,14 @@
 
 @layer utilities {
   .text-gold-gradient {
-    background: var(--gradient-gold);
+    background: var(--gradient-gold-text);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
   .bg-gradient-gold { background: var(--gradient-gold); }
   .bg-gradient-onyx { background: var(--gradient-onyx); }
+  .bg-gradient-sky { background: var(--gradient-sky); }
   .shadow-gold { box-shadow: var(--shadow-gold); }
   .shadow-luxe { box-shadow: var(--shadow-luxe); }
   .border-gold-soft { border-color: oklch(0.78 0.13 85 / 30%); }
