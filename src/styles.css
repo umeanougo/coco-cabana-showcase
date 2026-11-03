@@ -135,6 +135,7 @@
   }
   .bg-gradient-gold { background: var(--gradient-gold); }
   .bg-gradient-onyx { background: var(--gradient-onyx); }
+  .bg-gradient-sky { background: var(--gradient-sky); }
   .shadow-gold { box-shadow: var(--shadow-gold); }
   .shadow-luxe { box-shadow: var(--shadow-luxe); }
   .border-gold-soft { border-color: oklch(0.78 0.13 85 / 30%); }
