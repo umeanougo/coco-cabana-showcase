@@ -57,7 +57,7 @@ function PortfolioPage() {
                 loading="lazy"
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <figcaption className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent opacity-90 flex flex-col justify-end p-6">
+              <figcaption className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/10 to-transparent flex flex-col justify-end p-6">
                 <p className="text-[10px] tracking-luxe uppercase text-brand mb-1">{p.category}</p>
                 <p className="font-display text-2xl">{p.title}</p>
               </figcaption>
