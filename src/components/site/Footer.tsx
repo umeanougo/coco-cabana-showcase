@@ -23,7 +23,7 @@ export function Footer() {
         </div>
 
         <div>
-          <h4 className="text-xs tracking-luxe uppercase text-brand mb-5">Explore</h4>
+          <h4 className="text-xs tracking-luxe uppercase mb-5">Explore</h4>
           <ul className="space-y-3 text-sm">
             <li><Link to="/services" className="hover:text-brand transition">Services</Link></li>
             <li><Link to="/portfolio" className="hover:text-brand transition">Portfolio</Link></li>
@@ -33,7 +33,7 @@ export function Footer() {
         </div>
 
         <div>
-          <h4 className="text-xs tracking-luxe uppercase text-brand mb-5">Connect</h4>
+          <h4 className="text-xs tracking-luxe uppercase mb-5">Connect</h4>
           <ul className="space-y-3 text-sm">
             <li>
               <a href="mailto:hello@cococabana.us" className="flex items-center gap-2 hover:text-brand transition">
