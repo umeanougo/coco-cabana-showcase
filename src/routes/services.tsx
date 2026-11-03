@@ -62,7 +62,7 @@ function ServicesPage() {
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
         <div className="relative container mx-auto px-6 text-center">
           <p className="divider-gold text-[11px] tracking-luxe uppercase mb-5">What we do</p>
-          <h1 className="font-display text-5xl md:text-7xl">Our <span className="italic text-gold-gradient">Services</span></h1>
+          <h1 className="font-display text-5xl md:text-7xl">Our <span className="italic text-brand-gradient">Services</span></h1>
           <p className="mt-6 max-w-2xl mx-auto text-muted-foreground">
             A full suite of bespoke services — thoughtfully tailored to your vision, story and style.
           </p>
@@ -74,15 +74,15 @@ function ServicesPage() {
           {offerings.map((o) => (
             <div
               key={o.title}
-              className="group p-10 border border-gold-soft hover:border-gold bg-card/40 hover:shadow-gold transition-all"
+              className="group p-10 rounded-3xl rounded-3xl border border-gold-soft hover:border-brand bg-card/40 hover:shadow-gold transition-all"
             >
-              <o.icon className="text-gold mb-6" size={36} strokeWidth={1.2} />
+              <o.icon className="text-brand mb-6" size={36} strokeWidth={1.2} />
               <h3 className="font-display text-2xl mb-3">{o.title}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed mb-6">{o.desc}</p>
               <ul className="space-y-2">
                 {o.items.map((it) => (
                   <li key={it} className="text-sm flex items-start gap-2">
-                    <span className="text-gold mt-1">◆</span>
+                    <span className="text-brand mt-1">◆</span>
                     <span>{it}</span>
                   </li>
                 ))}
@@ -102,14 +102,14 @@ function ServicesPage() {
             { step: "04", title: "Celebrate", text: "We orchestrate the day so you can be fully present." },
           ].map((s) => (
             <div key={s.step} className="text-center">
-              <p className="font-display text-5xl text-gold-gradient mb-4">{s.step}</p>
+              <p className="font-display text-5xl text-brand-gradient mb-4">{s.step}</p>
               <h4 className="font-display text-xl mb-2">{s.title}</h4>
               <p className="text-sm text-muted-foreground">{s.text}</p>
             </div>
           ))}
         </div>
         <div className="text-center mt-16">
-          <Link to="/contact" className="inline-flex items-center gap-2 px-8 py-4 text-xs tracking-[0.25em] uppercase bg-gradient-gold text-primary-foreground shadow-gold">
+          <Link to="/contact" className="inline-flex items-center gap-2 px-8 py-4 text-xs tracking-[0.25em] uppercase bg-gradient-brand text-primary-foreground rounded-full shadow-gold">
             Start Your Inquiry <ArrowRight size={14} />
           </Link>
         </div>

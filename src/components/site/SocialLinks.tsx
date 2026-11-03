@@ -98,7 +98,7 @@ export function SocialLinks({
               href={s.href}
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-2 hover:text-gold transition"
+              className="flex items-center gap-2 hover:text-brand transition"
             >
               <s.icon size={iconSize} /> {s.label}
             </a>
@@ -117,7 +117,7 @@ export function SocialLinks({
           target="_blank"
           rel="noreferrer"
           aria-label={s.label}
-          className="text-foreground/80 hover:text-gold transition"
+          className="text-foreground/80 hover:text-brand transition"
         >
           <s.icon size={iconSize} />
         </a>

@@ -41,7 +41,7 @@ export function Header() {
           />
           <span className="hidden sm:block min-w-0">
             <span className="block font-display text-base lg:text-lg tracking-wide text-foreground leading-tight whitespace-nowrap">Coco Cabana</span>
-            <span className="hidden lg:block text-[10px] tracking-luxe text-gold uppercase leading-tight whitespace-nowrap">Events · Decor · Rentals</span>
+            <span className="hidden lg:block text-[10px] tracking-luxe text-brand uppercase leading-tight whitespace-nowrap">Events · Decor · Rentals</span>
           </span>
         </Link>
 
@@ -50,8 +50,8 @@ export function Header() {
             <Link
               key={l.to}
               to={l.to}
-              className="text-[11px] lg:text-xs tracking-[0.2em] uppercase text-foreground/80 hover:text-gold transition-colors whitespace-nowrap"
-              activeProps={{ className: "text-gold" }}
+              className="text-[11px] lg:text-xs tracking-[0.2em] uppercase text-foreground/80 hover:text-brand transition-colors whitespace-nowrap"
+              activeProps={{ className: "text-brand" }}
               activeOptions={{ exact: l.to === "/" }}
             >
               {l.label}
@@ -61,14 +61,14 @@ export function Header() {
 
         <Link
           to="/contact"
-          className="hidden md:inline-flex items-center px-4 py-2.5 text-[11px] tracking-[0.25em] uppercase border border-gold text-gold hover:bg-gold hover:text-primary-foreground transition-all whitespace-nowrap shrink-0"
+          className="hidden md:inline-flex items-center px-4 py-2.5 text-[11px] tracking-[0.25em] uppercase border-2 border-brand rounded-full text-brand hover:bg-brand hover:text-primary-foreground transition-all whitespace-nowrap shrink-0"
         >
           Book Now
         </Link>
 
         <button
           onClick={() => setOpen((v) => !v)}
-          className="md:hidden text-gold"
+          className="md:hidden text-brand"
           aria-label="Toggle menu"
         >
           {open ? <X size={26} /> : <Menu size={26} />}
@@ -83,8 +83,8 @@ export function Header() {
                 key={l.to}
                 to={l.to}
                 onClick={() => setOpen(false)}
-                className="text-sm tracking-[0.2em] uppercase text-foreground/80 hover:text-gold"
-                activeProps={{ className: "text-gold" }}
+                className="text-sm tracking-[0.2em] uppercase text-foreground/80 hover:text-brand"
+                activeProps={{ className: "text-brand" }}
                 activeOptions={{ exact: l.to === "/" }}
               >
                 {l.label}
@@ -93,7 +93,7 @@ export function Header() {
             <Link
               to="/contact"
               onClick={() => setOpen(false)}
-              className="mt-2 inline-flex items-center justify-center px-5 py-3 text-xs tracking-[0.25em] uppercase border border-gold text-gold"
+              className="mt-2 inline-flex items-center justify-center px-5 py-3 text-xs tracking-[0.25em] uppercase border-2 border-brand rounded-full text-brand"
             >
               Book Now
             </Link>

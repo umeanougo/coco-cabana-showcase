@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Sparkles, Flower2, Crown, Instagram } from "lucide-react";
+import { ArrowRight, Sparkles, Flower2, Crown, Instagram, Briefcase, Baby, Cake, Heart } from "lucide-react";
 import heroImg from "@/assets/hero-event.jpg";
 import p1 from "@/assets/portfolio-1.jpg";
 import p2 from "@/assets/portfolio-2.jpg";
@@ -10,7 +10,7 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Coco Cabana — Luxury Event Planning, Decor & Rentals" },
-      { name: "description", content: "Bespoke event planning, decor and premium event rentals crafted with intention. Weddings, milestones, corporate gatherings." },
+      { name: "description", content: "Bespoke event planning, decor and premium event rentals crafted with intention. Corporate events, baby showers, birthdays and weddings in Houston." },
       { property: "og:title", content: "Coco Cabana — Luxury Event Planning, Decor & Rentals" },
       { property: "og:description", content: "Bespoke event planning, decor and premium event rentals crafted with intention." },
     ],
@@ -24,6 +24,44 @@ const services = [
   { icon: Crown, title: "Rentals", text: "Statement flower walls, neon signs and our signature 360 photo booth, ready to elevate your event." },
 ];
 
+const occasions = [
+  { icon: Briefcase, title: "Corporate & Galas", text: "Brand launches, holiday parties, conferences and retainer partnerships, handled with polish and on schedule.", tint: "bg-babyblue-light", iconBg: "bg-brand text-primary-foreground" },
+  { icon: Baby, title: "Baby Showers", text: "Soft balloon garlands, dreamy dessert tables and picture-perfect backdrops for welcoming the little one.", tint: "bg-blush", iconBg: "bg-card text-brand" },
+  { icon: Cake, title: "Birthday Parties", text: "From first birthdays to milestone 30ths and 50ths, themed, bold and bursting with personality.", tint: "bg-tan-light", iconBg: "bg-tan-dark text-primary-foreground" },
+  { icon: Heart, title: "Weddings", text: "Ceremony to reception, florals, candle staging and every detail of your forever day.", tint: "bg-babyblue-light", iconBg: "bg-card text-brand" },
+];
+
+function OccasionsSection() {
+  return (
+    <section className="py-24 container mx-auto px-6">
+      <SectionHeading
+        eyebrow="Every Occasion"
+        title="Boardrooms to birthday bashes"
+        subtitle="Whether you are hosting 500 colleagues or 20 of your closest friends, we bring the same joy, creativity and professionalism."
+      />
+      <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {occasions.map((o, i) => (
+          <div
+            key={o.title}
+            className={`${o.tint} rounded-3xl p-8 transition-all duration-300 hover:-translate-y-2 hover:shadow-luxe ${i % 2 ? "lg:mt-10" : ""}`}
+          >
+            <div className={`${o.iconBg} h-14 w-14 rounded-2xl flex items-center justify-center mb-6 shadow-sm`}>
+              <o.icon size={26} strokeWidth={1.6} />
+            </div>
+            <h3 className="font-display text-2xl mb-3 text-brand-deep">{o.title}</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">{o.text}</p>
+          </div>
+        ))}
+      </div>
+      <div className="mt-12 flex flex-wrap justify-center gap-3">
+        {["Product Launches", "Holiday Parties", "Gender Reveals", "Sweet 16s", "Bridal Showers", "Anniversaries", "Graduations", "Charity Galas"].map((t) => (
+          <span key={t} className="rounded-full border border-gold-soft bg-card px-4 py-2 text-xs font-medium text-brand">{t}</span>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function HomePage() {
   return (
     <>
@@ -36,31 +74,31 @@ function HomePage() {
           height={1080}
           className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/75 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/80 to-background" />
         <div className="relative z-10 container mx-auto px-6 text-center pt-24 animate-fade-up">
           <p className="divider-gold text-[11px] tracking-luxe uppercase mb-6">Coco Cabana</p>
           <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.05] max-w-5xl mx-auto">
-            Where moments become <span className="text-gold-gradient italic">heirlooms</span>
+            Where moments become <span className="text-brand-gradient italic">heirlooms</span>
           </h1>
           <p className="mt-8 max-w-xl mx-auto text-base md:text-lg text-foreground/80 leading-relaxed">
-            Bespoke event planning, sumptuous decor and premium rentals — crafted to make every celebration unforgettable.
+            From corporate galas and brand launches to baby showers and birthday bashes, we plan, style and rent everything that makes your event unforgettable.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/contact"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 text-xs tracking-[0.25em] uppercase bg-gradient-gold text-primary-foreground shadow-gold hover:opacity-90 transition"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 text-xs tracking-[0.25em] uppercase bg-gradient-brand text-primary-foreground rounded-full shadow-gold hover:opacity-90 transition"
             >
               Begin Your Event <ArrowRight size={14} />
             </Link>
             <Link
               to="/portfolio"
-              className="inline-flex items-center justify-center px-8 py-4 text-xs tracking-[0.25em] uppercase border border-gold text-gold hover:bg-gold hover:text-primary-foreground transition"
+              className="inline-flex items-center justify-center px-8 py-4 text-xs tracking-[0.25em] uppercase border-2 border-brand rounded-full text-brand hover:bg-brand hover:text-primary-foreground transition"
             >
               View Portfolio
             </Link>
           </div>
         </div>
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-gold/60 text-[10px] tracking-luxe uppercase animate-pulse">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-brand/60 text-[10px] tracking-luxe uppercase animate-pulse">
           Scroll
         </div>
       </section>
@@ -74,6 +112,8 @@ function HomePage() {
         />
       </section>
 
+      <OccasionsSection />
+
       {/* SERVICES */}
       <section className="py-20 bg-babyblue-light/50 border-y border-gold-soft">
         <div className="container mx-auto px-6">
@@ -81,9 +121,9 @@ function HomePage() {
             {services.map((s) => (
               <div
                 key={s.title}
-                className="group p-10 border border-gold-soft hover:border-gold transition-all bg-background/40 hover:shadow-gold"
+                className="group p-10 rounded-3xl border border-gold-soft hover:border-brand transition-all bg-background/40 hover:shadow-gold"
               >
-                <s.icon className="text-gold mb-6" size={36} strokeWidth={1.2} />
+                <s.icon className="text-brand mb-6" size={36} strokeWidth={1.2} />
                 <h3 className="font-display text-2xl mb-3">{s.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{s.text}</p>
               </div>
@@ -92,7 +132,7 @@ function HomePage() {
           <div className="text-center mt-14">
             <Link
               to="/services"
-              className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-gold border-b border-gold pb-1"
+              className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-brand border-b border-brand pb-1"
             >
               All Services <ArrowRight size={14} />
             </Link>
@@ -108,7 +148,7 @@ function HomePage() {
             <Link
               to="/portfolio"
               key={i}
-              className="group relative overflow-hidden aspect-[3/4] block"
+              className="group relative overflow-hidden aspect-[3/4] block rounded-3xl"
             >
               <img
                 src={src}
@@ -120,8 +160,8 @@ function HomePage() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent opacity-90" />
               <div className="absolute bottom-0 left-0 right-0 p-6">
-                <p className="text-[10px] tracking-luxe uppercase text-gold mb-1">Featured</p>
-                <p className="font-display text-xl">View Project</p>
+                <p className="text-[10px] tracking-luxe uppercase text-brand mb-1">Featured</p>
+                <p className="font-display text-xl text-brand-deep">View Project</p>
               </div>
             </Link>
           ))}
@@ -133,16 +173,16 @@ function HomePage() {
 
       {/* CTA */}
       <section className="py-28 container mx-auto px-6">
-        <div className="relative overflow-hidden bg-gradient-onyx border border-gold-soft p-12 md:p-20 text-center shadow-luxe">
+        <div className="relative overflow-hidden bg-gradient-sky rounded-[2.5rem] border border-gold-soft p-12 md:p-20 text-center shadow-luxe">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,oklch(0.78_0.13_85/0.12),transparent_60%)]" />
           <div className="relative">
             <p className="divider-gold text-[11px] tracking-luxe uppercase mb-6">Let's create</p>
             <h2 className="font-display text-4xl md:text-6xl max-w-3xl mx-auto leading-tight">
-              Your story deserves a setting <span className="italic text-gold-gradient">just as beautiful</span>.
+              Your story deserves a setting <span className="italic text-brand-gradient">just as beautiful</span>.
             </h2>
             <Link
               to="/contact"
-              className="mt-10 inline-flex items-center gap-2 px-8 py-4 text-xs tracking-[0.25em] uppercase bg-gradient-gold text-primary-foreground shadow-gold hover:opacity-90 transition"
+              className="mt-10 inline-flex items-center gap-2 px-8 py-4 text-xs tracking-[0.25em] uppercase bg-gradient-brand text-primary-foreground rounded-full shadow-gold hover:opacity-90 transition"
             >
               Inquire Today <ArrowRight size={14} />
             </Link>
@@ -185,14 +225,14 @@ function InstagramSection() {
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-background/0 group-hover:bg-background/60 transition flex items-center justify-center">
-                  <Instagram className="text-gold opacity-0 group-hover:opacity-100 transition" size={28} />
+                  <Instagram className="text-brand opacity-0 group-hover:opacity-100 transition" size={28} />
                 </div>
               </a>
             ))}
           </div>
           <p className="text-center mt-10 text-xs text-muted-foreground tracking-wide">
             Follow{" "}
-            <a href="https://www.instagram.com/cococabana.htx/" target="_blank" rel="noreferrer" className="text-gold border-b border-gold/40">
+            <a href="https://www.instagram.com/cococabana.htx/" target="_blank" rel="noreferrer" className="text-brand border-b border-brand/40">
               @cococabana.htx
             </a>{" "}
             on Instagram
