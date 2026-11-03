@@ -74,7 +74,7 @@ function ServicesPage() {
           {offerings.map((o) => (
             <div
               key={o.title}
-              className="group p-10 rounded-3xl border border-gold-soft hover:border-brand bg-card/40 hover:shadow-gold transition-all"
+              className="group p-10 rounded-3xl rounded-3xl border border-gold-soft hover:border-brand bg-card/40 hover:shadow-gold transition-all"
             >
               <o.icon className="text-brand mb-6" size={36} strokeWidth={1.2} />
               <h3 className="font-display text-2xl mb-3">{o.title}</h3>
