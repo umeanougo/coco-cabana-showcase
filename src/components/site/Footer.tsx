@@ -9,7 +9,7 @@ export function Footer() {
       <div className="container mx-auto px-6 py-16 grid gap-12 md:grid-cols-4">
         <div className="md:col-span-2 max-w-sm">
           <div className="flex items-center gap-3 mb-5">
-            <img src={logo} alt="Coco Cabana" width={56} height={56} className="h-14 w-14 rounded-full" />
+            <img src={logo} alt="Coco Cabana" width={56} height={56} className="h-14 w-14 object-contain" />
             <div>
               <p className="font-display text-xl">Coco Cabana</p>
               <p className="text-[10px] tracking-luxe text-brand uppercase">Events · Decor · Rentals</p>
