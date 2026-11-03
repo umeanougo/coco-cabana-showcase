@@ -40,7 +40,7 @@ function HomePage() {
         <div className="relative z-10 container mx-auto px-6 text-center pt-24 animate-fade-up">
           <p className="divider-gold text-[11px] tracking-luxe uppercase mb-6">Coco Cabana</p>
           <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.05] max-w-5xl mx-auto">
-            Where moments become <span className="text-gold-gradient italic">heirlooms</span>
+            Where moments become <span className="text-brand-gradient italic">heirlooms</span>
           </h1>
           <p className="mt-8 max-w-xl mx-auto text-base md:text-lg text-foreground/80 leading-relaxed">
             Bespoke event planning, sumptuous decor and premium rentals — crafted to make every celebration unforgettable.
@@ -48,19 +48,19 @@ function HomePage() {
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/contact"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 text-xs tracking-[0.25em] uppercase bg-gradient-gold text-primary-foreground shadow-gold hover:opacity-90 transition"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 text-xs tracking-[0.25em] uppercase bg-gradient-brand text-primary-foreground rounded-full shadow-gold hover:opacity-90 transition"
             >
               Begin Your Event <ArrowRight size={14} />
             </Link>
             <Link
               to="/portfolio"
-              className="inline-flex items-center justify-center px-8 py-4 text-xs tracking-[0.25em] uppercase border border-gold text-gold hover:bg-gold hover:text-primary-foreground transition"
+              className="inline-flex items-center justify-center px-8 py-4 text-xs tracking-[0.25em] uppercase border-2 border-brand rounded-full text-brand hover:bg-brand hover:text-primary-foreground transition"
             >
               View Portfolio
             </Link>
           </div>
         </div>
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-gold/60 text-[10px] tracking-luxe uppercase animate-pulse">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-brand/60 text-[10px] tracking-luxe uppercase animate-pulse">
           Scroll
         </div>
       </section>
@@ -81,9 +81,9 @@ function HomePage() {
             {services.map((s) => (
               <div
                 key={s.title}
-                className="group p-10 border border-gold-soft hover:border-gold transition-all bg-background/40 hover:shadow-gold"
+                className="group p-10 rounded-3xl border border-gold-soft hover:border-brand transition-all bg-background/40 hover:shadow-gold"
               >
-                <s.icon className="text-gold mb-6" size={36} strokeWidth={1.2} />
+                <s.icon className="text-brand mb-6" size={36} strokeWidth={1.2} />
                 <h3 className="font-display text-2xl mb-3">{s.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{s.text}</p>
               </div>
@@ -92,7 +92,7 @@ function HomePage() {
           <div className="text-center mt-14">
             <Link
               to="/services"
-              className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-gold border-b border-gold pb-1"
+              className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-brand border-b border-brand pb-1"
             >
               All Services <ArrowRight size={14} />
             </Link>
@@ -120,7 +120,7 @@ function HomePage() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent opacity-90" />
               <div className="absolute bottom-0 left-0 right-0 p-6">
-                <p className="text-[10px] tracking-luxe uppercase text-gold mb-1">Featured</p>
+                <p className="text-[10px] tracking-luxe uppercase text-brand mb-1">Featured</p>
                 <p className="font-display text-xl">View Project</p>
               </div>
             </Link>
@@ -138,11 +138,11 @@ function HomePage() {
           <div className="relative">
             <p className="divider-gold text-[11px] tracking-luxe uppercase mb-6">Let's create</p>
             <h2 className="font-display text-4xl md:text-6xl max-w-3xl mx-auto leading-tight">
-              Your story deserves a setting <span className="italic text-gold-gradient">just as beautiful</span>.
+              Your story deserves a setting <span className="italic text-brand-gradient">just as beautiful</span>.
             </h2>
             <Link
               to="/contact"
-              className="mt-10 inline-flex items-center gap-2 px-8 py-4 text-xs tracking-[0.25em] uppercase bg-gradient-gold text-primary-foreground shadow-gold hover:opacity-90 transition"
+              className="mt-10 inline-flex items-center gap-2 px-8 py-4 text-xs tracking-[0.25em] uppercase bg-gradient-brand text-primary-foreground rounded-full shadow-gold hover:opacity-90 transition"
             >
               Inquire Today <ArrowRight size={14} />
             </Link>
@@ -185,14 +185,14 @@ function InstagramSection() {
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-background/0 group-hover:bg-background/60 transition flex items-center justify-center">
-                  <Instagram className="text-gold opacity-0 group-hover:opacity-100 transition" size={28} />
+                  <Instagram className="text-brand opacity-0 group-hover:opacity-100 transition" size={28} />
                 </div>
               </a>
             ))}
           </div>
           <p className="text-center mt-10 text-xs text-muted-foreground tracking-wide">
             Follow{" "}
-            <a href="https://www.instagram.com/cococabana.htx/" target="_blank" rel="noreferrer" className="text-gold border-b border-gold/40">
+            <a href="https://www.instagram.com/cococabana.htx/" target="_blank" rel="noreferrer" className="text-brand border-b border-brand/40">
               @cococabana.htx
             </a>{" "}
             on Instagram

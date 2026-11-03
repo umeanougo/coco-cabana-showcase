@@ -58,7 +58,7 @@ function AboutPage() {
       <section className="pt-40 pb-12 container mx-auto px-6 text-center">
         <p className="divider-gold text-[11px] tracking-luxe uppercase mb-5">About Coco Cabana</p>
         <h1 className="font-display text-5xl md:text-7xl">
-          Curating <span className="italic text-gold-gradient">breathtaking events</span>
+          Curating <span className="italic text-brand-gradient">breathtaking events</span>
         </h1>
         <p className="mt-6 max-w-2xl mx-auto text-muted-foreground">
           With a team of dedicated and creative planners and decorators, we take
@@ -78,7 +78,7 @@ function AboutPage() {
           <div className="mt-16 grid md:grid-cols-2 gap-10">
             {pillars.map((v) => (
               <div key={v.t} className="p-8 border border-gold-soft bg-background/40">
-                <p className="font-display text-2xl text-gold mb-3">{v.t}</p>
+                <p className="font-display text-2xl text-brand mb-3">{v.t}</p>
                 <p className="text-muted-foreground leading-relaxed">{v.d}</p>
               </div>
             ))}
@@ -95,7 +95,7 @@ function AboutPage() {
                 <img src={m.img} alt={m.name} width={384} height={384} loading="lazy" className="w-full h-full object-cover" />
               </div>
               <p className="mt-6 font-display text-2xl">{m.name}</p>
-              <p className="text-[11px] tracking-luxe uppercase text-gold mt-1">{m.role}</p>
+              <p className="text-[11px] tracking-luxe uppercase text-brand mt-1">{m.role}</p>
               <p className="mt-5 text-muted-foreground leading-relaxed text-sm">{m.bio}</p>
             </div>
           ))}
@@ -106,7 +106,7 @@ function AboutPage() {
         <div className="container mx-auto px-6 text-center max-w-2xl">
           <p className="divider-gold text-[11px] tracking-luxe uppercase mb-5">Featured Event</p>
           <h2 className="font-display text-4xl md:text-5xl">
-            Love is <span className="italic text-gold-gradient">in the air</span>
+            Love is <span className="italic text-brand-gradient">in the air</span>
           </h2>
           <p className="mt-6 text-muted-foreground leading-relaxed">
             Every event is a once-in-a-lifetime occasion, and that's why we
@@ -114,7 +114,7 @@ function AboutPage() {
             next event, one that captivates the senses, touches the heart and
             becomes a cherished memory for a lifetime.
           </p>
-          <Link to="/contact" className="mt-10 inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-gold border-b border-gold pb-1">
+          <Link to="/contact" className="mt-10 inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-brand border-b border-brand pb-1">
             Start your event <ArrowRight size={14} />
           </Link>
         </div>

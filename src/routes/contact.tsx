@@ -20,7 +20,7 @@ function ContactPage() {
       <section className="pt-40 pb-12 container mx-auto px-6 text-center">
         <p className="divider-gold text-[11px] tracking-luxe uppercase mb-5">Inquire</p>
         <h1 className="font-display text-5xl md:text-7xl">
-          Let's <span className="italic text-gold-gradient">create together</span>
+          Let's <span className="italic text-brand-gradient">create together</span>
         </h1>
         <p className="mt-6 max-w-2xl mx-auto text-muted-foreground">
           Share a few details and we'll be in touch within 1–2 business days to
@@ -36,28 +36,28 @@ function ContactPage() {
               <h3 className="font-display text-2xl mb-6">Get in touch</h3>
               <ul className="space-y-5 text-sm">
                 <li className="flex items-start gap-3">
-                  <Mail className="text-gold mt-0.5 shrink-0" size={18} />
-                  <a href="mailto:hello@cococabana.us" className="hover:text-gold transition">
+                  <Mail className="text-brand mt-0.5 shrink-0" size={18} />
+                  <a href="mailto:hello@cococabana.us" className="hover:text-brand transition">
                     hello@cococabana.us
                   </a>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Instagram className="text-gold mt-0.5 shrink-0" size={18} />
-                  <a href="https://www.instagram.com/cococabana.htx/" target="_blank" rel="noreferrer" className="hover:text-gold transition">
+                  <Instagram className="text-brand mt-0.5 shrink-0" size={18} />
+                  <a href="https://www.instagram.com/cococabana.htx/" target="_blank" rel="noreferrer" className="hover:text-brand transition">
                     @cococabana.htx
                   </a>
                 </li>
                 <li className="flex items-start gap-3">
-                  <MapPin className="text-gold mt-0.5 shrink-0" size={18} />
+                  <MapPin className="text-brand mt-0.5 shrink-0" size={18} />
                   <span className="text-muted-foreground">Houston, TX · local & destination events</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <Clock className="text-gold mt-0.5 shrink-0" size={18} />
+                  <Clock className="text-brand mt-0.5 shrink-0" size={18} />
                   <span className="text-muted-foreground">By appointment only</span>
                 </li>
               </ul>
               <div className="mt-8 pt-6 border-t border-gold-soft/50">
-                <p className="text-[10px] tracking-luxe uppercase text-gold/70 mb-4">Follow us</p>
+                <p className="text-[10px] tracking-luxe uppercase text-brand/70 mb-4">Follow us</p>
                 <SocialLinks iconSize={20} />
               </div>
             </div>
@@ -77,7 +77,7 @@ function ContactPage() {
             <div className="border border-gold-soft bg-gradient-onyx p-10 md:p-16 shadow-luxe text-center">
               <p className="divider-gold text-[11px] tracking-luxe uppercase mb-5">Inquiry form</p>
               <h2 className="font-display text-3xl md:text-4xl mb-5">
-                Tell us about your <span className="italic text-gold-gradient">event</span>
+                Tell us about your <span className="italic text-brand-gradient">event</span>
               </h2>
               <p className="text-sm text-muted-foreground max-w-md mx-auto mb-8 leading-relaxed">
                 Click below to open our full inquiry form. You'll share details
@@ -88,7 +88,7 @@ function ContactPage() {
                 href="https://www.honeybook.com/widget/coco_cabana_223521/cf_id/631af7ecf7bcf404cfac7ef9"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-block bg-gradient-gold text-primary-foreground px-10 py-4 text-[11px] tracking-luxe uppercase font-medium hover:opacity-90 transition shadow-luxe"
+                className="inline-block bg-gradient-brand text-primary-foreground rounded-full px-10 py-4 text-[11px] tracking-luxe uppercase font-medium hover:opacity-90 transition shadow-luxe"
               >
                 Open inquiry form
               </a>

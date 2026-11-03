@@ -39,7 +39,7 @@ function PortfolioPage() {
         <div className="relative container mx-auto px-6 text-center">
           <p className="divider-gold text-[11px] tracking-luxe uppercase mb-5">Selected Works</p>
           <h1 className="font-display text-5xl md:text-7xl">
-            Our <span className="italic text-gold-gradient">Portfolio</span>
+            Our <span className="italic text-brand-gradient">Portfolio</span>
           </h1>
           <p className="mt-6 max-w-2xl mx-auto text-muted-foreground">
             A curated look at celebrations we've had the joy of designing.
@@ -58,7 +58,7 @@ function PortfolioPage() {
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <figcaption className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent opacity-90 flex flex-col justify-end p-6">
-                <p className="text-[10px] tracking-luxe uppercase text-gold mb-1">{p.category}</p>
+                <p className="text-[10px] tracking-luxe uppercase text-brand mb-1">{p.category}</p>
                 <p className="font-display text-2xl">{p.title}</p>
               </figcaption>
             </figure>
