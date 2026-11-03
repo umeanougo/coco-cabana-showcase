@@ -58,9 +58,9 @@ function ServicesPage() {
   return (
     <>
       <section className="relative pt-40 pb-20 overflow-hidden">
-        <img src={heroImg} alt="" className="absolute inset-0 h-full w-full object-cover opacity-25" />
-        <div className="absolute inset-0 bg-background/70" />
-        <div className="relative container mx-auto px-6 text-center">
+        <img src={heroImg} alt="" className="absolute inset-0 h-full w-full object-cover" />
+        
+        <div className="relative mx-auto max-w-3xl bg-background border border-gold-soft px-8 py-12 text-center">
           <p className="divider-gold text-[11px] tracking-luxe uppercase mb-5">What we do</p>
           <h1 className="font-display text-5xl md:text-7xl">Our <span className="italic text-brand-gradient">Services</span></h1>
           <p className="mt-6 max-w-2xl mx-auto text-muted-foreground">
@@ -93,18 +93,26 @@ function ServicesPage() {
       </section>
 
       <section className="py-24 container mx-auto px-6">
-        <SectionHeading eyebrow="Our Process" title="From inspiration to celebration" />
-        <div className="mt-16 grid md:grid-cols-4 gap-8">
+        <SectionHeading eyebrow="What to Expect" title="Our planning process" />
+        <p className="mt-6 max-w-2xl mx-auto text-center text-muted-foreground">
+          We approach every event, intimate or grand, like it's ours. You'll work hand in hand with us from start to finish.
+        </p>
+        <div className="mt-16 grid md:grid-cols-3 gap-8">
           {[
-            { step: "01", title: "Discover", text: "We learn your story, vision and non-negotiables." },
-            { step: "02", title: "Design", text: "Mood boards, layouts and curated proposals tailored to you." },
-            { step: "03", title: "Refine", text: "Vendor coordination, walkthroughs and finishing touches." },
-            { step: "04", title: "Celebrate", text: "We orchestrate the day so you can be fully present." },
+            { step: "01", title: "Planning", time: "9–12+ months out", text: "We define your budget and secure key vendors, including your venue, matching you with the perfect team.", items: ["Determining budget", "Venue selection", "Vendor selection"] },
+            { step: "02", title: "Design", time: "4–9 months out", text: "A custom design proposal mapping every detail, from color palettes and floor plans to tablescapes and linen swatches.", items: ["Design plan creation", "Mock-ups of design elements", "Selection of design details"] },
+            { step: "03", title: "Execution", time: "3 months to event day", text: "We finalize every detail with you and your vendors, then our team runs the day so everything goes to plan.", items: ["Event day timeline", "Final vendor coordination", "Event day execution"] },
           ].map((s) => (
-            <div key={s.step} className="text-center">
-              <p className="font-display text-5xl text-brand-gradient mb-4">{s.step}</p>
-              <h4 className="font-display text-xl mb-2">{s.title}</h4>
-              <p className="text-sm text-muted-foreground">{s.text}</p>
+            <div key={s.step} className="p-10 border border-gold-soft bg-card/40">
+              <p className="font-display text-4xl text-brand-gradient mb-4">{s.step}</p>
+              <h3 className="font-display text-2xl mb-1">{s.title}</h3>
+              <p className="text-[11px] tracking-luxe uppercase text-tan-dark mb-4">{s.time}</p>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-6">{s.text}</p>
+              <ul className="space-y-2">
+                {s.items.map((it) => (
+                  <li key={it} className="text-sm flex items-start gap-2"><span className="text-brand mt-1">◆</span><span>{it}</span></li>
+                ))}
+              </ul>
             </div>
           ))}
         </div>

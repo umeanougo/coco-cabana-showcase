@@ -70,10 +70,10 @@ function HomePage() {
           height={1080}
           className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-background/70" />
-        <div className="relative z-10 container mx-auto px-6 text-center pt-24 animate-fade-up">
+
+        <div className="relative z-10 mx-auto max-w-4xl bg-background border border-gold-soft px-8 py-14 md:px-16 text-center mt-24 animate-fade-up">
           <p className="divider-gold text-[11px] tracking-luxe uppercase mb-6">Coco Cabana</p>
-          <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.05] max-w-5xl mx-auto">
+          <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-7xl leading-[1.05] max-w-5xl mx-auto">
             Where moments become <span className="text-brand-gradient italic">heirlooms</span>
           </h1>
           <p className="mt-8 max-w-xl mx-auto text-base md:text-lg text-foreground/80 leading-relaxed">
@@ -94,7 +94,7 @@ function HomePage() {
             </Link>
           </div>
         </div>
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-brand/60 text-[10px] tracking-luxe uppercase animate-pulse">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-primary-foreground/80 text-[10px] tracking-luxe uppercase animate-pulse">
           Scroll
         </div>
       </section>
@@ -102,13 +102,13 @@ function HomePage() {
       <OccasionsSection />
 
       {/* SERVICES */}
-      <section className="py-20 bg-babyblue-light/50 border-y border-gold-soft">
+      <section className="py-20 border-y border-gold-soft">
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-3 gap-10">
             {services.map((s) => (
               <div
                 key={s.title}
-                className="group p-10 border border-gold-soft hover:border-brand transition-all bg-background/40 hover:shadow-gold"
+                className="group p-10 border border-gold-soft hover:border-brand transition-all hover:shadow-gold"
               >
                 <s.icon className="text-brand mb-6" size={36} strokeWidth={1.2} />
                 <h3 className="font-display text-2xl mb-3">{s.title}</h3>
@@ -160,7 +160,7 @@ function HomePage() {
 
       {/* CTA */}
       <section className="py-28 container mx-auto px-6">
-        <div className="relative overflow-hidden bg-gradient-sky border border-gold-soft p-12 md:p-20 text-center shadow-luxe">
+        <div className="relative overflow-hidden border border-gold-soft p-12 md:p-20 text-center shadow-luxe">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,oklch(0.78_0.13_85/0.12),transparent_60%)]" />
           <div className="relative">
             <p className="divider-gold text-[11px] tracking-luxe uppercase mb-6">Let's create</p>
@@ -182,7 +182,7 @@ function HomePage() {
 
 function InstagramSection() {
   return (
-    <section className="py-28 bg-babyblue-light/40 border-y border-gold-soft">
+    <section className="py-28 border-y border-gold-soft">
       <div className="container mx-auto px-6">
         <SectionHeading
           eyebrow="@cococabana.htx"

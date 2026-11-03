@@ -62,7 +62,7 @@ function ContactPage() {
               </div>
             </div>
 
-            <div className="p-8 border border-gold-soft bg-gradient-onyx">
+            <div className="p-8 border border-gold-soft">
               <p className="divider-gold text-[10px] tracking-luxe uppercase mb-4">A note</p>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 We respond to every inquiry personally. Once submitted, you'll
@@ -74,7 +74,7 @@ function ContactPage() {
 
           {/* HoneyBook contact form — opens in new tab (HoneyBook blocks iframe embedding) */}
           <div className="lg:col-span-2">
-            <div className="rounded-3xl border border-gold-soft bg-gradient-onyx p-10 md:p-16 shadow-luxe text-center">
+            <div className="rounded-3xl border border-gold-soft p-10 md:p-16 shadow-luxe text-center">
               <p className="divider-gold text-[11px] tracking-luxe uppercase mb-5">Inquiry form</p>
               <h2 className="font-display text-3xl md:text-4xl mb-5">
                 Tell us about your <span className="italic text-brand-gradient">event</span>

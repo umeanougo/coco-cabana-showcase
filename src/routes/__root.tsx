@@ -8,7 +8,7 @@ function NotFoundComponent() {
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <p className="divider-gold text-[11px] tracking-luxe uppercase mb-6">Lost in the details</p>
-        <h1 className="font-display text-7xl text-brand">404</h1>
+        <h1 className="font-display text-7xl">404</h1>
         <h2 className="mt-4 font-display text-2xl">Page not found</h2>
         <p className="mt-3 text-sm text-muted-foreground">
           The page you're looking for has wandered off the guest list.

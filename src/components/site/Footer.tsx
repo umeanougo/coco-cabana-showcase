@@ -5,11 +5,11 @@ import { SocialLinks } from "./SocialLinks";
 
 export function Footer() {
   return (
-    <footer className="border-t border-gold-soft bg-gradient-onyx mt-24">
+    <footer className="border-t border-gold-soft mt-24">
       <div className="container mx-auto px-6 py-16 grid gap-12 md:grid-cols-4">
         <div className="md:col-span-2 max-w-sm">
           <div className="flex items-center gap-3 mb-5">
-            <img src={logo} alt="Coco Cabana" width={56} height={56} className="h-14 w-14 rounded-full" />
+            <img src={logo} alt="Coco Cabana" width={56} height={56} className="h-14 w-14 object-contain" />
             <div>
               <p className="font-display text-xl">Coco Cabana</p>
               <p className="text-[10px] tracking-luxe text-brand uppercase">Events · Decor · Rentals</p>
@@ -23,7 +23,7 @@ export function Footer() {
         </div>
 
         <div>
-          <h4 className="text-xs tracking-luxe uppercase text-brand mb-5">Explore</h4>
+          <h4 className="text-xs tracking-luxe uppercase mb-5">Explore</h4>
           <ul className="space-y-3 text-sm">
             <li><Link to="/services" className="hover:text-brand transition">Services</Link></li>
             <li><Link to="/portfolio" className="hover:text-brand transition">Portfolio</Link></li>
@@ -33,7 +33,7 @@ export function Footer() {
         </div>
 
         <div>
-          <h4 className="text-xs tracking-luxe uppercase text-brand mb-5">Connect</h4>
+          <h4 className="text-xs tracking-luxe uppercase mb-5">Connect</h4>
           <ul className="space-y-3 text-sm">
             <li>
               <a href="mailto:hello@cococabana.us" className="flex items-center gap-2 hover:text-brand transition">
