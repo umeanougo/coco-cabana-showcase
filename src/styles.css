@@ -99,6 +99,7 @@
   --ring: oklch(0.72 0.13 85 / 50%);
 
   --gradient-gold: linear-gradient(135deg, oklch(0.55 0.11 75), oklch(0.88 0.14 90), oklch(0.55 0.11 75));
+  --gradient-gold-text: linear-gradient(135deg, oklch(0.42 0.1 75), oklch(0.62 0.12 85), oklch(0.42 0.1 75));
   --gradient-onyx: linear-gradient(180deg, oklch(0.985 0.008 85), oklch(0.94 0.045 75));  /* warm white to light brown */
   --gradient-sky: linear-gradient(180deg, oklch(0.985 0.008 85), oklch(0.9 0.045 240));   /* white to baby blue */
   --shadow-gold: 0 10px 40px -10px oklch(0.72 0.13 85 / 30%);
@@ -128,7 +129,7 @@
 
 @layer utilities {
   .text-gold-gradient {
-    background: var(--gradient-gold);
+    background: var(--gradient-gold-text);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
