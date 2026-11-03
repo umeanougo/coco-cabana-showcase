@@ -5,7 +5,7 @@ import { SocialLinks } from "./SocialLinks";
 
 export function Footer() {
   return (
-    <footer className="border-t border-gold-soft bg-gradient-onyx mt-24">
+    <footer className="border-t border-gold-soft mt-24">
       <div className="container mx-auto px-6 py-16 grid gap-12 md:grid-cols-4">
         <div className="md:col-span-2 max-w-sm">
           <div className="flex items-center gap-3 mb-5">

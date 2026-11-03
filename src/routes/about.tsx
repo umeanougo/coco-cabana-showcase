@@ -68,7 +68,7 @@ function AboutPage() {
         </p>
       </section>
 
-      <section className="py-24 bg-card/30 border-y border-gold-soft">
+      <section className="py-24 border-y border-gold-soft">
         <div className="container mx-auto px-6">
           <SectionHeading
             eyebrow="Why choose us"
@@ -77,7 +77,7 @@ function AboutPage() {
           />
           <div className="mt-16 grid md:grid-cols-2 gap-10">
             {pillars.map((v) => (
-              <div key={v.t} className="p-8 border border-gold-soft bg-background/40">
+              <div key={v.t} className="p-8 border border-gold-soft">
                 <p className="font-display text-2xl text-brand mb-3">{v.t}</p>
                 <p className="text-muted-foreground leading-relaxed">{v.d}</p>
               </div>
@@ -102,7 +102,7 @@ function AboutPage() {
         </div>
       </section>
 
-      <section className="py-24 bg-card/30 border-t border-gold-soft">
+      <section className="py-24 border-t border-gold-soft">
         <div className="container mx-auto px-6 text-center max-w-2xl">
           <p className="divider-gold text-[11px] tracking-luxe uppercase mb-5">Featured Event</p>
           <h2 className="font-display text-4xl md:text-5xl">
