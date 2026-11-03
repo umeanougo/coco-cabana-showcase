@@ -60,7 +60,7 @@ function ServicesPage() {
       <section className="relative pt-40 pb-20 overflow-hidden">
         <img src={heroImg} alt="" className="absolute inset-0 h-full w-full object-cover" />
         
-        <div className="relative mx-auto max-w-3xl bg-background/95 border border-gold-soft px-8 py-12 text-center">
+        <div className="relative mx-auto max-w-3xl bg-background border border-gold-soft px-8 py-12 text-center">
           <p className="divider-gold text-[11px] tracking-luxe uppercase mb-5">What we do</p>
           <h1 className="font-display text-5xl md:text-7xl">Our <span className="italic text-brand-gradient">Services</span></h1>
           <p className="mt-6 max-w-2xl mx-auto text-muted-foreground">

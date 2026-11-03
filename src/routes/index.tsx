@@ -71,7 +71,7 @@ function HomePage() {
           className="absolute inset-0 h-full w-full object-cover"
         />
 
-        <div className="relative z-10 mx-auto max-w-4xl bg-background/95 border border-gold-soft px-8 py-14 md:px-16 text-center mt-24 animate-fade-up">
+        <div className="relative z-10 mx-auto max-w-4xl bg-background border border-gold-soft px-8 py-14 md:px-16 text-center mt-24 animate-fade-up">
           <p className="divider-gold text-[11px] tracking-luxe uppercase mb-6">Coco Cabana</p>
           <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-7xl leading-[1.05] max-w-5xl mx-auto">
             Where moments become <span className="text-brand-gradient italic">heirlooms</span>
@@ -94,7 +94,7 @@ function HomePage() {
             </Link>
           </div>
         </div>
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-brand/60 text-[10px] tracking-luxe uppercase animate-pulse">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-primary-foreground/80 text-[10px] tracking-luxe uppercase animate-pulse">
           Scroll
         </div>
       </section>

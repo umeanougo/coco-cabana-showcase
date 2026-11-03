@@ -27,7 +27,7 @@ export function Header() {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
           ? "bg-background border-b border-gold-soft py-3"
-          : "bg-transparent py-5"
+          : "bg-background border-b border-gold-soft py-4"
       }`}
     >
       <div className="container mx-auto px-6 flex items-center justify-between gap-6">

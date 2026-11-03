@@ -78,7 +78,7 @@ function AboutPage() {
           <div className="mt-16 grid md:grid-cols-2 gap-10">
             {pillars.map((v) => (
               <div key={v.t} className="p-8 border border-gold-soft">
-                <p className="font-display text-2xl text-brand mb-3">{v.t}</p>
+                <p className="font-display text-2xl text-heading mb-3">{v.t}</p>
                 <p className="text-muted-foreground leading-relaxed">{v.d}</p>
               </div>
             ))}
@@ -94,7 +94,7 @@ function AboutPage() {
               <div className="mx-auto w-48 h-48 rounded-full overflow-hidden border border-gold-soft shadow-luxe">
                 <img src={m.img} alt={m.name} width={384} height={384} loading="lazy" className="w-full h-full object-cover" />
               </div>
-              <p className="mt-6 font-display text-2xl">{m.name}</p>
+              <p className="mt-6 font-display text-2xl text-heading">{m.name}</p>
               <p className="text-[11px] tracking-luxe uppercase text-brand mt-1">{m.role}</p>
               <p className="mt-5 text-muted-foreground leading-relaxed text-sm">{m.bio}</p>
             </div>
