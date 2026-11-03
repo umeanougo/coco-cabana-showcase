@@ -11,13 +11,6 @@
   font-display: swap;
   src: url("https://fonts.gstatic.com/s/playfairdisplay/v37/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKdFvUDQ.woff2") format("woff2");
 }
-@font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url("https://fonts.gstatic.com/s/inter/v19/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2") format("woff2");
-}
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
@@ -59,7 +52,7 @@
   --color-tan-light: var(--tan-light);
 
   --font-display: "Playfair Display", Georgia, serif;
-  --font-sans: "Inter", system-ui, sans-serif;
+  --font-sans: "Raleway", system-ui, sans-serif;
 }
 
 :root {
@@ -110,10 +103,10 @@
   --gradient-brand: linear-gradient(135deg, oklch(0.36 0.08 255), oklch(0.28 0.07 258));
   --gradient-brand-text: linear-gradient(120deg, oklch(0.36 0.09 255), oklch(0.55 0.08 235));
   --gradient-gold-text: linear-gradient(135deg, oklch(0.42 0.1 75), oklch(0.62 0.12 85), oklch(0.42 0.1 75));
-  --gradient-onyx: linear-gradient(180deg, oklch(0.985 0.008 85), oklch(0.94 0.045 75));  /* warm white to light brown */
-  --gradient-sky: linear-gradient(180deg, oklch(0.985 0.008 85), oklch(0.9 0.045 240));   /* white to baby blue */
-  --shadow-gold: 0 14px 40px -12px oklch(0.33 0.08 255 / 30%);
-  --shadow-luxe: 0 30px 80px -20px oklch(0.4 0.05 60 / 25%);
+  --gradient-onyx: linear-gradient(oklch(0.95 0.03 75), oklch(0.95 0.03 75));  /* warm white to light brown */
+  --gradient-sky: linear-gradient(oklch(0.93 0.035 240), oklch(0.93 0.035 240));   /* white to baby blue */
+  --shadow-gold: 0 6px 16px -8px oklch(0.33 0.08 255 / 25%);
+  --shadow-luxe: 0 8px 24px -12px oklch(0.4 0.05 60 / 18%);
 
   --sidebar: var(--card);
   --sidebar-foreground: var(--foreground);
