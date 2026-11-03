@@ -75,7 +75,7 @@ function HomePage() {
       </section>
 
       {/* SERVICES */}
-      <section className="py-20 bg-card/40 border-y border-gold-soft">
+      <section className="py-20 bg-babyblue-light/50 border-y border-gold-soft">
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-3 gap-10">
             {services.map((s) => (
@@ -155,7 +155,7 @@ function HomePage() {
 
 function InstagramSection() {
   return (
-    <section className="py-28 bg-card/30 border-y border-gold-soft">
+    <section className="py-28 bg-babyblue-light/40 border-y border-gold-soft">
       <div className="container mx-auto px-6">
         <SectionHeading
           eyebrow="@cococabana.htx"
