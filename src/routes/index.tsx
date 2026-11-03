@@ -99,15 +99,6 @@ function HomePage() {
         </div>
       </section>
 
-      {/* INTRO */}
-      <section className="py-28 container mx-auto px-6">
-        <SectionHeading
-          eyebrow="The Coco Cabana Touch"
-          title="Designed with intention. Delivered with grace."
-          subtitle="From the first sketch to the final candle, we orchestrate every element so you can be fully present in your celebration."
-        />
-      </section>
-
       <OccasionsSection />
 
       {/* SERVICES */}
