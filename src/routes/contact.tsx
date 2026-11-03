@@ -32,7 +32,7 @@ function ContactPage() {
         <div className="grid lg:grid-cols-3 gap-10">
           {/* Contact info */}
           <aside className="lg:col-span-1 space-y-8">
-            <div className="p-8 rounded-3xl border border-gold-soft bg-card/40">
+            <div className="p-8 border border-gold-soft bg-card/40">
               <h3 className="font-display text-2xl mb-6">Get in touch</h3>
               <ul className="space-y-5 text-sm">
                 <li className="flex items-start gap-3">
@@ -62,7 +62,7 @@ function ContactPage() {
               </div>
             </div>
 
-            <div className="p-8 rounded-3xl border border-gold-soft bg-gradient-onyx">
+            <div className="p-8 border border-gold-soft bg-gradient-onyx">
               <p className="divider-gold text-[10px] tracking-luxe uppercase mb-4">A note</p>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 We respond to every inquiry personally. Once submitted, you'll
@@ -88,7 +88,7 @@ function ContactPage() {
                 href="https://www.honeybook.com/widget/coco_cabana_223521/cf_id/631af7ecf7bcf404cfac7ef9"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-block bg-gradient-brand text-primary-foreground rounded-full px-10 py-4 text-[11px] tracking-luxe uppercase font-medium hover:opacity-90 transition shadow-luxe"
+                className="inline-block bg-gradient-brand text-primary-foreground px-10 py-4 text-[11px] tracking-luxe uppercase font-medium hover:opacity-90 transition shadow-luxe"
               >
                 Open inquiry form
               </a>

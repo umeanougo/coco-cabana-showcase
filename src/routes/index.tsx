@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Sparkles, Flower2, Crown, Instagram, Briefcase, Baby, Cake, Heart } from "lucide-react";
+import { ArrowRight, Sparkles, Flower2, Crown, Instagram } from "lucide-react";
 import heroImg from "@/assets/hero-event.jpg";
 import p1 from "@/assets/portfolio-1.jpg";
 import p2 from "@/assets/portfolio-2.jpg";
@@ -25,37 +25,33 @@ const services = [
 ];
 
 const occasions = [
-  { icon: Briefcase, title: "Corporate & Galas", text: "Brand launches, holiday parties, conferences and retainer partnerships, handled with polish and on schedule.", tint: "bg-babyblue-light", iconBg: "bg-brand text-primary-foreground" },
-  { icon: Baby, title: "Baby Showers", text: "Soft balloon garlands, dreamy dessert tables and picture-perfect backdrops for welcoming the little one.", tint: "bg-blush", iconBg: "bg-card text-brand" },
-  { icon: Cake, title: "Birthday Parties", text: "From first birthdays to milestone 30ths and 50ths, themed, bold and bursting with personality.", tint: "bg-tan-light", iconBg: "bg-tan-dark text-primary-foreground" },
-  { icon: Heart, title: "Weddings", text: "Ceremony to reception, florals, candle staging and every detail of your forever day.", tint: "bg-babyblue-light", iconBg: "bg-card text-brand" },
+  { title: "Corporate & Galas", text: "Brand launches, holiday parties, conferences and retainer partnerships, delivered with polish and on schedule.", img: p2 },
+  { title: "Baby Showers", text: "Soft garlands, dreamy dessert tables and picture-perfect backdrops for welcoming the little one.", img: p3 },
+  { title: "Birthdays & Milestones", text: "First birthdays to milestone 30ths and 50ths, styled with personality and a little Coco dust.", img: p1 },
 ];
 
 function OccasionsSection() {
   return (
-    <section className="py-24 container mx-auto px-6">
+    <section className="py-28 container mx-auto px-6">
       <SectionHeading
         eyebrow="Every Occasion"
-        title="Boardrooms to birthday bashes"
-        subtitle="Whether you are hosting 500 colleagues or 20 of your closest friends, we bring the same joy, creativity and professionalism."
+        title="From the boardroom to the birthday table"
+        subtitle="Whether you are hosting five hundred colleagues or twenty of your closest friends, we bring the same care, creativity and professionalism."
       />
-      <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="mt-20 grid md:grid-cols-3 gap-x-10 gap-y-16">
         {occasions.map((o, i) => (
-          <div
-            key={o.title}
-            className={`${o.tint} rounded-3xl p-8 transition-all duration-300 hover:-translate-y-2 hover:shadow-luxe ${i % 2 ? "lg:mt-10" : ""}`}
-          >
-            <div className={`${o.iconBg} h-14 w-14 rounded-2xl flex items-center justify-center mb-6 shadow-sm`}>
-              <o.icon size={26} strokeWidth={1.6} />
+          <article key={o.title} className="group">
+            <div className="overflow-hidden aspect-[4/5]">
+              <img src={o.img} alt={o.title} loading="lazy" width={1024} height={1280} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
             </div>
-            <h3 className="font-display text-2xl mb-3 text-brand-deep">{o.title}</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed">{o.text}</p>
-          </div>
-        ))}
-      </div>
-      <div className="mt-12 flex flex-wrap justify-center gap-3">
-        {["Product Launches", "Holiday Parties", "Gender Reveals", "Sweet 16s", "Bridal Showers", "Anniversaries", "Graduations", "Charity Galas"].map((t) => (
-          <span key={t} className="rounded-full border border-gold-soft bg-card px-4 py-2 text-xs font-medium text-brand">{t}</span>
+            <div className="mt-6 flex items-baseline gap-4 border-t border-tan pt-5">
+              <span className="font-display italic text-2xl text-gold-dark">0{i + 1}</span>
+              <div>
+                <h3 className="font-display text-2xl mb-2">{o.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{o.text}</p>
+              </div>
+            </div>
+          </article>
         ))}
       </div>
     </section>
@@ -86,13 +82,13 @@ function HomePage() {
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/contact"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 text-xs tracking-[0.25em] uppercase bg-gradient-brand text-primary-foreground rounded-full shadow-gold hover:opacity-90 transition"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 text-xs tracking-[0.25em] uppercase bg-gradient-brand text-primary-foreground shadow-gold hover:opacity-90 transition"
             >
               Begin Your Event <ArrowRight size={14} />
             </Link>
             <Link
               to="/portfolio"
-              className="inline-flex items-center justify-center px-8 py-4 text-xs tracking-[0.25em] uppercase border-2 border-brand rounded-full text-brand hover:bg-brand hover:text-primary-foreground transition"
+              className="inline-flex items-center justify-center px-8 py-4 text-xs tracking-[0.25em] uppercase border border-brand text-brand hover:bg-brand hover:text-primary-foreground transition"
             >
               View Portfolio
             </Link>
@@ -121,7 +117,7 @@ function HomePage() {
             {services.map((s) => (
               <div
                 key={s.title}
-                className="group p-10 rounded-3xl border border-gold-soft hover:border-brand transition-all bg-background/40 hover:shadow-gold"
+                className="group p-10 border border-gold-soft hover:border-brand transition-all bg-background/40 hover:shadow-gold"
               >
                 <s.icon className="text-brand mb-6" size={36} strokeWidth={1.2} />
                 <h3 className="font-display text-2xl mb-3">{s.title}</h3>
@@ -148,7 +144,7 @@ function HomePage() {
             <Link
               to="/portfolio"
               key={i}
-              className="group relative overflow-hidden aspect-[3/4] block rounded-3xl"
+              className="group relative overflow-hidden aspect-[3/4] block"
             >
               <img
                 src={src}
@@ -173,7 +169,7 @@ function HomePage() {
 
       {/* CTA */}
       <section className="py-28 container mx-auto px-6">
-        <div className="relative overflow-hidden bg-gradient-sky rounded-[2.5rem] border border-gold-soft p-12 md:p-20 text-center shadow-luxe">
+        <div className="relative overflow-hidden bg-gradient-sky border border-gold-soft p-12 md:p-20 text-center shadow-luxe">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,oklch(0.78_0.13_85/0.12),transparent_60%)]" />
           <div className="relative">
             <p className="divider-gold text-[11px] tracking-luxe uppercase mb-6">Let's create</p>
@@ -182,7 +178,7 @@ function HomePage() {
             </h2>
             <Link
               to="/contact"
-              className="mt-10 inline-flex items-center gap-2 px-8 py-4 text-xs tracking-[0.25em] uppercase bg-gradient-brand text-primary-foreground rounded-full shadow-gold hover:opacity-90 transition"
+              className="mt-10 inline-flex items-center gap-2 px-8 py-4 text-xs tracking-[0.25em] uppercase bg-gradient-brand text-primary-foreground shadow-gold hover:opacity-90 transition"
             >
               Inquire Today <ArrowRight size={14} />
             </Link>

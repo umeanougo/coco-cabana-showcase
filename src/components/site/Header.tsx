@@ -61,7 +61,7 @@ export function Header() {
 
         <Link
           to="/contact"
-          className="hidden md:inline-flex items-center px-4 py-2.5 text-[11px] tracking-[0.25em] uppercase border-2 border-brand rounded-full text-brand hover:bg-brand hover:text-primary-foreground transition-all whitespace-nowrap shrink-0"
+          className="hidden md:inline-flex items-center px-4 py-2.5 text-[11px] tracking-[0.25em] uppercase border border-brand text-brand hover:bg-brand hover:text-primary-foreground transition-all whitespace-nowrap shrink-0"
         >
           Book Now
         </Link>
@@ -93,7 +93,7 @@ export function Header() {
             <Link
               to="/contact"
               onClick={() => setOpen(false)}
-              className="mt-2 inline-flex items-center justify-center px-5 py-3 text-xs tracking-[0.25em] uppercase border-2 border-brand rounded-full text-brand"
+              className="mt-2 inline-flex items-center justify-center px-5 py-3 text-xs tracking-[0.25em] uppercase border border-brand text-brand"
             >
               Book Now
             </Link>
