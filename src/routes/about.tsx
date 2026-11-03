@@ -4,6 +4,9 @@ import aboutImg from "@/assets/about.jpg";
 import christineImg from "@/assets/team-christine.webp";
 import belemaImg from "@/assets/team-belema.avif";
 import { SectionHeading } from "@/components/site/SectionHeading";
+import { Reveal } from "@/components/site/Reveal";
+
+const tints = ["bg-tint-blue", "bg-tint-blush", "bg-tint-sage", "bg-tint-tan"];
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -12,7 +15,8 @@ export const Route = createFileRoute("/about")({
       { name: "description", content: "Meet Coco Cabana — a Houston team of dedicated planners and decorators turning your vision into a breathtaking reality." },
       { property: "og:title", content: "About — Coco Cabana" },
       { property: "og:description", content: "Curating breathtaking events with creativity, professionalism and a personal touch." },
-      { property: "og:image", content: aboutImg },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: AboutPage,
@@ -68,7 +72,7 @@ function AboutPage() {
         </p>
       </section>
 
-      <section className="py-24 border-y border-gold-soft">
+      <section className="py-24 bg-surface">
         <div className="container mx-auto px-6">
           <SectionHeading
             eyebrow="Why choose us"
@@ -76,11 +80,12 @@ function AboutPage() {
             subtitle="Our commitment to excellence, paired with meticulous attention to detail, ensures your event will not only be flawlessly executed but will also radiate beauty and charm."
           />
           <div className="mt-16 grid md:grid-cols-2 gap-10">
-            {pillars.map((v) => (
-              <div key={v.t} className="p-8 border border-gold-soft">
+            {pillars.map((v, i) => (
+              <Reveal key={v.t} delay={(i % 2) * 120}><div className={`h-full p-10 ${tints[i]} lift`}>
+                <p className="font-display italic text-4xl text-brand/30 mb-2">0{i + 1}</p>
                 <p className="font-display text-2xl text-heading mb-3">{v.t}</p>
-                <p className="text-muted-foreground leading-relaxed">{v.d}</p>
-              </div>
+                <p className="text-foreground/80 leading-relaxed">{v.d}</p>
+              </div></Reveal>
             ))}
           </div>
         </div>
@@ -89,9 +94,9 @@ function AboutPage() {
       <section className="py-24 container mx-auto px-6">
         <SectionHeading eyebrow="The Studio" title="Meet the team" />
         <div className="mt-16 grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
-          {team.map((m) => (
-            <div key={m.name} className="text-center">
-              <div className="mx-auto w-48 h-48 rounded-full overflow-hidden border border-gold-soft shadow-luxe">
+          {team.map((m, i) => (
+            <div key={m.name} className={`text-center p-10 ${tints[i]} lift`}>
+              <div className="mx-auto w-48 h-48 rounded-full overflow-hidden ring-4 ring-background shadow-luxe transition-transform duration-500 hover:scale-105">
                 <img src={m.img} alt={m.name} width={384} height={384} loading="lazy" className="w-full h-full object-cover" />
               </div>
               <p className="mt-6 font-display text-2xl text-heading">{m.name}</p>
@@ -102,7 +107,7 @@ function AboutPage() {
         </div>
       </section>
 
-      <section className="py-24 border-t border-gold-soft">
+      <section className="py-24 bg-surface">
         <div className="container mx-auto px-6 text-center max-w-2xl">
           <p className="divider-gold text-[11px] tracking-luxe uppercase mb-5">Featured Event</p>
           <h2 className="font-display text-4xl md:text-5xl">

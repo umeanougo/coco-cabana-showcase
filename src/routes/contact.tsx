@@ -9,6 +9,8 @@ export const Route = createFileRoute("/contact")({
       { name: "description", content: "Tell us about your upcoming event. Coco Cabana responds to every inquiry personally — let's start designing your celebration." },
       { property: "og:title", content: "Contact — Coco Cabana" },
       { property: "og:description", content: "Tell us about your upcoming event." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: ContactPage,
@@ -28,11 +30,34 @@ function ContactPage() {
         </p>
       </section>
 
-      <section className="py-12 container mx-auto px-6">
+      <section className="py-20 bg-surface">
+        <div className="container mx-auto px-6">
+          <div className="max-w-2xl mx-auto text-center mb-12">
+            <h2 className="font-display text-4xl">Why us?</h2>
+            <p className="mt-4 text-foreground/80 leading-relaxed">At Coco Cabana, our commitment to excellence, coupled with a meticulous attention to detail, ensures that your event will not only be flawlessly executed but will also radiate beauty and charm. Pick the form that matches your inquiry.</p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {[
+              { t: "General Contact", d: "Would you like us to handle planning or decor for your upcoming event?", c: "bg-tint-blue" },
+              { t: "Luxury Candle Staging", d: "Just interested in our candle staging service? Use our form or visit luxurycandlestaging.com.", c: "bg-tint-blush" },
+              { t: "360 Photo Booth", d: "Just interested in our photo booth? Fill out the form or email 360photobooth@cococabana.us.", c: "bg-tint-sage" },
+              { t: "Flower Wall Rental", d: "Renting a flower wall and possibly adding on a neon sign? Use this form.", c: "bg-tint-tan" },
+            ].map((f) => (
+              <a key={f.t} href="https://www.honeybook.com/widget/coco_cabana_223521/cf_id/631af7ecf7bcf404cfac7ef9" target="_blank" rel="noreferrer" className={`group block p-8 ${f.c} lift`}>
+                <h3 className="font-display text-2xl mb-3">{f.t}</h3>
+                <p className="text-sm text-foreground/80 leading-relaxed">{f.d}</p>
+                <span className="mt-5 inline-block text-[10px] tracking-[0.25em] uppercase text-brand border-b border-brand/40 group-hover:border-brand">Open form →</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 container mx-auto px-6">
         <div className="grid lg:grid-cols-3 gap-10">
           {/* Contact info */}
           <aside className="lg:col-span-1 space-y-8">
-            <div className="p-8 border border-gold-soft bg-card/40">
+            <div className="p-8 bg-tint-blue">
               <h3 className="font-display text-2xl mb-6">Get in touch</h3>
               <ul className="space-y-5 text-sm">
                 <li className="flex items-start gap-3">
@@ -62,7 +87,7 @@ function ContactPage() {
               </div>
             </div>
 
-            <div className="p-8 border border-gold-soft">
+            <div className="p-8 bg-tint-blush">
               <p className="divider-gold text-[10px] tracking-luxe uppercase mb-4">A note</p>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 We respond to every inquiry personally. Once submitted, you'll
@@ -74,7 +99,7 @@ function ContactPage() {
 
           {/* HoneyBook contact form — opens in new tab (HoneyBook blocks iframe embedding) */}
           <div className="lg:col-span-2">
-            <div className="rounded-3xl border border-gold-soft p-10 md:p-16 shadow-luxe text-center">
+            <div className="bg-surface p-10 md:p-16 shadow-luxe text-center">
               <p className="divider-gold text-[11px] tracking-luxe uppercase mb-5">Inquiry form</p>
               <h2 className="font-display text-3xl md:text-4xl mb-5">
                 Tell us about your <span className="italic text-brand-gradient">event</span>

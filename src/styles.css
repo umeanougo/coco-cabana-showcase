@@ -48,6 +48,11 @@
   --color-tan-dark: var(--tan-dark);
   --color-brand: var(--brand);
   --color-heading: var(--heading);
+  --color-surface: var(--surface);
+  --color-tint-blue: var(--tint-blue);
+  --color-tint-blush: var(--tint-blush);
+  --color-tint-sage: var(--tint-sage);
+  --color-tint-tan: var(--tint-tan);
   --color-brand-deep: var(--brand-deep);
   --color-blush: var(--blush);
   --color-tan-light: var(--tan-light);
@@ -59,7 +64,12 @@
 :root {
   --radius: 0.125rem;
   --brand: oklch(0.36 0.04 55);  /* espresso brown accents (blue reserved for headings) */
-  --heading: oklch(0.33 0.08 255);  /* deep navy, headings only */
+  --heading: oklch(0.6 0.075 272);  /* periwinkle blue from the HoneyBook proposal, headings only */
+  --surface: oklch(0.99 0.006 85);  /* soft white for alternating sections */
+  --tint-blue: oklch(0.93 0.03 260);
+  --tint-blush: oklch(0.93 0.035 25);
+  --tint-sage: oklch(0.93 0.03 150);
+  --tint-tan: oklch(0.91 0.035 70);
   --brand-deep: oklch(0.3 0.04 55);
   --blush: oklch(0.93 0.04 15);
   --tan-light: oklch(0.93 0.025 70);
@@ -103,7 +113,7 @@
 
   --gradient-gold: linear-gradient(135deg, oklch(0.55 0.11 75), oklch(0.88 0.14 90), oklch(0.55 0.11 75));
   --gradient-brand: linear-gradient(oklch(0.36 0.04 55), oklch(0.36 0.04 55));
-  --gradient-brand-text: linear-gradient(120deg, oklch(0.33 0.08 255), oklch(0.45 0.08 245));
+  --gradient-brand-text: linear-gradient(120deg, oklch(0.55 0.08 272), oklch(0.66 0.07 255));
   --gradient-gold-text: linear-gradient(135deg, oklch(0.42 0.1 75), oklch(0.62 0.12 85), oklch(0.42 0.1 75));
   --gradient-onyx: var(--background);
   --gradient-sky: var(--background);
@@ -168,3 +178,13 @@
   to { opacity: 1; transform: translateY(0); }
 }
 .animate-fade-up { animation: fade-up 0.8s ease-out both; }
+
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.animate-marquee { animation: marquee 40s linear infinite; }
+@keyframes float-slow { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-10px) rotate(4deg); } }
+.animate-float { animation: float-slow 6s ease-in-out infinite; }
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s ease; }
+.reveal.is-visible { opacity: 1; transform: none; }
+.lift { transition: transform .35s ease, box-shadow .35s ease; }
+.lift:hover { transform: translateY(-6px); box-shadow: var(--shadow-luxe); }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; } .animate-marquee, .animate-float { animation: none; } }
