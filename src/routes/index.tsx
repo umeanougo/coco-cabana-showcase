@@ -36,14 +36,14 @@ function HomePage() {
           height={1080}
           className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/75 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/80 to-background" />
         <div className="relative z-10 container mx-auto px-6 text-center pt-24 animate-fade-up">
           <p className="divider-gold text-[11px] tracking-luxe uppercase mb-6">Coco Cabana</p>
           <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.05] max-w-5xl mx-auto">
             Where moments become <span className="text-brand-gradient italic">heirlooms</span>
           </h1>
           <p className="mt-8 max-w-xl mx-auto text-base md:text-lg text-foreground/80 leading-relaxed">
-            Bespoke event planning, sumptuous decor and premium rentals — crafted to make every celebration unforgettable.
+            From corporate galas and brand launches to baby showers and birthday bashes, we plan, style and rent everything that makes your event unforgettable.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
