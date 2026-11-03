@@ -37,7 +37,7 @@ export function Header() {
             alt="Coco Cabana"
             width={44}
             height={44}
-            className="h-11 w-11 object-contain shrink-0"
+            className="h-12 w-12 object-contain shrink-0 rounded-full bg-brand-deep p-1 ring-2 ring-gold/60 transition-transform duration-500 group-hover:rotate-12"
           />
           <span className="hidden sm:block min-w-0">
             <span className="block font-display text-base lg:text-lg tracking-wide text-foreground leading-tight whitespace-nowrap">Coco Cabana</span>
