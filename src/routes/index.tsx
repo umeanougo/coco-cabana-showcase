@@ -70,10 +70,10 @@ function HomePage() {
           height={1080}
           className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-background/70" />
-        <div className="relative z-10 container mx-auto px-6 text-center pt-24 animate-fade-up">
+
+        <div className="relative z-10 mx-auto max-w-4xl bg-background/95 border border-gold-soft px-8 py-14 md:px-16 text-center mt-24 animate-fade-up">
           <p className="divider-gold text-[11px] tracking-luxe uppercase mb-6">Coco Cabana</p>
-          <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.05] max-w-5xl mx-auto">
+          <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-7xl leading-[1.05] max-w-5xl mx-auto">
             Where moments become <span className="text-brand-gradient italic">heirlooms</span>
           </h1>
           <p className="mt-8 max-w-xl mx-auto text-base md:text-lg text-foreground/80 leading-relaxed">
