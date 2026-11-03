@@ -50,7 +50,7 @@ function PortfolioPage() {
       <section className="py-16 container mx-auto px-6">
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((p, i) => (
-            <figure key={i} className="group relative overflow-hidden aspect-[4/5]">
+            <figure key={i} className="group relative overflow-hidden aspect-[4/5] rounded-3xl">
               <img
                 src={p.src}
                 alt={p.title}
