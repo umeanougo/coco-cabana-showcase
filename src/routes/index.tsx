@@ -47,7 +47,7 @@ function OccasionsSection() {
   const [active, setActive] = useState(0);
   const o = occasions[active];
   return (
-    <section className="py-28 bg-background">
+    <section className="py-28 bg-surface">
       <div className="container mx-auto px-6">
         <SectionHeading
           eyebrow="Every Occasion"
@@ -210,7 +210,7 @@ function HomePage() {
       <InstagramSection />
 
       {/* MAILING LIST + CTA */}
-      <section className="py-28 bg-background">
+      <section className="py-28 bg-surface">
         <div className="container mx-auto px-6 grid md:grid-cols-2 gap-6">
           <Reveal className="h-full">
             <div className="h-full bg-tint-blush p-12 md:p-16 relative overflow-hidden">
