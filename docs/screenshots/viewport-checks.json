@@ -1,0 +1,65 @@
+[
+  {
+    "requested": [
+      1440,
+      900
+    ],
+    "height": 900,
+    "scrollWidth": 1440,
+    "width": 1440
+  },
+  {
+    "requested": [
+      1280,
+      800
+    ],
+    "height": 800,
+    "scrollWidth": 1280,
+    "width": 1280
+  },
+  {
+    "requested": [
+      1024,
+      768
+    ],
+    "height": 768,
+    "scrollWidth": 1024,
+    "width": 1024
+  },
+  {
+    "requested": [
+      768,
+      1024
+    ],
+    "height": 1024,
+    "scrollWidth": 768,
+    "width": 768
+  },
+  {
+    "requested": [
+      430,
+      932
+    ],
+    "height": 932,
+    "scrollWidth": 430,
+    "width": 430
+  },
+  {
+    "requested": [
+      390,
+      844
+    ],
+    "height": 844,
+    "scrollWidth": 390,
+    "width": 390
+  },
+  {
+    "requested": [
+      360,
+      800
+    ],
+    "height": 800,
+    "scrollWidth": 360,
+    "width": 360
+  }
+]

@@ -6,4 +6,10 @@
 // You can pass additional config via defineConfig({ vite: { ... } }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
-export default defineConfig();
+export default defineConfig({
+  vite: {
+    ssr: { external: ["cloudflare:workers"] },
+    optimizeDeps: { exclude: ["cloudflare:workers"] },
+    build: { rollupOptions: { external: ["cloudflare:workers"] } },
+  },
+});

@@ -32,21 +32,46 @@ export const Route = createRootRoute({
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Coco Cabana — Luxury Event Planning, Decor & Rentals" },
-      { name: "description", content: "Coco Cabana designs unforgettable celebrations through bespoke event planning, luxe decor, and premium event rentals." },
+      {
+        name: "description",
+        content:
+          "Coco Cabana designs unforgettable celebrations through bespoke event planning, luxe decor, and premium event rentals.",
+      },
       { name: "author", content: "Coco Cabana" },
       { property: "og:title", content: "Coco Cabana — Luxury Event Planning, Decor & Rentals" },
-      { property: "og:description", content: "Coco Cabana designs unforgettable celebrations through bespoke event planning, luxe decor, and premium event rentals." },
+      {
+        property: "og:description",
+        content:
+          "Coco Cabana designs unforgettable celebrations through bespoke event planning, luxe decor, and premium event rentals.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Coco Cabana — Luxury Event Planning, Decor & Rentals" },
-      { name: "twitter:description", content: "Coco Cabana designs unforgettable celebrations through bespoke event planning, luxe decor, and premium event rentals." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d2d65031-e08b-4fd0-9427-34c116a4f410/id-preview-cfaf0904--c0cebeb6-62bc-4f86-8e13-003af30ffaf2.lovable.app-1777480669206.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d2d65031-e08b-4fd0-9427-34c116a4f410/id-preview-cfaf0904--c0cebeb6-62bc-4f86-8e13-003af30ffaf2.lovable.app-1777480669206.png" },
+      {
+        name: "twitter:description",
+        content:
+          "Coco Cabana designs unforgettable celebrations through bespoke event planning, luxe decor, and premium event rentals.",
+      },
+      {
+        property: "og:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d2d65031-e08b-4fd0-9427-34c116a4f410/id-preview-cfaf0904--c0cebeb6-62bc-4f86-8e13-003af30ffaf2.lovable.app-1777480669206.png",
+      },
+      {
+        name: "twitter:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d2d65031-e08b-4fd0-9427-34c116a4f410/id-preview-cfaf0904--c0cebeb6-62bc-4f86-8e13-003af30ffaf2.lovable.app-1777480669206.png",
+      },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" },{ rel: "stylesheet", href: appCss }],
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap",
+      },
+      { rel: "stylesheet", href: appCss },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -70,8 +95,11 @@ function RootShell({ children }: { children: React.ReactNode }) {
 function RootComponent() {
   return (
     <div className="min-h-screen flex flex-col">
+      <a href="#main-content" className="skip-link">
+        Skip to content
+      </a>
       <Header />
-      <main className="flex-1">
+      <main id="main-content" className="flex-1">
         <Outlet />
       </main>
       <Footer />

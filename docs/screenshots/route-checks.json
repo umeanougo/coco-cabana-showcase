@@ -1,0 +1,37 @@
+[
+  {
+    "path": "/",
+    "title": "Coco Cabana | Event Planning, Decor & Rentals in Houston",
+    "h1": "Your vision, our expertise",
+    "scrollWidth": 360,
+    "width": 360
+  },
+  {
+    "path": "/services",
+    "title": "Services | Coco Cabana Weddings, Events, Rentals & Candle Staging",
+    "h1": "What do we bring to your special day?",
+    "scrollWidth": 360,
+    "width": 360
+  },
+  {
+    "path": "/portfolio",
+    "title": "Portfolio — Coco Cabana | Event Design Gallery",
+    "h1": "Our Portfolio",
+    "scrollWidth": 360,
+    "width": 360
+  },
+  {
+    "path": "/about",
+    "title": "About — Coco Cabana | Curating Breathtaking Events",
+    "h1": "Curating breathtaking events",
+    "scrollWidth": 360,
+    "width": 360
+  },
+  {
+    "path": "/contact",
+    "title": "Contact — Coco Cabana | Inquire About Your Event",
+    "h1": "Let's create together",
+    "scrollWidth": 360,
+    "width": 360
+  }
+]

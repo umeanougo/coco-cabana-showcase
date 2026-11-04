@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Mail, Phone } from "lucide-react";
+import { Mail, Clock } from "lucide-react";
 import logo from "@/assets/coco-cabana-logo.png";
 import { SocialLinks } from "./SocialLinks";
 
@@ -9,26 +9,54 @@ export function Footer() {
       <div className="container mx-auto px-6 py-16 grid gap-12 md:grid-cols-4">
         <div className="md:col-span-2 max-w-sm">
           <div className="flex items-center gap-3 mb-5">
-            <img src={logo} alt="Coco Cabana" width={56} height={56} className="h-16 w-16 object-contain rounded-full bg-brand-deep p-1 ring-2 ring-gold/60" />
+            <img
+              src={logo}
+              alt="Coco Cabana"
+              width={56}
+              height={56}
+              className="h-16 w-16 object-contain rounded-full bg-brand-deep p-1 ring-2 ring-gold/60"
+            />
             <div>
               <p className="font-display text-xl">Coco Cabana</p>
-              <p className="text-[10px] tracking-luxe text-brand uppercase">Events · Decor · Rentals</p>
+              <p className="text-[10px] tracking-luxe text-brand uppercase">
+                Events · Decor · Rentals
+              </p>
             </div>
           </div>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            Houston's one-stop shop for events, decor and rentals. Bespoke
-            planning, luxe florals, flower walls and 360 photo booths, designed
-            with intention.
+            Houston's one-stop shop for events, decor and rentals. Bespoke planning, luxe florals,
+            flower walls and 360 photo booths, designed with intention.
           </p>
         </div>
 
         <div>
           <h4 className="text-xs tracking-luxe uppercase mb-5">Explore</h4>
           <ul className="space-y-3 text-sm">
-            <li><Link to="/services" className="hover:text-brand transition">Services</Link></li>
-            <li><Link to="/portfolio" className="hover:text-brand transition">Portfolio</Link></li>
-            <li><Link to="/about" className="hover:text-brand transition">About</Link></li>
-            <li><Link to="/contact" className="hover:text-brand transition">Contact</Link></li>
+            <li>
+              <Link to="/pricing-calculator" className="hover:text-brand transition">
+                Estimate Your Event
+              </Link>
+            </li>
+            <li>
+              <Link to="/services" className="hover:text-brand transition">
+                Services
+              </Link>
+            </li>
+            <li>
+              <Link to="/portfolio" className="hover:text-brand transition">
+                Portfolio
+              </Link>
+            </li>
+            <li>
+              <Link to="/about" className="hover:text-brand transition">
+                About
+              </Link>
+            </li>
+            <li>
+              <Link to="/contact" className="hover:text-brand transition">
+                Contact
+              </Link>
+            </li>
           </ul>
         </div>
 
@@ -36,14 +64,18 @@ export function Footer() {
           <h4 className="text-xs tracking-luxe uppercase mb-5">Connect</h4>
           <ul className="space-y-3 text-sm">
             <li>
-              <a href="mailto:hello@cococabana.us" className="flex items-center gap-2 hover:text-brand transition">
-                <Mail size={16} /><span>hello@cococabana.us</span>
+              <a
+                href="mailto:hello@cococabana.us"
+                className="flex items-center gap-2 hover:text-brand transition"
+              >
+                <Mail size={16} />
+                <span>hello@cococabana.us</span>
               </a>
             </li>
             <li>
-              <a href="tel:+10000000000" className="flex items-center gap-2 hover:text-brand transition">
-                <Phone size={16} /> Available by appointment
-              </a>
+              <span className="flex items-center gap-2">
+                <Clock size={16} /> Available by appointment
+              </span>
             </li>
           </ul>
           <div className="mt-6">
