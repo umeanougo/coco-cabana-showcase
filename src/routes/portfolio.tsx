@@ -12,9 +12,16 @@ export const Route = createFileRoute("/portfolio")({
   head: () => ({
     meta: [
       { title: "Portfolio — Coco Cabana | Event Design Gallery" },
-      { name: "description", content: "Explore a curated gallery of weddings, milestones and luxury events designed by Coco Cabana." },
+      {
+        name: "description",
+        content:
+          "Explore a curated gallery of weddings, milestones and luxury events designed by Coco Cabana.",
+      },
       { property: "og:title", content: "Portfolio — Coco Cabana" },
-      { property: "og:description", content: "A gallery of weddings, milestones and luxury events." },
+      {
+        property: "og:description",
+        content: "A gallery of weddings, milestones and luxury events.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -49,49 +56,46 @@ function PortfolioPage() {
             Our <span className="italic text-brand-gradient">Portfolio</span>
           </h1>
           <p className="mt-6 max-w-2xl mx-auto text-muted-foreground">
-            Our gallery highlights some of our memorable moments, encapsulating our journey through a multitude of events, each unique in its purpose, scale, and impact, yet all sharing the common thread of our unwavering commitment to excellence.
+            Our gallery highlights some of our memorable moments, encapsulating our journey through
+            a multitude of events, each unique in its purpose, scale, and impact, yet all sharing
+            the common thread of our unwavering commitment to excellence.
           </p>
         </div>
       </section>
 
-      <section className="py-16 bg-surface"><div className="container mx-auto px-6">
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
-          {cats.map((c, i) => (
-            <button key={c} onClick={() => setCat(c)} className={`px-5 py-2.5 text-[11px] tracking-[0.2em] uppercase transition ${cat === c ? "bg-brand text-primary-foreground" : `${tints[i % 4]} text-brand hover:opacity-80`}`}>{c}</button>
-          ))}
-        </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {shown.map((p) => (
-            <figure key={p.title} className="group relative overflow-hidden aspect-[4/5] animate-fade-up">
-              <img
-                src={p.src}
-                alt={p.title}
-                loading="lazy"
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <figcaption className="absolute inset-x-4 bottom-4 bg-background p-5 transition-transform duration-500 group-hover:-translate-y-2">
-                <p className="text-[10px] tracking-luxe uppercase text-brand mb-1">{p.category}</p>
-                <p className="font-display text-2xl">{p.title}</p>
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-      </div></section>
-
-      <section className="py-20 container mx-auto px-6">
-        <div className="aspect-video bg-tint-blue flex items-center justify-center">
-          {/*
-            Highlight reel placeholder. Replace this <video> with your own .mp4 / .webm
-            (place in /public) or an <iframe> embed (Vimeo / YouTube).
-            Example:
-              <iframe src="https://player.vimeo.com/video/XXXX" className="w-full h-full" allow="autoplay; fullscreen" />
-          */}
-          <div className="text-center px-6">
-            <p className="divider-gold text-[11px] tracking-luxe uppercase mb-4">Highlight Reel</p>
-            <p className="font-display text-2xl mb-2">Video coming soon</p>
-            <p className="text-sm text-muted-foreground max-w-md">
-              Drop a video file into this placeholder to feature your latest event reel.
-            </p>
+      <section className="py-16 bg-surface">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-wrap justify-center gap-3 mb-12">
+            {cats.map((c, i) => (
+              <button
+                key={c}
+                onClick={() => setCat(c)}
+                className={`px-5 py-2.5 text-[11px] tracking-[0.2em] uppercase transition ${cat === c ? "bg-brand text-primary-foreground" : `${tints[i % 4]} text-brand hover:opacity-80`}`}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {shown.map((p) => (
+              <figure
+                key={p.title}
+                className="group relative overflow-hidden aspect-[4/5] animate-fade-up"
+              >
+                <img
+                  src={p.src}
+                  alt={p.title}
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <figcaption className="absolute inset-x-4 bottom-4 bg-background p-5 transition-transform duration-500 group-hover:-translate-y-2">
+                  <p className="text-[10px] tracking-luxe uppercase text-brand mb-1">
+                    {p.category}
+                  </p>
+                  <p className="font-display text-2xl">{p.title}</p>
+                </figcaption>
+              </figure>
+            ))}
           </div>
         </div>
       </section>

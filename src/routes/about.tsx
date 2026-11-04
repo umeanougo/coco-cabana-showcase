@@ -12,9 +12,17 @@ export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
       { title: "About — Coco Cabana | Curating Breathtaking Events" },
-      { name: "description", content: "Meet Coco Cabana — a Houston team of dedicated planners and decorators turning your vision into a breathtaking reality." },
+      {
+        name: "description",
+        content:
+          "Meet Coco Cabana — a Houston team of dedicated planners and decorators turning your vision into a breathtaking reality.",
+      },
       { property: "og:title", content: "About — Coco Cabana" },
-      { property: "og:description", content: "Curating breathtaking events with creativity, professionalism and a personal touch." },
+      {
+        property: "og:description",
+        content:
+          "Curating breathtaking events with creativity, professionalism and a personal touch.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -65,10 +73,10 @@ function AboutPage() {
           Curating <span className="italic text-brand-gradient">breathtaking events</span>
         </h1>
         <p className="mt-6 max-w-2xl mx-auto text-muted-foreground">
-          With a team of dedicated and creative planners and decorators, we take
-          pride in transforming your vision into a breathtaking reality. From
-          the perfect color palette to elegant tablescapes, we honor every
-          detail so your event becomes a true reflection of your dreams.
+          With a team of dedicated and creative planners and decorators, we take pride in
+          transforming your vision into a breathtaking reality. From the perfect color palette to
+          elegant tablescapes, we honor every detail so your event becomes a true reflection of your
+          dreams.
         </p>
       </section>
 
@@ -81,11 +89,13 @@ function AboutPage() {
           />
           <div className="mt-16 grid md:grid-cols-2 gap-10">
             {pillars.map((v, i) => (
-              <Reveal key={v.t} delay={(i % 2) * 120}><div className={`h-full p-10 ${tints[i]} lift`}>
-                <p className="font-display italic text-4xl text-brand/30 mb-2">0{i + 1}</p>
-                <p className="font-display text-2xl text-heading mb-3">{v.t}</p>
-                <p className="text-foreground/80 leading-relaxed">{v.d}</p>
-              </div></Reveal>
+              <Reveal key={v.t} delay={(i % 2) * 120}>
+                <div className={`h-full p-10 ${tints[i]} lift`}>
+                  <p className="font-display italic text-4xl text-brand/30 mb-2">0{i + 1}</p>
+                  <p className="font-display text-2xl text-heading mb-3">{v.t}</p>
+                  <p className="text-foreground/80 leading-relaxed">{v.d}</p>
+                </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -97,7 +107,14 @@ function AboutPage() {
           {team.map((m, i) => (
             <div key={m.name} className={`text-center p-10 ${tints[i]} lift`}>
               <div className="mx-auto w-48 h-48 rounded-full overflow-hidden ring-4 ring-background shadow-luxe transition-transform duration-500 hover:scale-105">
-                <img src={m.img} alt={m.name} width={384} height={384} loading="lazy" className="w-full h-full object-cover" />
+                <img
+                  src={m.img}
+                  alt={m.name}
+                  width={384}
+                  height={384}
+                  loading="lazy"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <p className="mt-6 font-display text-2xl text-heading">{m.name}</p>
               <p className="text-[11px] tracking-luxe uppercase text-brand mt-1">{m.role}</p>
@@ -114,12 +131,14 @@ function AboutPage() {
             Love is <span className="italic text-brand-gradient">in the air</span>
           </h2>
           <p className="mt-6 text-muted-foreground leading-relaxed">
-            Every event is a once-in-a-lifetime occasion, and that's why we
-            embrace the art of curating beautiful moments. Let us create your
-            next event, one that captivates the senses, touches the heart and
-            becomes a cherished memory for a lifetime.
+            Every event is a once-in-a-lifetime occasion, and that's why we embrace the art of
+            curating beautiful moments. Let us create your next event, one that captivates the
+            senses, touches the heart and becomes a cherished memory for a lifetime.
           </p>
-          <Link to="/contact" className="mt-10 inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-brand border-b border-brand pb-1">
+          <Link
+            to="/contact"
+            className="mt-10 inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase text-brand border-b border-brand pb-1"
+          >
             Start your event <ArrowRight size={14} />
           </Link>
         </div>

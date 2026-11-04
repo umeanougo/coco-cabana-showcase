@@ -9,6 +9,7 @@ const links = [
   { to: "/portfolio", label: "Portfolio" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
+  { to: "/pricing-calculator", label: "Estimate Your Event" },
 ] as const;
 
 export function Header() {
@@ -40,12 +41,16 @@ export function Header() {
             className="h-12 w-12 object-contain shrink-0 rounded-full bg-brand-deep p-1 ring-2 ring-gold/60 transition-transform duration-500 group-hover:rotate-12"
           />
           <span className="hidden sm:block min-w-0">
-            <span className="block font-display text-base lg:text-lg tracking-wide text-foreground leading-tight whitespace-nowrap">Coco Cabana</span>
-            <span className="hidden lg:block text-[10px] tracking-luxe text-brand uppercase leading-tight whitespace-nowrap">Events · Decor · Rentals</span>
+            <span className="block font-display text-base lg:text-lg tracking-wide text-foreground leading-tight whitespace-nowrap">
+              Coco Cabana
+            </span>
+            <span className="hidden lg:block text-[10px] tracking-luxe text-brand uppercase leading-tight whitespace-nowrap">
+              Events · Decor · Rentals
+            </span>
           </span>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-5 lg:gap-8 flex-1 justify-center">
+        <nav className="hidden xl:flex items-center gap-5 lg:gap-8 flex-1 justify-center">
           {links.map((l) => (
             <Link
               key={l.to}
@@ -61,22 +66,24 @@ export function Header() {
 
         <Link
           to="/contact"
-          className="hidden md:inline-flex items-center px-4 py-2.5 text-[11px] tracking-[0.25em] uppercase border border-brand text-brand hover:bg-brand hover:text-primary-foreground transition-all whitespace-nowrap shrink-0"
+          className="hidden xl:inline-flex items-center px-4 py-2.5 text-[11px] tracking-[0.25em] uppercase border border-brand text-brand hover:bg-brand hover:text-primary-foreground transition-all whitespace-nowrap shrink-0"
         >
           Book Now
         </Link>
 
         <button
           onClick={() => setOpen((v) => !v)}
-          className="md:hidden text-brand"
+          className="xl:hidden text-brand p-3"
           aria-label="Toggle menu"
+          aria-expanded={open}
+          aria-controls="mobile-navigation"
         >
           {open ? <X size={26} /> : <Menu size={26} />}
         </button>
       </div>
 
       {open && (
-        <div className="md:hidden border-t border-gold-soft bg-background">
+        <div id="mobile-navigation" className="xl:hidden border-t border-gold-soft bg-background">
           <nav className="container mx-auto px-6 py-6 flex flex-col gap-5">
             {links.map((l) => (
               <Link

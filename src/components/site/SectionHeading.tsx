@@ -11,12 +11,8 @@ export function SectionHeading({ eyebrow, title, subtitle, align = "center" }: P
       {eyebrow && (
         <p className="divider-gold text-[11px] tracking-luxe uppercase mb-5">{eyebrow}</p>
       )}
-      <h2 className="font-display text-4xl md:text-5xl leading-tight">
-        {title}
-      </h2>
-      {subtitle && (
-        <p className="mt-5 text-muted-foreground leading-relaxed">{subtitle}</p>
-      )}
+      <h2 className="font-display text-4xl md:text-5xl leading-tight">{title}</h2>
+      {subtitle && <p className="mt-5 text-muted-foreground leading-relaxed">{subtitle}</p>}
     </div>
   );
 }
