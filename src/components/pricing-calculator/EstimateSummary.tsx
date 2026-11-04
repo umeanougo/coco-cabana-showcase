@@ -1,131 +1,140 @@
-import type { Basics } from "@/lib/pricing-calculator/validation";
-import { type Estimate, range } from "@/lib/pricing-calculator/calculate-estimate";
+import { partialContext } from "@/lib/pricing-calculator/presentation";
+import { type Estimate, range, money } from "@/lib/pricing-calculator/calculate-estimate";
+import { type Basics } from "@/lib/pricing-calculator/validation";
 import {
-  assumptions,
   disclaimer,
   exclusions,
-  serviceFee,
+  feeExplanation,
   tierLabels,
+  serviceName,
 } from "@/config/pricing-calculator";
 export function EstimateSummary({
   estimate,
   basics,
-  reference,
-  onEdit,
   onRemove,
 }: {
   estimate: Estimate;
   basics: Basics;
-  reference: string;
-  onEdit: () => void;
-  onRemove: (id: string) => void;
+  onRemove?: (id: string) => void;
 }) {
   return (
-    <section className="estimate-card">
-      <p className="eyebrow">Your celebration, taking shape</p>
-      <h2>Your starting range</h2>
-      <p className="estimate-amount" aria-live="polite" aria-atomic="true">
+    <div className="cc-estimate">
+      <p className="cc-eyebrow">
+        {serviceName(basics.audience, basics.service)} · {basics.guestCount} guests
+      </p>
+      <h2>Your event estimate</h2>
+      <p className="cc-total">
         {estimate.pricedCount
           ? range(estimate.minimumTotal, estimate.maximumTotal)
-          : "Let’s build your estimate"}
+          : estimate.rows.length
+            ? "Pricing to confirm"
+            : "Choose your first detail"}
       </p>
-      <p className="estimate-caption">USD · priced selections only · not a quote</p>
-      <p className="estimate-notice">
-        Only chair pricing is currently available. Other selected services and unconfirmed fees are
-        additional; this is not a complete event budget.
+      <p className="cc-partial">{partialContext(estimate)}</p>
+      <p className="cc-estimate-caption">
+        {estimate.reference
+          ? "Reference range · not approved pricing"
+          : estimate.pricedCount
+            ? "Estimated range"
+            : "Your selections will appear here."}
+        {estimate.customCount > 0
+          ? ` · ${estimate.customCount} unpriced selection${estimate.customCount === 1 ? "" : "s"} additional`
+          : ""}
       </p>
-      <div className="event-recap">
-        <strong>{basics.eventType}</strong>
-        <p>
-          {basics.guestCount || "—"} guests · {estimate.tables} tables
-          {!basics.tableCount ? ` (assumed ${assumptions.guestsPerTable} per table)` : ""}
-        </p>
-        <p>{basics.eventDate || "Date to be decided"}</p>
-        <p>{basics.location || "Location to be decided"}</p>
-        <p>
-          {basics.venueStatus} · {basics.planningStage}
-        </p>
-        {basics.desiredBudget !== undefined && (
-          <p>Target budget: {range(basics.desiredBudget, basics.desiredBudget)}</p>
-        )}
-        <button type="button" className="text-link no-print" onClick={onEdit}>
-          Edit event details
-        </button>
-      </div>
-      {estimate.rows.length === 0 ? (
-        <p className="empty-estimate">
-          Choose the details that matter to you. Your estimate updates as you go.
-        </p>
-      ) : (
-        <ul className="estimate-items">
-          {estimate.rows.map((r) => (
-            <li key={r.id}>
+      {estimate.rows.length > 0 && (
+        <>
+          <ul className="cc-summary-items">
+            {estimate.rows.map((r) => (
+              <li key={r.id}>
+                <div>
+                  <strong>{r.item.name}</strong>
+                  <small>
+                    {r.item.calculationType === "custom_quote"
+                      ? "Custom scope"
+                      : tierLabels[r.tier]}{" "}
+                    · {r.quantity} × {r.item.calculationType.replaceAll("_", " ")}
+                  </small>
+                  <span>
+                    {r.min === null || r.max === null
+                      ? "Additional · pricing to confirm"
+                      : range(r.min, r.max)}
+                  </span>
+                </div>
+                {onRemove && (
+                  <button
+                    className="cc-link"
+                    onClick={() => onRemove(r.id)}
+                    aria-label={`Remove ${r.item.name}`}
+                  >
+                    Remove
+                  </button>
+                )}
+              </li>
+            ))}
+          </ul>
+          <dl className="cc-totals">
+            <div>
+              <dt>Priced selections</dt>
+              <dd>
+                {estimate.pricedCount
+                  ? range(estimate.minimumSubtotal, estimate.maximumSubtotal)
+                  : "Not priced"}
+              </dd>
+            </div>
+            <div>
+              <dt>
+                {estimate.feeLabel}
+                {estimate.customCount ? " — on priced items" : ""}
+              </dt>
+              <dd>
+                {estimate.pricedCount
+                  ? range(estimate.minimumServiceFee, estimate.maximumServiceFee)
+                  : "Pending priced selections"}
+              </dd>
+            </div>
+            {estimate.ownFeePercent > 0 && (
               <div>
-                <strong>{r.item.name}</strong>
-                <small>
-                  {tierLabels[r.tier]} ·{" "}
-                  {r.custom
-                    ? "Consultation required"
-                    : `${r.quantity} × ${r.item.calculationType.replace("per_", "per ")}`}
-                </small>
+                <dt>Your planning fee ({estimate.ownFeePercent}%)</dt>
+                <dd>
+                  {estimate.pricedCount
+                    ? range(estimate.minimumOwnFee, estimate.maximumOwnFee)
+                    : "Pending"}
+                </dd>
               </div>
+            )}
+            {estimate.pricedCount > 0 && (
               <div>
-                {!r.custom && <span>{range(r.min, r.max)}</span>}
-                <button
-                  type="button"
-                  className="text-link no-print"
-                  aria-label={`Remove ${r.item.name}`}
-                  onClick={() => onRemove(r.id)}
-                >
-                  Remove
-                </button>
+                <dt>About, per guest</dt>
+                <dd>
+                  {money(estimate.minimumPerGuest)}–{money(estimate.maximumPerGuest)}
+                </dd>
               </div>
-            </li>
-          ))}
-        </ul>
+            )}
+          </dl>
+        </>
       )}
-      <dl className="estimate-totals">
-        <div>
-          <dt>Selected event elements</dt>
-          <dd>
-            {estimate.pricedCount
-              ? range(estimate.minimumSubtotal, estimate.maximumSubtotal)
-              : "Not yet priced"}
-          </dd>
-        </div>
-        <div>
-          <dt>Estimated service fee ({serviceFee.rate * 100}%)</dt>
-          <dd>
-            {serviceFee.eligibilityConfirmed
-              ? range(estimate.minimumServiceFee, estimate.maximumServiceFee)
-              : "To be confirmed"}
-          </dd>
-        </div>
-        <div>
-          <dt>Priced estimate total</dt>
-          <dd>
-            {estimate.pricedCount
-              ? range(estimate.minimumTotal, estimate.maximumTotal)
-              : "Consultation required"}
-          </dd>
-        </div>
-      </dl>
-      <p className="estimate-caption">
-        {estimate.customCount} selected{" "}
-        {estimate.customCount === 1 ? "element requires" : "elements require"} consultation. Taxes
-        and logistics are excluded.
-      </p>
-      <details className="assumptions">
-        <summary>Assumptions, fees & exclusions</summary>
-        <p>{serviceFee.explanation}</p>
-        <p>{exclusions}</p>
+      <details className="cc-help">
+        <summary>How this estimate works</summary>
         <p>
-          Guest count drives chair costs. Tier descriptions express a preferred level; exact
-          products and inclusions are confirmed in consultation.
+          {basics.service === "alacarte"
+            ? "À la carte — no design or planning fee. You tell us the vision; we bring it to life."
+            : basics.audience === "planner" && basics.service === "planning"
+              ? "You are the planner: no Coco Cabana planning fee. Your optional percentage is added to the selected subtotal."
+              : feeExplanation}
         </p>
+        <p>
+          {estimate.tables} tables: {basics.guestCount} guests ÷ 8, rounded up. Displayed amounts
+          are rounded to whole dollars, or the nearest $10 above $1,000; calculations retain cents.
+        </p>
+        <p>{exclusions}</p>
       </details>
-      <p className="disclaimer">{disclaimer}</p>
-      <p className="estimate-reference">Estimate reference: {reference || "Preparing…"}</p>
-    </section>
+      {estimate.reference && estimate.underReferenceMinimum && (
+        <p className="cc-note">
+          For review: this range is below the draft {money(estimate.referenceMinimum!)} service
+          minimum. Minimums and their basis still need confirmation; no minimum fee has been added.
+        </p>
+      )}
+      <p className="cc-disclaimer">{disclaimer}</p>
+    </div>
   );
 }

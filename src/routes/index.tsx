@@ -1,3 +1,4 @@
+import { reviewEnvironment } from "@/config/review-environment";
 import { CalculatorCTA } from "@/components/site/CalculatorCTA";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
@@ -365,6 +366,7 @@ function HomePage() {
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
+                  if (reviewEnvironment.enabled) return;
                   const v = new FormData(e.currentTarget).get("email");
                   window.location.href = `mailto:hello@cococabana.us?subject=Mailing%20list%20signup&body=Please%20add%20${encodeURIComponent(String(v))}`;
                 }}
@@ -377,8 +379,11 @@ function HomePage() {
                   placeholder="Your email"
                   className="flex-1 bg-background px-5 py-4 text-sm outline-none focus:ring-2 ring-brand"
                 />
-                <button className="px-8 py-4 text-xs tracking-[0.25em] uppercase bg-brand text-primary-foreground hover:opacity-90 transition">
-                  Join
+                <button
+                  disabled={reviewEnvironment.enabled}
+                  className="px-8 py-4 text-xs tracking-[0.25em] uppercase bg-brand text-primary-foreground hover:opacity-90 transition"
+                >
+                  {reviewEnvironment.enabled ? "Signup disabled in review" : "Join"}
                 </button>
               </form>
             </div>

@@ -1,337 +1,368 @@
-import {
-  Drawer,
-  DrawerTrigger,
-  DrawerContent,
-  DrawerTitle,
-  DrawerDescription,
-  DrawerClose,
-} from "@/components/ui/drawer";
-import { useEffect, useRef, useState } from "react";
-import { Printer, ArrowRight, ArrowLeft } from "lucide-react";
-import { z } from "zod";
+import { referencePricingEnabled, reviewEnvironment } from "@/config/review-environment";
+import { useEffect, useState } from "react";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import {
   basicsSchema,
+  scopeIssues,
   selectionsSchema,
   type Basics,
   type Selection,
+  type Submission,
 } from "@/lib/pricing-calculator/validation";
-import { calculateEstimate } from "@/lib/pricing-calculator/calculate-estimate";
-import { track } from "@/lib/pricing-calculator/analytics";
-import { site } from "@/config/site";
+import { calculateEstimate, range } from "@/lib/pricing-calculator/calculate-estimate";
+import {
+  categories,
+  services,
+  serviceName,
+  type Audience,
+  type Service,
+} from "@/config/pricing-calculator";
 import { EventBasicsStep } from "./EventBasicsStep";
 import { PricingCategory } from "./PricingCategory";
 import { EstimateSummary } from "./EstimateSummary";
 import { EstimateEmailForm } from "./EstimateEmailForm";
-const steps = [
-  "Event basics",
-  "Planning & vendors",
-  "Décor & design",
-  "Rentals & extras",
-  "Your estimate",
-  "Email & consultation",
-];
+import { PricingGuide } from "./PricingGuide";
 const initial: Basics = {
+  audience: "client",
+  service: "planning",
   eventType: "Wedding",
   eventDate: "",
   location: "",
-  guestCount: 50,
-  venueStatus: "Not sure yet",
-  planningStage: "Just exploring",
+  guestCount: 120,
+  ownFeePercent: 0,
 };
-const storageKey = "coco-budget-v1";
-const draftSchema = z.object({
-  basics: basicsSchema.extend({
-    location: z.string().max(160),
-    guestCount: z.number().int().min(0).max(10000),
-  }),
-  selections: selectionsSchema,
-  step: z.number().int().min(0).max(5),
-  reference: z.string().uuid(),
-  attribution: z.record(z.string().max(200)).default({}),
-});
+const key = "coco-budget-v2";
 export function CalculatorShell() {
-  const [basics, setBasics] = useState(initial);
-  const [selections, setSelections] = useState<Selection[]>([]);
-  const [step, setStep] = useState(0);
-  const [reference, setReference] = useState("");
-  const [ready, setReady] = useState(false);
-  const [storageNote, setStorageNote] = useState("");
-  const [error, setError] = useState("");
-  const [attribution, setAttribution] = useState<Record<string, string>>({});
-  const title = useRef<HTMLHeadingElement>(null);
-  const started = useRef(false);
-  const stepRef = useRef(step);
-  stepRef.current = step;
+  const [basics, setBasics] = useState(initial),
+    [selections, setSelections] = useState<Selection[]>([]),
+    [stage, setStage] = useState<"audience" | "service" | "build">("audience");
+  const [ready, setReady] = useState(false),
+    [storageNote, setStorageNote] = useState("");
+  const [review, setReview] = useState(false),
+    [saving, setSaving] = useState(false),
+    [attribution, setAttribution] = useState<Submission["attribution"]>({});
+  const allowReferencePrices = referencePricingEnabled;
   useEffect(() => {
-    let restored = false;
     try {
-      const raw = sessionStorage.getItem(storageKey);
+      const raw = sessionStorage.getItem(key);
       if (raw) {
-        const parsed = draftSchema.safeParse(JSON.parse(raw));
-        if (parsed.success) {
-          const d = parsed.data;
+        const d = JSON.parse(raw);
+        if (
+          basicsSchema.safeParse(d.basics).success &&
+          selectionsSchema.safeParse(d.selections).success
+        ) {
           setBasics(d.basics);
           setSelections(d.selections);
-          setStep(d.step);
-          setReference(d.reference);
-          setAttribution(d.attribution);
-          restored = true;
+          if (["audience", "service", "build"].includes(d.stage)) setStage(d.stage);
         }
       }
     } catch {
-      setStorageNote(
-        "This browser cannot save your progress. Keep this tab open or print your estimate.",
-      );
+      setStorageNote("This browser cannot restore your draft. Keep this tab open or print a copy.");
     }
-    if (!restored) {
-      setReference(crypto.randomUUID());
-      const params = new URLSearchParams(location.search);
-      setAttribution(
-        Object.fromEntries(
-          ["utm_source", "utm_medium", "utm_campaign"]
-            .filter((k) => params.has(k))
-            .map((k) => [k, params.get(k)!.slice(0, 200)]),
-        ),
-      );
-    }
+    const params = new URLSearchParams(location.search);
+    setAttribution(
+      Object.fromEntries(
+        ["utm_source", "utm_medium", "utm_campaign"]
+          .filter((k) => params.has(k))
+          .map((k) => [k, params.get(k)!.slice(0, 200)]),
+      ),
+    );
     setReady(true);
-    track("viewed");
-    if (import.meta.env.DEV && !site.calendly)
-      console.info(
-        "Calculator: configure VITE_COCO_CABANA_CALENDLY_URL to enable consultation booking.",
-      );
-    return () => {
-      if (started.current && stepRef.current < 4) track("abandoned", { step: stepRef.current + 1 });
-    };
   }, []);
   useEffect(() => {
     if (ready)
       try {
-        sessionStorage.setItem(
-          storageKey,
-          JSON.stringify({ basics, selections, step, reference, attribution }),
-        );
+        sessionStorage.setItem(key, JSON.stringify({ basics, selections, stage }));
       } catch {
         setStorageNote("Progress could not be saved in this browser. Print a copy before leaving.");
       }
-  }, [basics, selections, step, reference, ready, attribution]);
-  const change = () => {
-    if (!started.current) {
-      started.current = true;
-      track("started");
-    }
-    setReference(crypto.randomUUID());
+  }, [basics, selections, stage, ready]);
+  const issues = scopeIssues(basics, selections);
+  const valid = issues.length === 0;
+  const estimate = valid ? calculateEstimate(basics, selections, { allowReferencePrices }) : null;
+  const pickAudience = (audience: Audience) => {
+    setBasics({ ...basics, audience });
+    setStage("service");
   };
-  const [summaryOpen, setSummaryOpen] = useState(false);
-  const go = (n: number) => {
-    setSummaryOpen(false);
-    if (n > 0 && !basicsSchema.safeParse(basics).success) {
-      setError("Enter a location and valid whole-number guest/table counts before continuing.");
-      setStep(0);
-      return;
-    }
-    setError("");
-    setStep(n);
-    if (n >= 1 && n <= 3)
-      track("category_opened", { category: ["planning", "decor", "rentals"][n - 1] });
-    if (n === 4)
-      track("estimate_generated", {
-        guest_count_band:
-          basics.guestCount <= 50 ? "1–50" : basics.guestCount <= 150 ? "51–150" : "151+",
-      });
-    requestAnimationFrame(() => {
-      title.current?.focus();
-      title.current?.scrollIntoView({ block: "start", behavior: "instant" });
-    });
+  const remove = (id: string) => setSelections(selections.filter((s) => s.id !== id));
+  const openReview = () => {
+    setSaving(false);
+    setReview(true);
   };
-  const estimate = calculateEstimate(
-    {
-      ...basics,
-      guestCount:
-        Number.isInteger(basics.guestCount) && basics.guestCount > 0 && basics.guestCount <= 10000
-          ? basics.guestCount
-          : 1,
-    },
-    selections,
-  );
-  const summary = (
-    <EstimateSummary
-      estimate={estimate}
-      basics={basics}
-      reference={reference}
-      onEdit={() => go(0)}
-      onRemove={(id) => {
-        change();
-        setSelections(selections.filter((s) => s.id !== id));
-        track("item_removed");
-      }}
-    />
-  );
   return (
-    <div className="calculator-page">
-      <header className="calculator-heading">
-        <p className="eyebrow">Event Budget Calculator · Coco Cabana</p>
+    <div className="cc-pricing">
+      <header className="cc-hero">
+        <p className="cc-eyebrow">Coco Cabana · Houston event pricing</p>
         <h1>
-          Every celebration starts
-          <br />
-          with <em>a little possibility.</em>
+          What will your Houston
+          <br className="hidden sm:block" /> event really cost?
         </h1>
         <p>
-          Build a preliminary event budget around the details you love.
-          <br className="hidden sm:block" />
-          No email needed to explore. No commitment to book.
+          Every number, upfront. Explore the details, find your range,
+          <br className="hidden sm:block" /> and take the next step when you’re ready.
         </p>
+        <a className="cc-button" href="#event-estimator">
+          Start my estimate <span aria-hidden="true">↘</span>
+        </a>
+        <div className="cc-hero-note">No email needed to explore · No commitment to book</div>
       </header>
-      <div className="calculator-layout">
-        <div className="calculator-main">
-          <nav aria-label="Calculator progress" className="calc-progress no-print">
-            <ol>
-              {steps.map((s, i) => (
-                <li key={s}>
-                  <button
-                    type="button"
-                    aria-current={step === i ? "step" : undefined}
-                    onClick={() => go(i)}
-                  >
-                    <span>{i + 1}</span>
-                    <span>{s}</span>
-                  </button>
-                </li>
-              ))}
-            </ol>
-          </nav>
-          <section className="calc-panel no-print">
-            <p className="eyebrow">
-              Step {step + 1} of {steps.length}
-            </p>
-            <h2 ref={title} tabIndex={-1}>
-              {steps[step]}
-            </h2>
-            <p className="step-description">
-              {
-                [
-                  "Tell us a little about the occasion. You can change these details at any time.",
-                  "Choose the support you need. Skip anything you’re still deciding.",
-                  "Set the scene, from the first impression to the last dance.",
-                  "Add the finishing touches that make the day feel like you.",
-                  "Review your selections. Unpriced services will be discussed in consultation.",
-                  "Save a copy, then take the next step when you’re ready.",
-                ][step]
-              }
-            </p>
-            {storageNote && <p role="status">{storageNote}</p>}
-            {error && (
-              <p id="basics-error" role="alert">
-                {error}
-              </p>
-            )}
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (step === 0) track("event_basics_completed", { event_type: basics.eventType });
-                go(step + 1);
-              }}
-              aria-describedby={error ? "basics-error" : undefined}
-            >
-              {step === 0 && (
-                <EventBasicsStep
-                  value={basics}
-                  onChange={(v) => {
-                    change();
-                    setBasics(v);
-                  }}
-                />
-              )}
-              {step >= 1 && step <= 3 && (
-                <PricingCategory
-                  categoryId={["planning", "decor", "rentals"][step - 1]}
-                  selections={selections}
-                  onChange={(s) => {
-                    change();
-                    setSelections(s);
-                  }}
-                />
-              )}
-              {step === 4 && (
-                <div className="review-actions">
-                  <p>
-                    {selections.length
-                      ? `${selections.length} ${selections.length === 1 ? "element" : "elements"} selected. Review the itemized estimate below or alongside this panel.`
-                      : "No services selected yet. Choose at least one element to email your estimate."}
-                  </p>
-                  <button
-                    type="button"
-                    className="calc-button secondary"
-                    onClick={() => window.print()}
-                  >
-                    <Printer size={16} /> Print / Save PDF
-                  </button>
-                  <button type="button" className="text-link" onClick={() => go(2)}>
-                    Edit selected details
-                  </button>
-                </div>
-              )}
-              {step < 5 && (
-                <div className="calc-step-actions">
-                  {step > 0 && (
-                    <button
-                      type="button"
-                      className="calc-button secondary"
-                      onClick={() => go(step - 1)}
-                    >
-                      <ArrowLeft size={16} /> Back
-                    </button>
-                  )}
-                  <button type="submit" className="calc-button">
-                    {step === 3 ? "Review estimate" : step === 4 ? "Save & next steps" : "Continue"}
-                    <ArrowRight size={16} />
-                  </button>
-                </div>
-              )}
-            </form>
-            {step === 5 && (
-              <EstimateEmailForm
-                key={reference}
-                basics={basics}
-                selections={selections}
-                reference={reference}
-                attribution={attribution}
-              />
-            )}
-          </section>
-          <p className="session-note no-print">
-            Your selections stay in this browser tab when you refresh. Closing the tab ends the
-            session.
-          </p>
+      {allowReferencePrices && (
+        <div className="cc-preview-note">
+          <strong>Review preview</strong>
+          <small> · {reviewEnvironment.revision} · Email, marketing and bookings disabled.</small>
+          <span>
+            Reference prices from Christine’s brief. Rates, minimums and inclusions need approval
+            before publication.
+          </span>
         </div>
-        <aside className="calculator-summary">{summary}</aside>
-      </div>
-      <div className="mobile-estimate no-print">
-        <Drawer open={summaryOpen} onOpenChange={setSummaryOpen}>
-          <DrawerTrigger asChild>
-            <button className="calc-button">
-              Review estimate ·{" "}
-              {estimate.pricedCount
-                ? `$${estimate.minimumTotal.toLocaleString()}–$${estimate.maximumTotal.toLocaleString()}`
-                : `${selections.length} selected`}
-            </button>
-          </DrawerTrigger>
-          <DrawerContent className="max-h-[85dvh]">
-            <div className="overflow-y-auto p-4">
-              <DrawerTitle className="sr-only">Your event estimate</DrawerTitle>
-              <DrawerDescription className="sr-only">
-                Review your selected items, assumptions and priced range.
-              </DrawerDescription>
-              <DrawerClose className="text-link mb-3">Close estimate</DrawerClose>
-              {summary}
+      )}
+      <section id="event-estimator" className="cc-builder" aria-label="Event budget estimator">
+        <nav className="cc-stage-nav" aria-label="Estimator steps">
+          <button
+            aria-current={stage === "audience" ? "step" : undefined}
+            onClick={() => setStage("audience")}
+          >
+            01 · Who’s planning
+          </button>
+          <button
+            disabled={stage === "audience"}
+            aria-current={stage === "service" ? "step" : undefined}
+            onClick={() => setStage("service")}
+          >
+            02 · Your service
+          </button>
+          <span aria-current={stage === "build" ? "step" : undefined}>
+            03 · Build your estimate
+          </span>
+        </nav>
+        {storageNote && <p role="status">{storageNote}</p>}
+        {stage === "audience" && (
+          <div className="cc-choice">
+            <p className="cc-eyebrow">Made for the way you plan</p>
+            <h2>Who’s planning this event?</h2>
+            <p>We’ll tailor your options and pricing to how you work. It’s free for everyone.</p>
+            <div className="cc-choice-list">
+              <button onClick={() => pickAudience("client")}>
+                <span>
+                  <strong>I’m planning my own event</strong>
+                  <small>Weddings, birthdays, showers and celebrations.</small>
+                </span>
+                <span aria-hidden="true">→</span>
+              </button>
+              <button onClick={() => pickAudience("planner")}>
+                <span>
+                  <strong>I’m a planner or event pro</strong>
+                  <small>Budget your clients’ events for free.</small>
+                </span>
+                <span aria-hidden="true">→</span>
+              </button>
             </div>
-          </DrawerContent>
-        </Drawer>
-      </div>
-      <div className="print-brand">
-        Coco Cabana · Event Budget Calculator · {site.email}
-        {site.calendly && <p>Consultation: {site.calendly}</p>}
-      </div>
+          </div>
+        )}
+        {stage === "service" && (
+          <div className="cc-choice">
+            <p className="cc-eyebrow">
+              {basics.audience === "planner"
+                ? "Free for planners, always"
+                : "Your event, your kind of support"}
+            </p>
+            <h2>
+              {basics.audience === "planner"
+                ? "Budget your clients’ events in minutes."
+                : "How would you like to work with us?"}
+            </h2>
+            <p>Explore a service to see what it includes and how its fee works.</p>
+            <div className="cc-service-list">
+              {(Object.keys(services) as Service[]).map((id) => (
+                <details key={id}>
+                  <summary>
+                    <span>
+                      <strong>{serviceName(basics.audience, id)}</strong>
+                      <small>
+                        {basics.audience === "planner" && id === "planning"
+                          ? "Every vendor plus décor, for your own planning."
+                          : services[id].description}
+                      </small>
+                    </span>
+                    <span aria-hidden="true">+</span>
+                  </summary>
+                  <div>
+                    <p>
+                      {basics.audience === "planner" && id === "planning"
+                        ? "No Coco Cabana planning fee. Add your own percentage if you want to see your client’s full budget."
+                        : services[id].detail}
+                    </p>
+                    <p className="cc-fee-copy">
+                      {id === "alacarte"
+                        ? "No planning or design fee. Pay only for the pieces you pick."
+                        : basics.audience === "planner" && id === "planning"
+                          ? "Your optional fee applies only to Full event budget."
+                          : "20% up to $25,000 · flat $5,000 through $50,000 · 10% above $50,000"}
+                    </p>
+                    <button
+                      className="cc-button"
+                      onClick={() => {
+                        setBasics({ ...basics, service: id });
+                        setStage("build");
+                      }}
+                    >
+                      Continue with {serviceName(basics.audience, id)}
+                    </button>
+                  </div>
+                </details>
+              ))}
+            </div>
+          </div>
+        )}
+        {stage === "build" && (
+          <div className="cc-build-grid">
+            <div className="cc-selection">
+              <div className="cc-build-heading">
+                <div>
+                  <p className="cc-eyebrow">Your service</p>
+                  <h2>{serviceName(basics.audience, basics.service)}</h2>
+                </div>
+                <button className="cc-link" onClick={() => setStage("service")}>
+                  Change service
+                </button>
+              </div>
+              <EventBasicsStep value={basics} onChange={setBasics} errors={issues} />
+              {!valid && (
+                <p role="alert" className="cc-error">
+                  {issues.map((i) => i.message).join(" ")} Totals pause until applicable inputs are
+                  valid.
+                </p>
+              )}
+              {estimate && estimate.excluded.length > 0 && (
+                <p role="status" className="cc-note">
+                  {estimate.excluded.length} planning-vendor selection(s) are saved but excluded
+                  from this service’s total. Switch back to Planning / Full event budget to restore
+                  them.
+                </p>
+              )}
+              <p className="cc-instruction">
+                Tap a tier to add an item, again to remove it. Mix tiers to suit your priorities.
+              </p>
+              {categories
+                .filter((c) => basics.service === "planning" || c.id !== "planning")
+                .map((c) => {
+                  const total = estimate?.categoryTotals.find((t) => t.id === c.id);
+                  return (
+                    <details className="cc-category" open key={c.id}>
+                      <summary>
+                        <h3>{c.name}</h3>
+                        <span>
+                          {total &&
+                          estimate?.rows.some((r) => r.item.categoryId === c.id && !r.custom)
+                            ? range(total.min, total.max)
+                            : estimate?.rows.some((r) => r.item.categoryId === c.id)
+                              ? "Pricing to confirm"
+                              : "Explore"}{" "}
+                          {estimate &&
+                            estimate.rows.some((r) => r.item.categoryId === c.id && r.custom) && (
+                              <small className="cc-partial">
+                                Priced items only ·{" "}
+                                {
+                                  estimate.rows.filter(
+                                    (r) => r.item.categoryId === c.id && r.custom,
+                                  ).length
+                                }{" "}
+                                additional requiring a quote
+                              </small>
+                            )}
+                          <span aria-hidden="true">⌄</span>
+                        </span>
+                      </summary>
+                      <PricingCategory
+                        categoryId={c.id}
+                        basics={basics}
+                        selections={selections}
+                        onChange={setSelections}
+                        allowReferencePrices={allowReferencePrices}
+                        errors={issues}
+                      />
+                    </details>
+                  );
+                })}
+              <p className="cc-fine">
+                Your draft stays in this browser tab. Contact details are only requested when you
+                ask to keep a copy.
+              </p>
+            </div>
+            <aside className="cc-side-summary">
+              {estimate ? (
+                <>
+                  <EstimateSummary estimate={estimate} basics={basics} onRemove={remove} />
+                  <button className="cc-button cc-wide" onClick={openReview}>
+                    See my estimate
+                  </button>
+                </>
+              ) : (
+                <p>Enter valid event details to see your estimate.</p>
+              )}
+            </aside>
+          </div>
+        )}
+      </section>
+      <PricingGuide />
+      {stage === "build" && (
+        <div className="cc-mobile-total">
+          <div aria-live="polite" aria-atomic="true">
+            <small>
+              {estimate?.rows.length ?? 0} selections
+              {estimate?.reference ? " · reference range" : ""}
+            </small>
+            <strong>
+              {estimate?.pricedCount
+                ? range(estimate.minimumTotal, estimate.maximumTotal)
+                : valid
+                  ? "Pricing to confirm"
+                  : "Check inputs"}
+            </strong>
+            <small>
+              {estimate?.customCount
+                ? `Priced items only · ${estimate.customCount} additional requiring a quote. Estimate, not a quote.`
+                : "Estimate, not a quote."}
+            </small>
+          </div>
+          <button className="cc-button" disabled={!valid} onClick={openReview}>
+            See my estimate
+          </button>
+        </div>
+      )}
+      <Dialog open={review} onOpenChange={setReview}>
+        <DialogContent className="cc-dialog cc-review">
+          <DialogTitle>Review your estimate</DialogTitle>
+          <DialogDescription>
+            Your selected details, their pricing basis, and the next steps.
+          </DialogDescription>
+          {estimate && (
+            <>
+              {!saving ? (
+                <>
+                  <EstimateSummary estimate={estimate} basics={basics} onRemove={remove} />
+                  <div className="cc-actions">
+                    <button
+                      className="cc-button"
+                      disabled={!estimate.rows.length}
+                      onClick={() => setSaving(true)}
+                    >
+                      Keep a copy
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <EstimateEmailForm
+                  basics={basics}
+                  selections={selections}
+                  attribution={attribution}
+                  onBack={() => setSaving(false)}
+                />
+              )}
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

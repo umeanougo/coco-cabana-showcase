@@ -9,7 +9,7 @@ const links = [
   { to: "/portfolio", label: "Portfolio" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
-  { to: "/pricing-calculator", label: "Estimate Your Event" },
+  { to: "/pricing", label: "Pricing" },
 ] as const;
 
 export function Header() {

@@ -1,21 +1,32 @@
-import { submissionSchema } from "../lib/pricing-calculator/validation";
+import { submissionSchema, scopeIssues } from "../lib/pricing-calculator/validation";
 import { calculateEstimate } from "../lib/pricing-calculator/calculate-estimate";
-import { disclaimer, exclusions, assumptions } from "../config/pricing-calculator";
-import { estimateEmail } from "./estimate-email";
-interface Statement {
-  bind(...values: unknown[]): Statement;
-  run(): Promise<unknown>;
-  first<T>(): Promise<T | null>;
-}
+import {
+  disclaimer,
+  exclusions,
+  pricingVersion,
+  pricingItems,
+  type PricingItem,
+} from "../config/pricing-calculator";
+import { recoverEstimate } from "./estimate-recovery";
+import type { Snapshot, EstimateDB } from "./estimate-store";
 export interface EstimateEnvironment {
-  ESTIMATES_DB?: { prepare(sql: string): Statement };
+  ESTIMATES_DB?: EstimateDB;
   RESEND_API_KEY?: string;
   ESTIMATE_FROM_EMAIL?: string;
+  ESTIMATE_TEAM_EMAIL?: string;
   SITE_ORIGIN?: string;
-  COCO_CABANA_CALENDLY_URL?: string;
-  EASEOPS_ESTIMATE_WEBHOOK_URL?: string;
-  EASEOPS_ESTIMATE_WEBHOOK_SECRET?: string;
+  ESTIMATE_DELIVERY_ENABLED?: string;
+  HONEYBOOK_SCHEDULER_URL?: string;
+  HONEYBOOK_SCHEDULER_VERIFIED?: string;
 }
+type Options = {
+  preview?: boolean;
+  now?: () => number;
+  transport?: typeof fetch;
+  catalog?: PricingItem[];
+  version?: string;
+  deferDelivery?: boolean;
+};
 const reply = (status: number, message: string, extra: Record<string, unknown> = {}) =>
   Response.json({ message, ...extra }, { status, headers: { "Cache-Control": "no-store" } });
 const digest = async (text: string) =>
@@ -25,17 +36,12 @@ const digest = async (text: string) =>
 export async function handleEstimate(
   request: Request,
   env: EstimateEnvironment,
-): Promise<Response> {
-  if (!env.SITE_ORIGIN)
-    return reply(
-      503,
-      "Email delivery is not configured yet. Print your estimate or continue to our inquiry form.",
-    );
-  if (request.headers.get("origin") !== env.SITE_ORIGIN)
+  options: Options = {},
+) {
+  if (!env.SITE_ORIGIN || request.headers.get("origin") !== env.SITE_ORIGIN)
     return reply(403, "This request must come from the Coco Cabana website.");
   if (!request.headers.get("content-type")?.includes("application/json"))
     return reply(415, "Use a JSON submission.");
-  // Read a bounded stream, including requests without a Content-Length header.
   const reader = request.body?.getReader();
   if (!reader) return reply(400, "Missing estimate.");
   const chunks: Uint8Array[] = [];
@@ -54,30 +60,34 @@ export async function handleEstimate(
   try {
     const bytes = new Uint8Array(size);
     let offset = 0;
-    for (const chunk of chunks) {
-      bytes.set(chunk, offset);
-      offset += chunk.length;
+    for (const c of chunks) {
+      bytes.set(c, offset);
+      offset += c.length;
     }
     parsed = submissionSchema.safeParse(JSON.parse(new TextDecoder().decode(bytes)));
   } catch {
     return reply(400, "Invalid estimate.");
   }
-  if (!parsed.success) return reply(400, "Check your event and contact details, then try again.");
+  if (!parsed.success)
+    return reply(
+      400,
+      "Check your event details, quantities, first name and email. Your selections have not been cleared.",
+    );
   const data = parsed.data,
-    db = env.ESTIMATES_DB;
+    db = env.ESTIMATES_DB,
+    now = (options.now ?? Date.now)();
   if (!db)
     return reply(
       503,
-      "Email delivery is not configured yet. Your estimate remains in this tab; print it or continue to our inquiry form.",
+      "Saving and email are not configured. Your selections remain in this tab; print a copy.",
     );
   try {
-    const now = Date.now(),
-      bucket = Math.floor(now / 3600000),
-      ip = request.headers.get("cf-connecting-ip") || "local";
-    const rateKey = await digest(`${ip}:${bucket}`);
+    const rateKey = await digest(
+      `${request.headers.get("cf-connecting-ip") || "local"}:${Math.floor(now / 3600000)}`,
+    );
     await db
       .prepare(
-        "INSERT INTO estimate_rate_limits (key, count, expires_at) VALUES (?,1,?) ON CONFLICT(key) DO UPDATE SET count=count+1",
+        "INSERT INTO estimate_rate_limits(key,count,expires_at) VALUES(?,1,?) ON CONFLICT(key) DO UPDATE SET count=count+1",
       )
       .bind(rateKey, now + 7200000)
       .run();
@@ -85,136 +95,133 @@ export async function handleEstimate(
       .prepare("SELECT count FROM estimate_rate_limits WHERE key=?")
       .bind(rateKey)
       .first<{ count: number }>();
-    if ((rate?.count || 0) > 10)
-      return reply(429, "Too many attempts. Please try again in an hour or use the inquiry form.");
+    if ((rate?.count ?? 0) > 30)
+      return reply(429, "Too many attempts. Your estimate is intact; try later.");
     await db.prepare("DELETE FROM estimate_rate_limits WHERE expires_at < ?").bind(now).run();
     const hash = await digest(JSON.stringify(data));
-    const estimate = calculateEstimate(data.basics, data.selections);
-    const record = {
-      ...data,
-      estimate,
-      assumptions,
-      disclaimer,
-      exclusions,
-      source: "/pricing-calculator",
-      submittedAt: new Date(now).toISOString(),
-    };
-    await db
-      .prepare(
-        "INSERT OR IGNORE INTO pricing_estimates (public_reference,payload_hash,payload,email_delivery_status,created_at,updated_at) VALUES (?,?,?,'pending',?,?)",
-      )
-      .bind(data.reference, hash, JSON.stringify(record), now, now)
-      .run();
-    const saved = await db
-      .prepare(
-        "SELECT payload_hash,email_delivery_status,created_at FROM pricing_estimates WHERE public_reference=?",
-      )
+    let saved = await db
+      .prepare("SELECT request_hash,snapshot FROM calculator_estimates_v2 WHERE reference=?")
       .bind(data.reference)
-      .first<{ payload_hash: string; email_delivery_status: string; created_at: number }>();
-    if (!saved || saved.payload_hash !== hash)
-      return reply(
-        409,
-        "This reference already belongs to different details. Edit a selection to create a new reference, then submit again.",
-      );
-    if (saved.email_delivery_status === "accepted")
-      return reply(200, "Email accepted.", { reference: data.reference, emailStatus: "accepted" });
-    if (now - saved.created_at > 3600000)
-      return reply(
-        409,
-        "This email request has expired. Edit a selection to create a new reference before retrying.",
-      );
-    if (!env.RESEND_API_KEY || !env.ESTIMATE_FROM_EMAIL)
-      return reply(
-        503,
-        "Your estimate was saved, but email delivery is not configured. You can print it or continue to our inquiry form.",
-        { reference: data.reference, emailStatus: "unconfigured" },
-      );
-    let response: Response;
-    try {
-      response = await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${env.RESEND_API_KEY}`,
-          "Content-Type": "application/json",
-          "Idempotency-Key": `estimate-${data.reference}`,
-        },
-        body: JSON.stringify({
-          from: env.ESTIMATE_FROM_EMAIL,
-          to: [data.contact.email],
-          subject: "Your Coco Cabana event estimate",
-          html: estimateEmail(data, env.SITE_ORIGIN, env.COCO_CABANA_CALENDLY_URL || ""),
-        }),
-        signal: AbortSignal.timeout(12000),
+      .first<{ request_hash: string; snapshot: string }>();
+    if (!saved) {
+      const catalog = options.catalog ?? pricingItems,
+        version = options.version ?? pricingVersion;
+      // Check version before current catalog membership: a retired item is a reviewable change.
+      const currentSelections = data.selections.filter((s) => catalog.some((i) => i.id === s.id));
+      const issues = scopeIssues(data.basics, currentSelections, catalog);
+      if (issues.length) return reply(400, "Correct the highlighted event inputs.", { issues });
+      const estimate = calculateEstimate(data.basics, currentSelections, {
+        allowReferencePrices: options.preview === true,
+        catalog,
+        version,
       });
-    } catch {
-      return reply(
-        502,
-        "Delivery could not be confirmed. Your estimate is saved; retry safely or print a copy.",
-      );
-    }
-    const result = (await response.json()) as { id?: string };
-    if (!response.ok || !result.id) {
-      await db
-        .prepare(
-          "UPDATE pricing_estimates SET email_delivery_status='failed',updated_at=? WHERE public_reference=?",
-        )
-        .bind(now, data.reference)
-        .run();
-      return reply(502, "Email delivery failed. Your estimate is saved; retry or print a copy.");
-    }
-    await db
-      .prepare(
-        "UPDATE pricing_estimates SET email_delivery_status='accepted',updated_at=? WHERE public_reference=?",
-      )
-      .bind(now, data.reference)
-      .run();
-    // Optional integration is isolated: it cannot invalidate accepted delivery.
-    if (env.EASEOPS_ESTIMATE_WEBHOOK_URL && env.EASEOPS_ESTIMATE_WEBHOOK_SECRET) {
-      try {
-        const body = JSON.stringify(record),
-          timestamp = String(now);
-        const key = await crypto.subtle.importKey(
-          "raw",
-          new TextEncoder().encode(env.EASEOPS_ESTIMATE_WEBHOOK_SECRET),
-          { name: "HMAC", hash: "SHA-256" },
-          false,
-          ["sign"],
-        );
-        const signature = Array.from(
-          new Uint8Array(
-            await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(`${timestamp}.${body}`)),
-          ),
-        )
-          .map((b) => b.toString(16).padStart(2, "0"))
-          .join("");
-        const webhook = await fetch(env.EASEOPS_ESTIMATE_WEBHOOK_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Coco-Timestamp": timestamp,
-            "X-Coco-Signature": signature,
-            "Idempotency-Key": data.reference,
+      if (data.catalogVersion !== version) {
+        return reply(409, "Pricing has changed. Review this updated breakdown before saving it.", {
+          state: "pricing_changed",
+          proposal: {
+            schemaVersion: 2,
+            catalogVersion: version,
+            data: { ...data, catalogVersion: version, selections: currentSelections },
+            estimate,
+            disclaimer,
+            exclusions,
+            createdAt: now,
+            preview: options.preview === true,
           },
-          body,
-          signal: AbortSignal.timeout(4000),
+          retiredItems: data.selections
+            .filter((s) => !catalog.some((i) => i.id === s.id))
+            .map((s) => s.id),
         });
-        await db
-          .prepare("UPDATE pricing_estimates SET webhook_status=? WHERE public_reference=?")
-          .bind(webhook.ok ? "delivered" : "failed", data.reference)
-          .run();
-      } catch {
-        await db
-          .prepare("UPDATE pricing_estimates SET webhook_status='failed' WHERE public_reference=?")
-          .bind(data.reference)
-          .run()
-          .catch(() => {});
       }
+      if (currentSelections.length !== data.selections.length)
+        return reply(400, "A selected item is no longer available. Refresh pricing.");
+      if (!estimate.rows.length)
+        return reply(400, "Choose at least one item applicable to this service.");
+      const snapshot: Snapshot = {
+        schemaVersion: 2,
+        catalogVersion: version,
+        data,
+        estimate,
+        disclaimer,
+        exclusions,
+        createdAt: now,
+        preview: options.preview === true,
+      };
+      const status = snapshot.preview
+        ? "held_preview"
+        : estimate.reference || estimate.customCount
+          ? "held_pricing"
+          : "pending";
+      // D1 batch and the local SQLite adapter commit all three rows or none.
+      // The hash predicate prevents a concurrent conflicting request from creating intents.
+      await db.batch([
+        db
+          .prepare(
+            "INSERT OR IGNORE INTO calculator_estimates_v2(reference,request_hash,snapshot,created_at) VALUES(?,?,?,?)",
+          )
+          .bind(data.reference, hash, JSON.stringify(snapshot), now),
+        ...(["visitor", "team"] as const).map((channel) =>
+          db
+            .prepare(
+              "INSERT OR IGNORE INTO calculator_outbox_v2(id,reference,channel,envelope,status,created_at,lease_until) SELECT ?,?,?,?, ?,?,0 FROM calculator_estimates_v2 WHERE reference=? AND request_hash=?",
+            )
+            .bind(
+              `${data.reference}-${channel}`,
+              data.reference,
+              channel,
+              "",
+              status,
+              now,
+              data.reference,
+              hash,
+            ),
+        ),
+      ]);
+      saved = await db
+        .prepare("SELECT request_hash,snapshot FROM calculator_estimates_v2 WHERE reference=?")
+        .bind(data.reference)
+        .first<{ request_hash: string; snapshot: string }>();
     }
-    return reply(200, "Email accepted.", { reference: data.reference, emailStatus: "accepted" });
+    if (!saved || saved.request_hash !== hash)
+      return reply(
+        409,
+        "This reference belongs to different details. Edit the form to create a new request.",
+        { state: "conflict" },
+      );
+    const snapshot = JSON.parse(saved.snapshot) as Snapshot;
+    const common = {
+      reference: data.reference,
+      state: "saved",
+      catalogVersion: snapshot.catalogVersion,
+      snapshot,
+    };
+    if (options.preview)
+      return reply(
+        200,
+        "Saved locally. No email was sent. Marketing, SMS and external CRM actions are disabled.",
+        { ...common, emailStatus: "held_preview", teamStatus: "held_preview" },
+      );
+    if (options.deferDelivery)
+      return reply(202, "Estimate saved; notification work is queued.", {
+        ...common,
+        emailStatus: "pending",
+        teamStatus: "pending",
+      });
+    const statuses = await recoverEstimate(db, data.reference, env, {
+      now: () => now,
+      transport: options.transport,
+    });
+    return reply(
+      200,
+      statuses.emailStatus === "accepted" && statuses.teamStatus === "accepted"
+        ? "Estimate saved. The provider accepted both email requests; inbox delivery is not confirmed."
+        : "Estimate saved. Email work is held, queued or failed; it has not been confirmed delivered.",
+      { ...common, ...statuses },
+    );
   } catch {
     return reply(
       503,
-      "We could not finish saving or sending this estimate. Your selections are still here. Please retry or print a copy.",
+      "We could not confirm saving or delivery. Your selections remain intact. Retry safely or print a copy.",
     );
   }
 }

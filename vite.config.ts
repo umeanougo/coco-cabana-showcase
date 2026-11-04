@@ -8,6 +8,18 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
   vite: {
+    server: {
+      fs: {
+        deny: [
+          ".env",
+          ".env.*",
+          "*.{crt,pem}",
+          "**/.git/**",
+          "**/.local/**",
+          "**/docs/coco-cabana-claude-reference/**",
+        ],
+      },
+    },
     ssr: { external: ["cloudflare:workers"] },
     optimizeDeps: { exclude: ["cloudflare:workers"] },
     build: { rollupOptions: { external: ["cloudflare:workers"] } },
