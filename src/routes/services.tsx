@@ -184,7 +184,7 @@ function ServicesPage() {
           <SectionHeading eyebrow="À La Carte" title="À la carte services" />
           <div className="mt-12 space-y-3">
             {alaCarte.map((a, i) => (
-              <div key={a.t} className={`${open === i ? tints[i % 4] : "bg-surface"} transition-colors`}>
+              <div key={a.t} className={`${open === i ? tints[i % 4] : "bg-background"} transition-colors`}>
                 <button onClick={() => setOpen(open === i ? null : i)} className="w-full flex items-center justify-between px-6 py-5 text-left">
                   <span className="font-display text-xl text-heading">{a.t}</span>
                   <Plus className={`text-brand transition-transform duration-300 ${open === i ? "rotate-45" : ""}`} size={20} />
