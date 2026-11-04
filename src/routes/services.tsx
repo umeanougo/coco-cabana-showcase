@@ -138,7 +138,7 @@ function ServicesPage() {
         </div>
       </section>
 
-      <section className="py-24 bg-background">
+      <section className="py-24 bg-surface">
         <div className="container mx-auto px-6">
           <SectionHeading eyebrow="Event Rentals" title="Flower walls" subtitle="Our flower walls are more than decorative elements; they are enchanting works of art that transform any space into a floral paradise in an instant. The perfect backdrop for weddings, parties, corporate events and photoshoots." />
           <div className="mt-14 grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -179,7 +179,7 @@ function ServicesPage() {
         </div>
       </section>
 
-      <section className="py-24 bg-background">
+      <section className="py-24 bg-surface">
         <div className="container mx-auto px-6 max-w-3xl">
           <SectionHeading eyebrow="À La Carte" title="À la carte services" />
           <div className="mt-12 space-y-3">
