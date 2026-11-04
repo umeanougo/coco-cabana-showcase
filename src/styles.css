@@ -170,12 +170,22 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    /* Widen the paint area so italic glyph overhang at line edges
+       is not sheared off by background-clip: text. */
+    padding-inline: 0.15em;
+    margin-inline: -0.15em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
   }
   .text-brand-gradient {
     background: var(--gradient-brand-text);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    padding-inline: 0.15em;
+    margin-inline: -0.15em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
   }
   .bg-gradient-brand {
     background: var(--gradient-brand);
