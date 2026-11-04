@@ -1,13 +1,7 @@
+import { usePricing } from "./PricingContext";
 import { partialContext } from "@/lib/pricing-calculator/presentation";
 import { type Estimate, range, money } from "@/lib/pricing-calculator/calculate-estimate";
 import { type Basics } from "@/lib/pricing-calculator/validation";
-import {
-  disclaimer,
-  exclusions,
-  feeExplanation,
-  tierLabels,
-  serviceName,
-} from "@/config/pricing-calculator";
 export function EstimateSummary({
   estimate,
   basics,
@@ -17,6 +11,8 @@ export function EstimateSummary({
   basics: Basics;
   onRemove?: (id: string) => void;
 }) {
+  const { disclaimer, exclusions, feeExplanation, tierLabels, serviceName, assumptions } =
+    usePricing();
   return (
     <div className="cc-estimate">
       <p className="cc-eyebrow">
@@ -123,8 +119,9 @@ export function EstimateSummary({
               : feeExplanation}
         </p>
         <p>
-          {estimate.tables} tables: {basics.guestCount} guests ÷ 8, rounded up. Displayed amounts
-          are rounded to whole dollars, or the nearest $10 above $1,000; calculations retain cents.
+          {estimate.tables} tables: {basics.guestCount} guests ÷ {assumptions.guestsPerTable},
+          rounded up. Displayed amounts are rounded to whole dollars, or the nearest $10 above
+          $1,000; calculations retain cents.
         </p>
         <p>{exclusions}</p>
       </details>

@@ -1,459 +1,742 @@
-[
-  {
-    "id": "venue",
-    "name": "Venue",
-    "categoryId": "planning",
-    "calculationType": "flat",
-    "status": "reference",
-    "tiers": {
-      "economic": {
-        "minimum": 2000,
-        "maximum": 5000
+{
+  "schemaVersion": 1,
+  "catalogVersion": "christine-reference-2026-11-04-v2",
+  "items": [
+    {
+      "id": "venue",
+      "name": "Venue",
+      "categoryId": "planning",
+      "calculationType": "flat",
+      "status": "reference",
+      "tiers": {
+        "economic": {
+          "minimum": 2000,
+          "maximum": 5000
+        },
+        "average": {
+          "minimum": 5000,
+          "maximum": 10000
+        },
+        "lux": {
+          "minimum": 10000,
+          "maximum": 25000
+        }
       },
-      "average": {
-        "minimum": 5000,
-        "maximum": 10000
+      "version": "christine-reference-2026-11-04-v2",
+      "audiences": ["client", "planner"],
+      "services": ["planning"],
+      "exclusions": "Taxes, delivery, setup, teardown and travel are not calculated here. Their treatment and final inclusions require confirmation. Unpriced selections are additional, not free.",
+      "description": "",
+      "inclusions": "",
+      "pricingNotes": "",
+      "hidden": false,
+      "displayOrder": 0
+    },
+    {
+      "id": "catering",
+      "name": "Catering",
+      "categoryId": "planning",
+      "calculationType": "per_guest",
+      "status": "reference",
+      "tiers": {
+        "economic": {
+          "minimum": 25,
+          "maximum": 45
+        },
+        "average": {
+          "minimum": 45,
+          "maximum": 75
+        },
+        "lux": {
+          "minimum": 75,
+          "maximum": 150
+        }
       },
-      "lux": {
-        "minimum": 10000,
-        "maximum": 25000
-      }
+      "version": "christine-reference-2026-11-04-v2",
+      "audiences": ["client", "planner"],
+      "services": ["planning"],
+      "exclusions": "Taxes, delivery, setup, teardown and travel are not calculated here. Their treatment and final inclusions require confirmation. Unpriced selections are additional, not free.",
+      "description": "",
+      "inclusions": "",
+      "pricingNotes": "",
+      "hidden": false,
+      "displayOrder": 1
+    },
+    {
+      "id": "bar",
+      "name": "Drinks & bar",
+      "categoryId": "planning",
+      "calculationType": "per_guest",
+      "status": "reference",
+      "tiers": {
+        "economic": {
+          "minimum": 12,
+          "maximum": 20
+        },
+        "average": {
+          "minimum": 20,
+          "maximum": 35
+        },
+        "lux": {
+          "minimum": 35,
+          "maximum": 60
+        }
+      },
+      "version": "christine-reference-2026-11-04-v2",
+      "audiences": ["client", "planner"],
+      "services": ["planning"],
+      "exclusions": "Taxes, delivery, setup, teardown and travel are not calculated here. Their treatment and final inclusions require confirmation. Unpriced selections are additional, not free.",
+      "description": "",
+      "inclusions": "",
+      "pricingNotes": "",
+      "hidden": false,
+      "displayOrder": 2
+    },
+    {
+      "id": "dj",
+      "name": "DJ",
+      "categoryId": "planning",
+      "calculationType": "flat",
+      "status": "reference",
+      "tiers": {
+        "economic": {
+          "minimum": 500,
+          "maximum": 900
+        },
+        "average": {
+          "minimum": 900,
+          "maximum": 1800
+        },
+        "lux": {
+          "minimum": 1800,
+          "maximum": 4000
+        }
+      },
+      "version": "christine-reference-2026-11-04-v2",
+      "audiences": ["client", "planner"],
+      "services": ["planning"],
+      "exclusions": "Taxes, delivery, setup, teardown and travel are not calculated here. Their treatment and final inclusions require confirmation. Unpriced selections are additional, not free.",
+      "description": "",
+      "inclusions": "",
+      "pricingNotes": "",
+      "hidden": false,
+      "displayOrder": 3
+    },
+    {
+      "id": "mc",
+      "name": "MC",
+      "categoryId": "planning",
+      "calculationType": "flat",
+      "status": "reference",
+      "tiers": {
+        "economic": {
+          "minimum": 300,
+          "maximum": 600
+        },
+        "average": {
+          "minimum": 600,
+          "maximum": 1200
+        },
+        "lux": {
+          "minimum": 1200,
+          "maximum": 3000
+        }
+      },
+      "version": "christine-reference-2026-11-04-v2",
+      "audiences": ["client", "planner"],
+      "services": ["planning"],
+      "exclusions": "Taxes, delivery, setup, teardown and travel are not calculated here. Their treatment and final inclusions require confirmation. Unpriced selections are additional, not free.",
+      "description": "",
+      "inclusions": "",
+      "pricingNotes": "",
+      "hidden": false,
+      "displayOrder": 4
+    },
+    {
+      "id": "photo",
+      "name": "Photographer",
+      "categoryId": "planning",
+      "calculationType": "flat",
+      "status": "reference",
+      "tiers": {
+        "economic": {
+          "minimum": 800,
+          "maximum": 1500
+        },
+        "average": {
+          "minimum": 1500,
+          "maximum": 3500
+        },
+        "lux": {
+          "minimum": 3500,
+          "maximum": 8000
+        }
+      },
+      "version": "christine-reference-2026-11-04-v2",
+      "audiences": ["client", "planner"],
+      "services": ["planning"],
+      "exclusions": "Taxes, delivery, setup, teardown and travel are not calculated here. Their treatment and final inclusions require confirmation. Unpriced selections are additional, not free.",
+      "description": "",
+      "inclusions": "",
+      "pricingNotes": "",
+      "hidden": false,
+      "displayOrder": 5
+    },
+    {
+      "id": "video",
+      "name": "Videographer",
+      "categoryId": "planning",
+      "calculationType": "flat",
+      "status": "reference",
+      "tiers": {
+        "economic": {
+          "minimum": 800,
+          "maximum": 1500
+        },
+        "average": {
+          "minimum": 1500,
+          "maximum": 3500
+        },
+        "lux": {
+          "minimum": 3500,
+          "maximum": 7000
+        }
+      },
+      "version": "christine-reference-2026-11-04-v2",
+      "audiences": ["client", "planner"],
+      "services": ["planning"],
+      "exclusions": "Taxes, delivery, setup, teardown and travel are not calculated here. Their treatment and final inclusions require confirmation. Unpriced selections are additional, not free.",
+      "description": "",
+      "inclusions": "",
+      "pricingNotes": "",
+      "hidden": false,
+      "displayOrder": 6
+    },
+    {
+      "id": "cake",
+      "name": "Cake & desserts",
+      "categoryId": "planning",
+      "calculationType": "per_guest",
+      "status": "reference",
+      "tiers": {
+        "economic": {
+          "minimum": 4,
+          "maximum": 7
+        },
+        "average": {
+          "minimum": 7,
+          "maximum": 12
+        },
+        "lux": {
+          "minimum": 12,
+          "maximum": 25
+        }
+      },
+      "version": "christine-reference-2026-11-04-v2",
+      "audiences": ["client", "planner"],
+      "services": ["planning"],
+      "exclusions": "Taxes, delivery, setup, teardown and travel are not calculated here. Their treatment and final inclusions require confirmation. Unpriced selections are additional, not free.",
+      "description": "",
+      "inclusions": "",
+      "pricingNotes": "",
+      "hidden": false,
+      "displayOrder": 7
+    },
+    {
+      "id": "artist",
+      "name": "Live artist performance",
+      "categoryId": "planning",
+      "calculationType": "flat",
+      "status": "reference",
+      "tiers": {
+        "economic": {
+          "minimum": 400,
+          "maximum": 800
+        },
+        "average": {
+          "minimum": 800,
+          "maximum": 1500
+        },
+        "lux": {
+          "minimum": 1500,
+          "maximum": 3500
+        }
+      },
+      "version": "christine-reference-2026-11-04-v2",
+      "audiences": ["client", "planner"],
+      "services": ["planning"],
+      "exclusions": "Taxes, delivery, setup, teardown and travel are not calculated here. Their treatment and final inclusions require confirmation. Unpriced selections are additional, not free.",
+      "description": "",
+      "inclusions": "",
+      "pricingNotes": "",
+      "hidden": false,
+      "displayOrder": 8
+    },
+    {
+      "id": "hmu",
+      "name": "Hair & makeup",
+      "categoryId": "planning",
+      "calculationType": "quantity",
+      "status": "reference",
+      "tiers": {
+        "economic": {
+          "minimum": 100,
+          "maximum": 175
+        },
+        "average": {
+          "minimum": 175,
+          "maximum": 275
+        },
+        "lux": {
+          "minimum": 275,
+          "maximum": 500
+        }
+      },
+      "version": "christine-reference-2026-11-04-v2",
+      "audiences": ["client", "planner"],
+      "services": ["planning"],
+      "exclusions": "Taxes, delivery, setup, teardown and travel are not calculated here. Their treatment and final inclusions require confirmation. Unpriced selections are additional, not free.",
+      "description": "",
+      "inclusions": "",
+      "pricingNotes": "",
+      "hidden": false,
+      "displayOrder": 9
+    },
+    {
+      "id": "favors",
+      "name": "Favors",
+      "categoryId": "planning",
+      "calculationType": "per_guest",
+      "status": "reference",
+      "tiers": {
+        "economic": {
+          "minimum": 3,
+          "maximum": 6
+        },
+        "average": {
+          "minimum": 6,
+          "maximum": 12
+        },
+        "lux": {
+          "minimum": 12,
+          "maximum": 25
+        }
+      },
+      "version": "christine-reference-2026-11-04-v2",
+      "audiences": ["client", "planner"],
+      "services": ["planning"],
+      "exclusions": "Taxes, delivery, setup, teardown and travel are not calculated here. Their treatment and final inclusions require confirmation. Unpriced selections are additional, not free.",
+      "description": "",
+      "inclusions": "",
+      "pricingNotes": "",
+      "hidden": false,
+      "displayOrder": 10
+    },
+    {
+      "id": "backdrop",
+      "name": "Backdrop",
+      "categoryId": "decor",
+      "calculationType": "flat",
+      "status": "reference",
+      "tiers": {
+        "economic": {
+          "minimum": 700,
+          "maximum": 1500
+        },
+        "average": {
+          "minimum": 1500,
+          "maximum": 2500
+        },
+        "lux": {
+          "minimum": 2500,
+          "maximum": 5000
+        }
+      },
+      "version": "christine-reference-2026-11-04-v2",
+      "audiences": ["client", "planner"],
+      "services": ["planning", "design", "alacarte"],
+      "exclusions": "Taxes, delivery, setup, teardown and travel are not calculated here. Their treatment and final inclusions require confirmation. Unpriced selections are additional, not free.",
+      "description": "",
+      "inclusions": "",
+      "pricingNotes": "",
+      "hidden": false,
+      "displayOrder": 11
+    },
+    {
+      "id": "centerpieces",
+      "name": "Floral centerpieces",
+      "categoryId": "decor",
+      "calculationType": "per_table",
+      "status": "reference",
+      "tiers": {
+        "economic": {
+          "minimum": 85,
+          "maximum": 175
+        },
+        "average": {
+          "minimum": 175,
+          "maximum": 250
+        },
+        "lux": {
+          "minimum": 250,
+          "maximum": 500
+        }
+      },
+      "version": "christine-reference-2026-11-04-v2",
+      "audiences": ["client", "planner"],
+      "services": ["planning", "design", "alacarte"],
+      "exclusions": "Taxes, delivery, setup, teardown and travel are not calculated here. Their treatment and final inclusions require confirmation. Unpriced selections are additional, not free.",
+      "description": "",
+      "inclusions": "",
+      "pricingNotes": "",
+      "hidden": false,
+      "displayOrder": 12
+    },
+    {
+      "id": "sign",
+      "name": "Entrance sign",
+      "categoryId": "decor",
+      "calculationType": "flat",
+      "status": "reference",
+      "tiers": {
+        "economic": {
+          "minimum": 95,
+          "maximum": 200
+        },
+        "average": {
+          "minimum": 200,
+          "maximum": 400
+        },
+        "lux": {
+          "minimum": 400,
+          "maximum": 1500
+        }
+      },
+      "version": "christine-reference-2026-11-04-v2",
+      "audiences": ["client", "planner"],
+      "services": ["planning", "design", "alacarte"],
+      "exclusions": "Taxes, delivery, setup, teardown and travel are not calculated here. Their treatment and final inclusions require confirmation. Unpriced selections are additional, not free.",
+      "description": "",
+      "inclusions": "",
+      "pricingNotes": "",
+      "hidden": false,
+      "displayOrder": 13
+    },
+    {
+      "id": "chairs",
+      "name": "Chairs",
+      "categoryId": "decor",
+      "calculationType": "per_guest",
+      "status": "reference",
+      "tiers": {
+        "economic": {
+          "minimum": 6,
+          "maximum": 12
+        },
+        "average": {
+          "minimum": 12,
+          "maximum": 18
+        },
+        "lux": {
+          "minimum": 18,
+          "maximum": 28
+        }
+      },
+      "version": "christine-reference-2026-11-04-v2",
+      "audiences": ["client", "planner"],
+      "services": ["planning", "design", "alacarte"],
+      "exclusions": "Taxes, delivery, setup, teardown and travel are not calculated here. Their treatment and final inclusions require confirmation. Unpriced selections are additional, not free.",
+      "description": "",
+      "inclusions": "",
+      "pricingNotes": "",
+      "hidden": false,
+      "displayOrder": 14
+    },
+    {
+      "id": "linens",
+      "name": "Linens & table settings",
+      "categoryId": "decor",
+      "calculationType": "per_table",
+      "status": "reference",
+      "tiers": {
+        "economic": {
+          "minimum": 20,
+          "maximum": 40
+        },
+        "average": {
+          "minimum": 40,
+          "maximum": 90
+        },
+        "lux": {
+          "minimum": 90,
+          "maximum": 250
+        }
+      },
+      "version": "christine-reference-2026-11-04-v2",
+      "audiences": ["client", "planner"],
+      "services": ["planning", "design", "alacarte"],
+      "exclusions": "Taxes, delivery, setup, teardown and travel are not calculated here. Their treatment and final inclusions require confirmation. Unpriced selections are additional, not free.",
+      "description": "",
+      "inclusions": "",
+      "pricingNotes": "",
+      "hidden": false,
+      "displayOrder": 15
+    },
+    {
+      "id": "lighting",
+      "name": "Lighting",
+      "categoryId": "decor",
+      "calculationType": "flat",
+      "status": "reference",
+      "tiers": {
+        "economic": {
+          "minimum": 300,
+          "maximum": 600
+        },
+        "average": {
+          "minimum": 600,
+          "maximum": 1500
+        },
+        "lux": {
+          "minimum": 1500,
+          "maximum": 4000
+        }
+      },
+      "version": "christine-reference-2026-11-04-v2",
+      "audiences": ["client", "planner"],
+      "services": ["planning", "design", "alacarte"],
+      "exclusions": "Taxes, delivery, setup, teardown and travel are not calculated here. Their treatment and final inclusions require confirmation. Unpriced selections are additional, not free.",
+      "description": "",
+      "inclusions": "",
+      "pricingNotes": "",
+      "hidden": false,
+      "displayOrder": 16
+    },
+    {
+      "id": "cakedisplay",
+      "name": "Cake display area",
+      "categoryId": "decor",
+      "calculationType": "flat",
+      "status": "reference",
+      "tiers": {
+        "economic": {
+          "minimum": 350,
+          "maximum": 500
+        },
+        "average": {
+          "minimum": 500,
+          "maximum": 800
+        },
+        "lux": {
+          "minimum": 800,
+          "maximum": 1500
+        }
+      },
+      "version": "christine-reference-2026-11-04-v2",
+      "audiences": ["client", "planner"],
+      "services": ["planning", "design", "alacarte"],
+      "exclusions": "Taxes, delivery, setup, teardown and travel are not calculated here. Their treatment and final inclusions require confirmation. Unpriced selections are additional, not free.",
+      "description": "",
+      "inclusions": "",
+      "pricingNotes": "",
+      "hidden": false,
+      "displayOrder": 17
+    },
+    {
+      "id": "headtable",
+      "name": "Head / sweetheart table",
+      "categoryId": "decor",
+      "calculationType": "flat",
+      "status": "reference",
+      "tiers": {
+        "economic": {
+          "minimum": 400,
+          "maximum": 800
+        },
+        "average": {
+          "minimum": 800,
+          "maximum": 2500
+        },
+        "lux": {
+          "minimum": 2500,
+          "maximum": 5000
+        }
+      },
+      "version": "christine-reference-2026-11-04-v2",
+      "audiences": ["client", "planner"],
+      "services": ["planning", "design", "alacarte"],
+      "exclusions": "Taxes, delivery, setup, teardown and travel are not calculated here. Their treatment and final inclusions require confirmation. Unpriced selections are additional, not free.",
+      "description": "",
+      "inclusions": "",
+      "pricingNotes": "",
+      "hidden": false,
+      "displayOrder": 18
+    },
+    {
+      "id": "tablecandles",
+      "name": "Table candles",
+      "categoryId": "decor",
+      "calculationType": "per_table",
+      "status": "reference",
+      "tiers": {
+        "economic": {
+          "minimum": 10,
+          "maximum": 20
+        },
+        "average": {
+          "minimum": 20,
+          "maximum": 40
+        },
+        "lux": {
+          "minimum": 40,
+          "maximum": 90
+        }
+      },
+      "version": "christine-reference-2026-11-04-v2",
+      "audiences": ["client", "planner"],
+      "services": ["planning", "design", "alacarte"],
+      "exclusions": "Taxes, delivery, setup, teardown and travel are not calculated here. Their treatment and final inclusions require confirmation. Unpriced selections are additional, not free.",
+      "description": "",
+      "inclusions": "",
+      "pricingNotes": "",
+      "hidden": false,
+      "displayOrder": 19
+    },
+    {
+      "id": "candles",
+      "name": "Candle staging",
+      "categoryId": "decor",
+      "calculationType": "per_table",
+      "status": "reference",
+      "tiers": {
+        "economic": {
+          "minimum": 15,
+          "maximum": 30
+        },
+        "average": {
+          "minimum": 30,
+          "maximum": 60
+        },
+        "lux": {
+          "minimum": 60,
+          "maximum": 150
+        }
+      },
+      "version": "christine-reference-2026-11-04-v2",
+      "audiences": ["client", "planner"],
+      "services": ["planning", "design", "alacarte"],
+      "exclusions": "Taxes, delivery, setup, teardown and travel are not calculated here. Their treatment and final inclusions require confirmation. Unpriced selections are additional, not free.",
+      "description": "",
+      "inclusions": "",
+      "pricingNotes": "",
+      "hidden": false,
+      "displayOrder": 20
+    },
+    {
+      "id": "balloon",
+      "name": "Balloon installation",
+      "categoryId": "decor",
+      "calculationType": "custom_quote",
+      "status": "missing",
+      "tiers": {},
+      "version": "christine-reference-2026-11-04-v2",
+      "audiences": ["client", "planner"],
+      "services": ["planning", "design", "alacarte"],
+      "exclusions": "Taxes, delivery, setup, teardown and travel are not calculated here. Their treatment and final inclusions require confirmation. Unpriced selections are additional, not free.",
+      "description": "",
+      "inclusions": "",
+      "pricingNotes": "",
+      "hidden": false,
+      "displayOrder": 21
+    },
+    {
+      "id": "eru",
+      "name": "Eru Iyawo display",
+      "categoryId": "specialty",
+      "calculationType": "custom_quote",
+      "status": "missing",
+      "tiers": {},
+      "version": "christine-reference-2026-11-04-v2",
+      "audiences": ["client", "planner"],
+      "services": ["planning", "design", "alacarte"],
+      "exclusions": "Taxes, delivery, setup, teardown and travel are not calculated here. Their treatment and final inclusions require confirmation. Unpriced selections are additional, not free.",
+      "description": "",
+      "inclusions": "",
+      "pricingNotes": "",
+      "hidden": false,
+      "displayOrder": 22
+    }
+  ],
+  "categories": [
+    {
+      "id": "planning",
+      "name": "Planning vendors",
+      "displayOrder": 0
+    },
+    {
+      "id": "decor",
+      "name": "Décor elements",
+      "displayOrder": 1
+    },
+    {
+      "id": "specialty",
+      "name": "Specialty",
+      "displayOrder": 2
+    }
+  ],
+  "tierLabels": {
+    "economic": "Economic",
+    "average": "Average",
+    "lux": "Lux"
+  },
+  "tierDescriptions": {
+    "economic": "Beautiful basics; smart, budget-friendly choices",
+    "average": "The most popular range for Houston events",
+    "lux": "Premium finishes, statement pieces, high-end vendors"
+  },
+  "assumptions": {
+    "currency": "USD",
+    "guestsPerTable": 8,
+    "minGuests": 10,
+    "maxGuests": 1000,
+    "maxQuantity": 30,
+    "minQuantity": 1
+  },
+  "services": {
+    "planning": {
+      "name": "Planning",
+      "description": "We plan and design your whole event, start to finish.",
+      "detail": "Sourcing and managing vendors, building your timeline, designing the look and running the day.",
+      "referenceMinimum": 10000
+    },
+    "design": {
+      "name": "Design",
+      "description": "Our design vision, sourced and installed. You handle the planning.",
+      "detail": "We create the design concept, present a lookbook, then source, build and install every detail.",
+      "referenceMinimum": 5000
+    },
+    "alacarte": {
+      "name": "À la carte décor",
+      "description": "You know exactly what you want. We bring it to life.",
+      "detail": "Send us your inspiration. No design service, just the pieces you choose, set up beautifully.",
+      "referenceMinimum": 3000
     }
   },
-  {
-    "id": "catering",
-    "name": "Catering",
-    "categoryId": "planning",
-    "calculationType": "per_guest",
-    "status": "reference",
-    "tiers": {
-      "economic": {
-        "minimum": 25,
-        "maximum": 45
-      },
-      "average": {
-        "minimum": 45,
-        "maximum": 75
-      },
-      "lux": {
-        "minimum": 75,
-        "maximum": 150
-      }
-    }
-  },
-  {
-    "id": "bar",
-    "name": "Drinks & bar",
-    "categoryId": "planning",
-    "calculationType": "per_guest",
-    "status": "reference",
-    "tiers": {
-      "economic": {
-        "minimum": 12,
-        "maximum": 20
-      },
-      "average": {
-        "minimum": 20,
-        "maximum": 35
-      },
-      "lux": {
-        "minimum": 35,
-        "maximum": 60
-      }
-    }
-  },
-  {
-    "id": "dj",
-    "name": "DJ",
-    "categoryId": "planning",
-    "calculationType": "flat",
-    "status": "reference",
-    "tiers": {
-      "economic": {
-        "minimum": 500,
-        "maximum": 900
-      },
-      "average": {
-        "minimum": 900,
-        "maximum": 1800
-      },
-      "lux": {
-        "minimum": 1800,
-        "maximum": 4000
-      }
-    }
-  },
-  {
-    "id": "mc",
-    "name": "MC",
-    "categoryId": "planning",
-    "calculationType": "flat",
-    "status": "reference",
-    "tiers": {
-      "economic": {
-        "minimum": 300,
-        "maximum": 600
-      },
-      "average": {
-        "minimum": 600,
-        "maximum": 1200
-      },
-      "lux": {
-        "minimum": 1200,
-        "maximum": 3000
-      }
-    }
-  },
-  {
-    "id": "photo",
-    "name": "Photographer",
-    "categoryId": "planning",
-    "calculationType": "flat",
-    "status": "reference",
-    "tiers": {
-      "economic": {
-        "minimum": 800,
-        "maximum": 1500
-      },
-      "average": {
-        "minimum": 1500,
-        "maximum": 3500
-      },
-      "lux": {
-        "minimum": 3500,
-        "maximum": 8000
-      }
-    }
-  },
-  {
-    "id": "video",
-    "name": "Videographer",
-    "categoryId": "planning",
-    "calculationType": "flat",
-    "status": "reference",
-    "tiers": {
-      "economic": {
-        "minimum": 800,
-        "maximum": 1500
-      },
-      "average": {
-        "minimum": 1500,
-        "maximum": 3500
-      },
-      "lux": {
-        "minimum": 3500,
-        "maximum": 7000
-      }
-    }
-  },
-  {
-    "id": "cake",
-    "name": "Cake & desserts",
-    "categoryId": "planning",
-    "calculationType": "per_guest",
-    "status": "reference",
-    "tiers": {
-      "economic": {
-        "minimum": 4,
-        "maximum": 7
-      },
-      "average": {
-        "minimum": 7,
-        "maximum": 12
-      },
-      "lux": {
-        "minimum": 12,
-        "maximum": 25
-      }
-    }
-  },
-  {
-    "id": "artist",
-    "name": "Live artist performance",
-    "categoryId": "planning",
-    "calculationType": "flat",
-    "status": "reference",
-    "tiers": {
-      "economic": {
-        "minimum": 400,
-        "maximum": 800
-      },
-      "average": {
-        "minimum": 800,
-        "maximum": 1500
-      },
-      "lux": {
-        "minimum": 1500,
-        "maximum": 3500
-      }
-    }
-  },
-  {
-    "id": "hmu",
-    "name": "Hair & makeup",
-    "categoryId": "planning",
-    "calculationType": "quantity",
-    "status": "reference",
-    "tiers": {
-      "economic": {
-        "minimum": 100,
-        "maximum": 175
-      },
-      "average": {
-        "minimum": 175,
-        "maximum": 275
-      },
-      "lux": {
-        "minimum": 275,
-        "maximum": 500
-      }
-    }
-  },
-  {
-    "id": "favors",
-    "name": "Favors",
-    "categoryId": "planning",
-    "calculationType": "per_guest",
-    "status": "reference",
-    "tiers": {
-      "economic": {
-        "minimum": 3,
-        "maximum": 6
-      },
-      "average": {
-        "minimum": 6,
-        "maximum": 12
-      },
-      "lux": {
-        "minimum": 12,
-        "maximum": 25
-      }
-    }
-  },
-  {
-    "id": "backdrop",
-    "name": "Backdrop",
-    "categoryId": "decor",
-    "calculationType": "flat",
-    "status": "reference",
-    "tiers": {
-      "economic": {
-        "minimum": 700,
-        "maximum": 1500
-      },
-      "average": {
-        "minimum": 1500,
-        "maximum": 2500
-      },
-      "lux": {
-        "minimum": 2500,
-        "maximum": 5000
-      }
-    }
-  },
-  {
-    "id": "centerpieces",
-    "name": "Floral centerpieces",
-    "categoryId": "decor",
-    "calculationType": "per_table",
-    "status": "reference",
-    "tiers": {
-      "economic": {
-        "minimum": 85,
-        "maximum": 175
-      },
-      "average": {
-        "minimum": 175,
-        "maximum": 250
-      },
-      "lux": {
-        "minimum": 250,
-        "maximum": 500
-      }
-    }
-  },
-  {
-    "id": "sign",
-    "name": "Entrance sign",
-    "categoryId": "decor",
-    "calculationType": "flat",
-    "status": "reference",
-    "tiers": {
-      "economic": {
-        "minimum": 95,
-        "maximum": 200
-      },
-      "average": {
-        "minimum": 200,
-        "maximum": 400
-      },
-      "lux": {
-        "minimum": 400,
-        "maximum": 1500
-      }
-    }
-  },
-  {
-    "id": "chairs",
-    "name": "Chairs",
-    "categoryId": "decor",
-    "calculationType": "per_guest",
-    "status": "reference",
-    "tiers": {
-      "economic": {
-        "minimum": 6,
-        "maximum": 12
-      },
-      "average": {
-        "minimum": 12,
-        "maximum": 18
-      },
-      "lux": {
-        "minimum": 18,
-        "maximum": 28
-      }
-    }
-  },
-  {
-    "id": "linens",
-    "name": "Linens & table settings",
-    "categoryId": "decor",
-    "calculationType": "per_table",
-    "status": "reference",
-    "tiers": {
-      "economic": {
-        "minimum": 20,
-        "maximum": 40
-      },
-      "average": {
-        "minimum": 40,
-        "maximum": 90
-      },
-      "lux": {
-        "minimum": 90,
-        "maximum": 250
-      }
-    }
-  },
-  {
-    "id": "lighting",
-    "name": "Lighting",
-    "categoryId": "decor",
-    "calculationType": "flat",
-    "status": "reference",
-    "tiers": {
-      "economic": {
-        "minimum": 300,
-        "maximum": 600
-      },
-      "average": {
-        "minimum": 600,
-        "maximum": 1500
-      },
-      "lux": {
-        "minimum": 1500,
-        "maximum": 4000
-      }
-    }
-  },
-  {
-    "id": "cakedisplay",
-    "name": "Cake display area",
-    "categoryId": "decor",
-    "calculationType": "flat",
-    "status": "reference",
-    "tiers": {
-      "economic": {
-        "minimum": 350,
-        "maximum": 500
-      },
-      "average": {
-        "minimum": 500,
-        "maximum": 800
-      },
-      "lux": {
-        "minimum": 800,
-        "maximum": 1500
-      }
-    }
-  },
-  {
-    "id": "headtable",
-    "name": "Head / sweetheart table",
-    "categoryId": "decor",
-    "calculationType": "flat",
-    "status": "reference",
-    "tiers": {
-      "economic": {
-        "minimum": 400,
-        "maximum": 800
-      },
-      "average": {
-        "minimum": 800,
-        "maximum": 2500
-      },
-      "lux": {
-        "minimum": 2500,
-        "maximum": 5000
-      }
-    }
-  },
-  {
-    "id": "tablecandles",
-    "name": "Table candles",
-    "categoryId": "decor",
-    "calculationType": "per_table",
-    "status": "reference",
-    "tiers": {
-      "economic": {
-        "minimum": 10,
-        "maximum": 20
-      },
-      "average": {
-        "minimum": 20,
-        "maximum": 40
-      },
-      "lux": {
-        "minimum": 40,
-        "maximum": 90
-      }
-    }
-  },
-  {
-    "id": "candles",
-    "name": "Candle staging",
-    "categoryId": "decor",
-    "calculationType": "per_table",
-    "status": "reference",
-    "tiers": {
-      "economic": {
-        "minimum": 15,
-        "maximum": 30
-      },
-      "average": {
-        "minimum": 30,
-        "maximum": 60
-      },
-      "lux": {
-        "minimum": 60,
-        "maximum": 150
-      }
-    }
-  },
-  {
-    "id": "balloon",
-    "name": "Balloon installation",
-    "categoryId": "decor",
-    "calculationType": "custom_quote",
-    "status": "missing",
-    "tiers": {}
-  },
-  {
-    "id": "eru",
-    "name": "Eru Iyawo display",
-    "categoryId": "specialty",
-    "calculationType": "custom_quote",
-    "status": "missing",
-    "tiers": {}
+  "eventTypes": [
+    "Wedding",
+    "Birthday",
+    "Baby shower",
+    "Corporate event",
+    "Traditional / Eru Iyawo",
+    "Other celebration"
+  ],
+  "disclaimer": "This is an estimate to help you plan, not a quote. Final pricing depends on your date, venue and design.",
+  "exclusions": "Taxes, delivery, setup, teardown and travel are not calculated here. Their treatment and final inclusions require confirmation. Unpriced selections are additional, not free.",
+  "fees": {
+    "lowerThreshold": 25000,
+    "upperThreshold": 50000,
+    "lowerPercent": 20,
+    "upperPercent": 10,
+    "flatAmount": 5000
   }
-]
+}

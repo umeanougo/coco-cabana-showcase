@@ -8,16 +8,20 @@ const viteRequire = createRequire(require.resolve("vite/package.json"));
 const { build } = viteRequire("esbuild");
 const directory = await mkdtemp(join(tmpdir(), "coco-tests-"));
 try {
-  const outfile = join(directory, "pricing.test.mjs");
   await build({
-    entryPoints: ["tests/pricing.test.ts"],
+    entryPoints: ["tests/pricing.test.ts", "tests/pricing-manager.test.ts"],
     bundle: true,
     platform: "node",
     format: "esm",
     define: { "import.meta.env": "{}" },
-    outfile,
+    outdir: directory,
+    outExtension: { ".js": ".mjs" },
   });
-  const result = spawnSync(process.execPath, ["--test", outfile], { stdio: "inherit" });
+  const result = spawnSync(
+    process.execPath,
+    ["--test", join(directory, "pricing.test.mjs"), join(directory, "pricing-manager.test.mjs")],
+    { stdio: "inherit" },
+  );
   process.exitCode = result.status ?? 1;
 } finally {
   await rm(directory, { recursive: true, force: true });

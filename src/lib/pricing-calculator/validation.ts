@@ -1,8 +1,8 @@
+import type { PricingConfiguration } from "./configuration";
 import { z } from "zod";
 import {
-  eventTypes,
   pricingItems,
-  assumptions,
+  websitePricing,
   applicable,
   type PricingItem,
 } from "../../config/pricing-calculator";
@@ -56,23 +56,25 @@ export function scopeIssues(
   basics: Basics,
   selections: Selection[],
   catalog: PricingItem[] = pricingItems,
+  config: PricingConfiguration = websitePricing,
 ) {
+  const { assumptions } = config;
+  const guestError = `Enter ${assumptions.minGuests}–${assumptions.maxGuests.toLocaleString("en-US")} whole-number guests.`;
   const issues: { field: string; message: string }[] = [];
   const base = basicsSchema.safeParse(basics);
   if (!base.success)
     for (const issue of base.error.issues)
       issues.push({
         field: String(issue.path[0]),
-        message:
-          issue.path[0] === "guestCount" ? "Enter 10–1,000 whole-number guests." : issue.message,
+        message: issue.path[0] === "guestCount" ? guestError : issue.message,
       });
   if (
     !Number.isInteger(basics.guestCount) ||
     basics.guestCount < assumptions.minGuests ||
     basics.guestCount > assumptions.maxGuests
   )
-    issues.push({ field: "guestCount", message: "Enter 10–1,000 whole-number guests." });
-  if (!eventTypes.includes(basics.eventType))
+    issues.push({ field: "guestCount", message: guestError });
+  if (!config.eventTypes.includes(basics.eventType))
     issues.push({ field: "eventType", message: "Choose a current event type." });
   const bounded = selectionsSchema.safeParse(selections);
   if (!bounded.success)
@@ -103,11 +105,13 @@ export function scopeIssues(
     if (!applicable(item, basics.audience, basics.service)) continue;
     if (
       item.calculationType === "quantity" &&
-      (!Number.isInteger(s.quantity) || s.quantity < 1 || s.quantity > assumptions.maxQuantity)
+      (!Number.isInteger(s.quantity) ||
+        s.quantity < assumptions.minQuantity ||
+        s.quantity > assumptions.maxQuantity)
     )
       issues.push({
         field: s.id,
-        message: `Enter 1–${assumptions.maxQuantity} whole-number people for ${item.name}.`,
+        message: `Enter ${assumptions.minQuantity}–${assumptions.maxQuantity} whole-number units for ${item.name}.`,
       });
     if (item.status !== "missing" && !item.tiers[s.tier])
       issues.push({ field: s.id, message: `Choose an available tier for ${item.name}.` });

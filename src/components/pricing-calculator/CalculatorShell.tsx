@@ -1,3 +1,4 @@
+import { usePricing } from "./PricingContext";
 import { referencePricingEnabled, reviewEnvironment } from "@/config/review-environment";
 import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -10,13 +11,7 @@ import {
   type Submission,
 } from "@/lib/pricing-calculator/validation";
 import { calculateEstimate, range } from "@/lib/pricing-calculator/calculate-estimate";
-import {
-  categories,
-  services,
-  serviceName,
-  type Audience,
-  type Service,
-} from "@/config/pricing-calculator";
+import { type Audience, type Service } from "@/config/pricing-calculator";
 import { EventBasicsStep } from "./EventBasicsStep";
 import { PricingCategory } from "./PricingCategory";
 import { EstimateSummary } from "./EstimateSummary";
@@ -31,9 +26,23 @@ const initial: Basics = {
   guestCount: 120,
   ownFeePercent: 0,
 };
-const key = "coco-budget-v2";
 export function CalculatorShell() {
-  const [basics, setBasics] = useState(initial),
+  const {
+    configuration,
+    localPreview,
+    categories,
+    services,
+    serviceName,
+    pricingItems,
+    feeExplanation,
+    assumptions,
+  } = usePricing();
+  const key = localPreview ? "coco-budget-admin-preview-v1" : "coco-budget-v2";
+  const [basics, setBasics] = useState({
+      ...initial,
+      eventType: configuration.eventTypes[0],
+      guestCount: Math.max(assumptions.minGuests, Math.min(120, assumptions.maxGuests)),
+    }),
     [selections, setSelections] = useState<Selection[]>([]),
     [stage, setStage] = useState<"audience" | "service" | "build">("audience");
   const [ready, setReady] = useState(false),
@@ -41,10 +50,10 @@ export function CalculatorShell() {
   const [review, setReview] = useState(false),
     [saving, setSaving] = useState(false),
     [attribution, setAttribution] = useState<Submission["attribution"]>({});
-  const allowReferencePrices = referencePricingEnabled;
+  const allowReferencePrices = referencePricingEnabled || localPreview;
   useEffect(() => {
     try {
-      const raw = sessionStorage.getItem(key);
+      const raw = localPreview ? null : sessionStorage.getItem(key);
       if (raw) {
         const d = JSON.parse(raw);
         if (
@@ -68,18 +77,23 @@ export function CalculatorShell() {
       ),
     );
     setReady(true);
-  }, []);
+  }, [key, localPreview]);
   useEffect(() => {
-    if (ready)
+    if (ready && !localPreview)
       try {
         sessionStorage.setItem(key, JSON.stringify({ basics, selections, stage }));
       } catch {
         setStorageNote("Progress could not be saved in this browser. Print a copy before leaving.");
       }
-  }, [basics, selections, stage, ready]);
-  const issues = scopeIssues(basics, selections);
+  }, [basics, selections, stage, ready, key, localPreview]);
+  const issues = scopeIssues(basics, selections, pricingItems, configuration);
   const valid = issues.length === 0;
-  const estimate = valid ? calculateEstimate(basics, selections, { allowReferencePrices }) : null;
+  const estimate = valid
+    ? calculateEstimate(basics, selections, {
+        allowReferencePrices: allowReferencePrices || localPreview,
+        configuration,
+      })
+    : null;
   const pickAudience = (audience: Audience) => {
     setBasics({ ...basics, audience });
     setStage("service");
@@ -197,7 +211,7 @@ export function CalculatorShell() {
                         ? "No planning or design fee. Pay only for the pieces you pick."
                         : basics.audience === "planner" && id === "planning"
                           ? "Your optional fee applies only to Full event budget."
-                          : "20% up to $25,000 · flat $5,000 through $50,000 · 10% above $50,000"}
+                          : feeExplanation}
                     </p>
                     <button
                       className="cc-button"
@@ -235,16 +249,24 @@ export function CalculatorShell() {
               )}
               {estimate && estimate.excluded.length > 0 && (
                 <p role="status" className="cc-note">
-                  {estimate.excluded.length} planning-vendor selection(s) are saved but excluded
-                  from this service’s total. Switch back to Planning / Full event budget to restore
-                  them.
+                  {estimate.excluded.length} selection(s) are retained but excluded from this
+                  service’s total. Switch back to Planning / Full event budget to restore them.
                 </p>
               )}
               <p className="cc-instruction">
                 Tap a tier to add an item, again to remove it. Mix tiers to suit your priorities.
               </p>
               {categories
-                .filter((c) => basics.service === "planning" || c.id !== "planning")
+                .filter((c) =>
+                  pricingItems.some(
+                    (i) =>
+                      i.categoryId === c.id &&
+                      !i.hidden &&
+                      i.audiences.includes(basics.audience) &&
+                      i.services.includes(basics.service),
+                  ),
+                )
+                .sort((a, b) => a.displayOrder - b.displayOrder)
                 .map((c) => {
                   const total = estimate?.categoryTotals.find((t) => t.id === c.id);
                   return (
@@ -344,10 +366,10 @@ export function CalculatorShell() {
                   <div className="cc-actions">
                     <button
                       className="cc-button"
-                      disabled={!estimate.rows.length}
+                      disabled={!estimate.rows.length || localPreview}
                       onClick={() => setSaving(true)}
                     >
-                      Keep a copy
+                      {localPreview ? "Copies disabled in local draft preview" : "Keep a copy"}
                     </button>
                   </div>
                 </>
