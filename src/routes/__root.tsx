@@ -1,3 +1,4 @@
+import { reviewEnvironment } from "@/config/review-environment";
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import appCss from "../styles.css?url";
 import { Header } from "@/components/site/Header";
@@ -29,6 +30,7 @@ function NotFoundComponent() {
 export const Route = createRootRoute({
   head: () => ({
     meta: [
+      ...(reviewEnvironment.enabled ? [{ name: "robots", content: "noindex, nofollow" }] : []),
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Coco Cabana — Luxury Event Planning, Decor & Rentals" },

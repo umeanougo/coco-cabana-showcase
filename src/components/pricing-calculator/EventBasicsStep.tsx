@@ -1,109 +1,115 @@
 import type { Basics } from "@/lib/pricing-calculator/validation";
-import {
-  assumptions,
-  eventTypes,
-  venueStatuses,
-  planningStages,
-} from "@/config/pricing-calculator";
+import { eventTypes, assumptions } from "@/config/pricing-calculator";
 export function EventBasicsStep({
   value,
   onChange,
+  errors = [],
 }: {
   value: Basics;
+  errors?: { field: string; message: string }[];
   onChange: (v: Basics) => void;
 }) {
-  const set = (key: keyof Basics, v: string | number | undefined) =>
-    onChange({ ...value, [key]: v });
   return (
-    <div className="calc-fields">
+    <div className="cc-basics">
       <label>
-        What are we celebrating?
-        <select value={value.eventType} onChange={(e) => set("eventType", e.target.value)}>
-          {eventTypes.map((v) => (
-            <option key={v}>{v}</option>
+        Event type
+        <select
+          value={value.eventType}
+          onChange={(e) => onChange({ ...value, eventType: e.target.value })}
+        >
+          {eventTypes.map((t) => (
+            <option key={t}>{t}</option>
           ))}
         </select>
       </label>
-      <label>
-        Date or approximate timing <span>(optional)</span>
-        <input
-          maxLength={100}
-          placeholder="e.g. June 2027 or still deciding"
-          value={value.eventDate}
-          onChange={(e) => set("eventDate", e.target.value)}
-        />
-      </label>
-      <label>
-        City or event location
-        <input
-          required
-          maxLength={160}
-          placeholder="e.g. Houston, TX"
-          value={value.location}
-          onChange={(e) => set("location", e.target.value)}
-        />
-      </label>
-      <label>
-        Number of guests
-        <input
-          required
-          type="number"
-          inputMode="numeric"
-          min={1}
-          max={assumptions.maxGuests}
-          step={1}
-          value={value.guestCount || ""}
-          onChange={(e) => set("guestCount", Number(e.target.value))}
-        />
-        <small>Enter a whole number from 1 to {assumptions.maxGuests.toLocaleString()}.</small>
-      </label>
-      <label>
-        Number of tables <span>(optional)</span>
-        <input
-          type="number"
-          inputMode="numeric"
-          min={1}
-          max={10000}
-          step={1}
-          value={value.tableCount ?? ""}
-          placeholder={String(Math.ceil(value.guestCount / assumptions.guestsPerTable))}
-          onChange={(e) =>
-            set("tableCount", e.target.value === "" ? undefined : Number(e.target.value))
-          }
-        />
-        <small>
-          Otherwise, we allow {assumptions.guestsPerTable} guests per table, rounded up.
+      <div>
+        <label htmlFor="cc-guests">Guest count</label>
+        <div className="cc-stepper">
+          <button
+            type="button"
+            aria-label="Fewer guests"
+            onClick={() => onChange({ ...value, guestCount: Math.max(10, value.guestCount - 10) })}
+          >
+            −
+          </button>
+          <input
+            id="cc-guests"
+            aria-invalid={errors.some((e) => e.field === "guestCount")}
+            type="number"
+            min="10"
+            max="1000"
+            step="1"
+            value={value.guestCount || ""}
+            onChange={(e) => onChange({ ...value, guestCount: Number(e.target.value) })}
+            aria-describedby="cc-guest-help"
+          />
+          <button
+            type="button"
+            aria-label="More guests"
+            onClick={() =>
+              onChange({ ...value, guestCount: Math.min(1000, value.guestCount + 10) })
+            }
+          >
+            +
+          </button>
+        </div>
+        <small id="cc-guest-help">
+          10–1,000 guests ·{" "}
+          {Number.isInteger(value.guestCount) && value.guestCount >= 10
+            ? Math.ceil(value.guestCount / assumptions.guestsPerTable)
+            : "—"}{" "}
+          tables, allowing 8 guests per table, rounded up.
         </small>
-      </label>
+      </div>
+      {errors
+        .filter((e) => e.field === "guestCount")
+        .map((e) => (
+          <p key={e.field} role="alert" className="cc-error">
+            {e.message}
+          </p>
+        ))}
       <label>
-        Target budget · USD <span>(optional)</span>
+        Event date <small>(optional)</small>
         <input
-          type="number"
-          inputMode="decimal"
-          min={0}
-          max={100000000}
-          value={value.desiredBudget ?? ""}
-          onChange={(e) =>
-            set("desiredBudget", e.target.value === "" ? undefined : Number(e.target.value))
-          }
+          value={value.eventDate}
+          maxLength={100}
+          placeholder="Date or approximate timing"
+          onChange={(e) => onChange({ ...value, eventDate: e.target.value })}
         />
       </label>
       <label>
-        Venue status
-        <select value={value.venueStatus} onChange={(e) => set("venueStatus", e.target.value)}>
-          {venueStatuses.map((v) => (
-            <option key={v}>{v}</option>
-          ))}
-        </select>
+        Venue or location <small>(optional)</small>
+        <input
+          value={value.location}
+          maxLength={160}
+          placeholder="Still deciding is fine"
+          onChange={(e) => onChange({ ...value, location: e.target.value })}
+        />
       </label>
-      <label>
-        Where are you in planning?
-        <select value={value.planningStage} onChange={(e) => set("planningStage", e.target.value)}>
-          {planningStages.map((v) => (
-            <option key={v}>{v}</option>
-          ))}
-        </select>
-      </label>
+      {value.audience === "planner" && value.service === "planning" && (
+        <label>
+          Your planning fee (%) <small>(optional)</small>
+          <input
+            type="number"
+            min="0"
+            max="100"
+            step="0.01"
+            aria-invalid={errors.some((e) => e.field === "ownFeePercent")}
+            value={value.ownFeePercent}
+            onChange={(e) => onChange({ ...value, ownFeePercent: Number(e.target.value) })}
+          />
+          {errors
+            .filter((e) => e.field === "ownFeePercent")
+            .map((e) => (
+              <span key={e.field} role="alert" className="cc-error">
+                {e.message}
+              </span>
+            ))}
+          <small>
+            Your percentage applies to the selected subtotal. No Coco Cabana planning fee is added.
+          </small>
+        </label>
+      )}
     </div>
   );
 }

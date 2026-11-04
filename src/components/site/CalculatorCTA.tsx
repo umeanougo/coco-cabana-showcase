@@ -11,7 +11,7 @@ export function CalculatorCTA({ compact = false }: { compact?: boolean }) {
           need a personal consultation.
         </p>
       </div>
-      <Link to="/pricing-calculator" className="calc-button">
+      <Link to="/pricing" className="calc-button">
         Build My Estimate <ArrowUpRight size={18} />
       </Link>
     </section>

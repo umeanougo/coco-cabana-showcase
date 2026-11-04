@@ -33,7 +33,7 @@ export function Footer() {
           <h4 className="text-xs tracking-luxe uppercase mb-5">Explore</h4>
           <ul className="space-y-3 text-sm">
             <li>
-              <Link to="/pricing-calculator" className="hover:text-brand transition">
+              <Link to="/pricing" className="hover:text-brand transition">
                 Estimate Your Event
               </Link>
             </li>

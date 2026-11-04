@@ -1,3 +1,5 @@
+> **Superseded for the current calculator:** see [hosted review configuration](hosted-review.md). This document describes the earlier scaffold.
+
 # Event Budget Calculator handoff
 
 Implemented at `/pricing-calculator` in the existing Coco Cabana Showcase repository. No separate application or hosting project was created. Changes are on `feat/event-budget-calculator`; production has not been deployed.

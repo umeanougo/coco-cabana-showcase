@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
+import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PricingCalculatorRouteImport } from './routes/pricing-calculator'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ApiPricingEstimatesRouteImport } from './routes/api.pricing-estimates'
@@ -37,6 +38,11 @@ const PortfolioRoute = PortfolioRouteImport.update({
   path: '/portfolio',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PricingCalculatorRoute = PricingCalculatorRouteImport.update({
   id: '/pricing-calculator',
   path: '/pricing-calculator',
@@ -58,6 +64,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/portfolio': typeof PortfolioRoute
+  '/pricing': typeof PricingRoute
   '/pricing-calculator': typeof PricingCalculatorRoute
   '/services': typeof ServicesRoute
   '/api/pricing-estimates': typeof ApiPricingEstimatesRoute
@@ -67,6 +74,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/portfolio': typeof PortfolioRoute
+  '/pricing': typeof PricingRoute
   '/pricing-calculator': typeof PricingCalculatorRoute
   '/services': typeof ServicesRoute
   '/api/pricing-estimates': typeof ApiPricingEstimatesRoute
@@ -77,6 +85,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/portfolio': typeof PortfolioRoute
+  '/pricing': typeof PricingRoute
   '/pricing-calculator': typeof PricingCalculatorRoute
   '/services': typeof ServicesRoute
   '/api/pricing-estimates': typeof ApiPricingEstimatesRoute
@@ -88,6 +97,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/portfolio'
+    | '/pricing'
     | '/pricing-calculator'
     | '/services'
     | '/api/pricing-estimates'
@@ -97,6 +107,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/portfolio'
+    | '/pricing'
     | '/pricing-calculator'
     | '/services'
     | '/api/pricing-estimates'
@@ -106,6 +117,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/portfolio'
+    | '/pricing'
     | '/pricing-calculator'
     | '/services'
     | '/api/pricing-estimates'
@@ -116,6 +128,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
   PortfolioRoute: typeof PortfolioRoute
+  PricingRoute: typeof PricingRoute
   PricingCalculatorRoute: typeof PricingCalculatorRoute
   ServicesRoute: typeof ServicesRoute
   ApiPricingEstimatesRoute: typeof ApiPricingEstimatesRoute
@@ -151,6 +164,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortfolioRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pricing-calculator': {
       id: '/pricing-calculator'
       path: '/pricing-calculator'
@@ -180,6 +200,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
   PortfolioRoute: PortfolioRoute,
+  PricingRoute: PricingRoute,
   PricingCalculatorRoute: PricingCalculatorRoute,
   ServicesRoute: ServicesRoute,
   ApiPricingEstimatesRoute: ApiPricingEstimatesRoute,

@@ -1,3 +1,4 @@
+import { reviewEnvironment } from "@/config/review-environment";
 import { site } from "@/config/site";
 import { CalculatorCTA } from "@/components/site/CalculatorCTA";
 import { createFileRoute } from "@tanstack/react-router";
@@ -71,7 +72,8 @@ function ContactPage() {
             ].map((f) => (
               <a
                 key={f.t}
-                href={site.honeybook}
+                href={reviewEnvironment.enabled ? undefined : site.honeybook}
+                aria-disabled={reviewEnvironment.enabled}
                 target="_blank"
                 rel="noreferrer"
                 className={`group block p-8 ${f.c} lift`}
@@ -79,7 +81,7 @@ function ContactPage() {
                 <h3 className="font-display text-2xl mb-3">{f.t}</h3>
                 <p className="text-sm text-foreground/80 leading-relaxed">{f.d}</p>
                 <span className="mt-5 inline-block text-[10px] tracking-[0.25em] uppercase text-brand border-b border-brand/40 group-hover:border-brand">
-                  Open form →
+                  {reviewEnvironment.enabled ? "Forms disabled in review" : "Open form →"}
                 </span>
               </a>
             ))}
@@ -149,15 +151,18 @@ function ContactPage() {
                 guest count, vision, and budget — it takes just a few minutes.
               </p>
               <a
-                href={site.honeybook}
+                href={reviewEnvironment.enabled ? undefined : site.honeybook}
+                aria-disabled={reviewEnvironment.enabled}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-block bg-gradient-brand text-primary-foreground px-10 py-4 text-[11px] tracking-luxe uppercase font-medium hover:opacity-90 transition shadow-luxe"
               >
-                Open inquiry form
+                {reviewEnvironment.enabled ? "Inquiries disabled in review" : "Open inquiry form"}
               </a>
               <p className="mt-6 text-xs text-muted-foreground">
-                Powered by HoneyBook · Submissions go straight to our inbox
+                {reviewEnvironment.enabled
+                  ? "Test website: no inquiry or booking will be submitted."
+                  : "Powered by HoneyBook · Submissions go straight to our inbox"}
               </p>
             </div>
           </div>
