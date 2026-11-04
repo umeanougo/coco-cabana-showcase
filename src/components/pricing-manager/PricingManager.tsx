@@ -25,7 +25,7 @@ const fresh = (): PricingDraft => ({
   lastSavedAt: null,
   configuration: clone(websitePricing),
 });
-const inputClass = "w-full rounded-md border border-border bg-background px-3 py-2 text-sm";
+const inputClass = "w-full rounded-md border border-border bg-white text-stone-900 px-3 py-2 text-sm";
 function Field({
   label,
   value,
