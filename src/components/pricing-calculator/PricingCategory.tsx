@@ -1,20 +1,14 @@
+import { usePricing } from "./PricingContext";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import {
-  pricingItems,
-  tierLabels,
-  tierDescriptions,
-  applicable,
-  type Category,
-  type Tier,
-} from "@/config/pricing-calculator";
+import { applicable, type Category, type Tier } from "@/config/pricing-calculator";
 import { range } from "@/lib/pricing-calculator/calculate-estimate";
 import type { Basics, Selection } from "@/lib/pricing-calculator/validation";
 const units = {
   flat: "flat",
   per_guest: "per guest",
   per_table: "per table",
-  quantity: "per person",
+  quantity: "per unit",
   custom_quote: "custom scope",
 };
 export function PricingCategory({
@@ -32,10 +26,11 @@ export function PricingCategory({
   onChange: (v: Selection[]) => void;
   allowReferencePrices: boolean;
 }) {
+  const { pricingItems, tierLabels, tierDescriptions, assumptions } = usePricing();
   const [example, setExample] = useState<string | null>(null);
-  const items = pricingItems.filter(
-    (i) => i.categoryId === categoryId && applicable(i, basics.audience, basics.service),
-  );
+  const items = pricingItems
+    .filter((i) => i.categoryId === categoryId && applicable(i, basics.audience, basics.service))
+    .sort((a, b) => (a.displayOrder ?? 0) - (b.displayOrder ?? 0));
   const choose = (id: string, tier: Tier) => {
     const current = selections.find((s) => s.id === id);
     onChange(
@@ -43,7 +38,7 @@ export function PricingCategory({
         ? selections.filter((s) => s.id !== id)
         : [
             ...selections.filter((s) => s.id !== id),
-            { id, tier, quantity: current?.quantity ?? 1 },
+            { id, tier, quantity: current?.quantity ?? assumptions.minQuantity },
           ],
     );
   };
@@ -75,7 +70,7 @@ export function PricingCategory({
                       : ""}
                   </small>
                 </div>
-                {categoryId !== "planning" && item.status !== "missing" && (
+                {item.status !== "missing" && (
                   <button type="button" className="cc-link" onClick={() => setExample(item.id)}>
                     {Object.values(item.examples ?? {}).some((e) => e?.approval === "approved")
                       ? "See examples"
@@ -84,7 +79,16 @@ export function PricingCategory({
                   </button>
                 )}
               </div>
-              {item.status === "missing" ? (
+              {item.description && <p className="cc-fine">{item.description}</p>}
+              {(item.inclusions || item.exclusions || item.pricingNotes) && (
+                <details className="cc-help">
+                  <summary>Item details</summary>
+                  {item.inclusions && <p>Includes: {item.inclusions}</p>}
+                  {item.exclusions && <p>Excludes: {item.exclusions}</p>}
+                  {item.pricingNotes && <p>{item.pricingNotes}</p>}
+                </details>
+              )}
+              {item.status === "missing" || item.calculationType === "custom_quote" ? (
                 <div className="cc-unpriced">
                   <p>
                     Pricing and package details need confirmation. This selection is additional to
@@ -121,11 +125,13 @@ export function PricingCategory({
               )}
               {selected && item.calculationType === "quantity" && (
                 <label className="cc-quantity">
-                  People receiving hair & makeup
+                  {item.id === "hmu"
+                    ? "People receiving hair & makeup"
+                    : `Quantity for ${item.name}`}
                   <input
                     type="number"
-                    min="1"
-                    max="30"
+                    min={assumptions.minQuantity}
+                    max={assumptions.maxQuantity}
                     step="1"
                     aria-invalid={errors.some((e) => e.field === item.id)}
                     value={selected.quantity || ""}
@@ -192,7 +198,9 @@ export function PricingCategory({
                         {
                           id: sample.id,
                           tier: t,
-                          quantity: selections.find((s) => s.id === sample.id)?.quantity ?? 1,
+                          quantity:
+                            selections.find((s) => s.id === sample.id)?.quantity ??
+                            assumptions.minQuantity,
                         },
                       ]);
                       setExample(null);

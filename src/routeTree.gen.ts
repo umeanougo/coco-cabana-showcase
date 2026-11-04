@@ -16,6 +16,7 @@ import { Route as PortfolioRouteImport } from './routes/portfolio'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PricingCalculatorRouteImport } from './routes/pricing-calculator'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as AdminPricingRouteImport } from './routes/admin.pricing'
 import { Route as ApiPricingEstimatesRouteImport } from './routes/api.pricing-estimates'
 
 const IndexRoute = IndexRouteImport.update({
@@ -53,6 +54,11 @@ const ServicesRoute = ServicesRouteImport.update({
   path: '/services',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminPricingRoute = AdminPricingRouteImport.update({
+  id: '/admin/pricing',
+  path: '/admin/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPricingEstimatesRoute = ApiPricingEstimatesRouteImport.update({
   id: '/api/pricing-estimates',
   path: '/api/pricing-estimates',
@@ -67,6 +73,7 @@ export interface FileRoutesByFullPath {
   '/pricing': typeof PricingRoute
   '/pricing-calculator': typeof PricingCalculatorRoute
   '/services': typeof ServicesRoute
+  '/admin/pricing': typeof AdminPricingRoute
   '/api/pricing-estimates': typeof ApiPricingEstimatesRoute
 }
 export interface FileRoutesByTo {
@@ -77,6 +84,7 @@ export interface FileRoutesByTo {
   '/pricing': typeof PricingRoute
   '/pricing-calculator': typeof PricingCalculatorRoute
   '/services': typeof ServicesRoute
+  '/admin/pricing': typeof AdminPricingRoute
   '/api/pricing-estimates': typeof ApiPricingEstimatesRoute
 }
 export interface FileRoutesById {
@@ -88,6 +96,7 @@ export interface FileRoutesById {
   '/pricing': typeof PricingRoute
   '/pricing-calculator': typeof PricingCalculatorRoute
   '/services': typeof ServicesRoute
+  '/admin/pricing': typeof AdminPricingRoute
   '/api/pricing-estimates': typeof ApiPricingEstimatesRoute
 }
 export interface FileRouteTypes {
@@ -100,6 +109,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/pricing-calculator'
     | '/services'
+    | '/admin/pricing'
     | '/api/pricing-estimates'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -110,6 +120,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/pricing-calculator'
     | '/services'
+    | '/admin/pricing'
     | '/api/pricing-estimates'
   id:
     | '__root__'
@@ -120,6 +131,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/pricing-calculator'
     | '/services'
+    | '/admin/pricing'
     | '/api/pricing-estimates'
   fileRoutesById: FileRoutesById
 }
@@ -131,6 +143,7 @@ export interface RootRouteChildren {
   PricingRoute: typeof PricingRoute
   PricingCalculatorRoute: typeof PricingCalculatorRoute
   ServicesRoute: typeof ServicesRoute
+  AdminPricingRoute: typeof AdminPricingRoute
   ApiPricingEstimatesRoute: typeof ApiPricingEstimatesRoute
 }
 
@@ -185,6 +198,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/pricing': {
+      id: '/admin/pricing'
+      path: '/admin/pricing'
+      fullPath: '/admin/pricing'
+      preLoaderRoute: typeof AdminPricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/pricing-estimates': {
       id: '/api/pricing-estimates'
       path: '/api/pricing-estimates'
@@ -203,6 +223,7 @@ const rootRouteChildren: RootRouteChildren = {
   PricingRoute: PricingRoute,
   PricingCalculatorRoute: PricingCalculatorRoute,
   ServicesRoute: ServicesRoute,
+  AdminPricingRoute: AdminPricingRoute,
   ApiPricingEstimatesRoute: ApiPricingEstimatesRoute,
 }
 export const routeTree = rootRouteImport

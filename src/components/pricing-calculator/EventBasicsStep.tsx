@@ -1,5 +1,5 @@
+import { usePricing } from "./PricingContext";
 import type { Basics } from "@/lib/pricing-calculator/validation";
-import { eventTypes, assumptions } from "@/config/pricing-calculator";
 export function EventBasicsStep({
   value,
   onChange,
@@ -9,6 +9,7 @@ export function EventBasicsStep({
   errors?: { field: string; message: string }[];
   onChange: (v: Basics) => void;
 }) {
+  const { eventTypes, assumptions } = usePricing();
   return (
     <div className="cc-basics">
       <label>
@@ -28,7 +29,12 @@ export function EventBasicsStep({
           <button
             type="button"
             aria-label="Fewer guests"
-            onClick={() => onChange({ ...value, guestCount: Math.max(10, value.guestCount - 10) })}
+            onClick={() =>
+              onChange({
+                ...value,
+                guestCount: Math.max(assumptions.minGuests, value.guestCount - 10),
+              })
+            }
           >
             −
           </button>
@@ -36,8 +42,8 @@ export function EventBasicsStep({
             id="cc-guests"
             aria-invalid={errors.some((e) => e.field === "guestCount")}
             type="number"
-            min="10"
-            max="1000"
+            min={assumptions.minGuests}
+            max={assumptions.maxGuests}
             step="1"
             value={value.guestCount || ""}
             onChange={(e) => onChange({ ...value, guestCount: Number(e.target.value) })}
@@ -47,18 +53,21 @@ export function EventBasicsStep({
             type="button"
             aria-label="More guests"
             onClick={() =>
-              onChange({ ...value, guestCount: Math.min(1000, value.guestCount + 10) })
+              onChange({
+                ...value,
+                guestCount: Math.min(assumptions.maxGuests, value.guestCount + 10),
+              })
             }
           >
             +
           </button>
         </div>
         <small id="cc-guest-help">
-          10–1,000 guests ·{" "}
-          {Number.isInteger(value.guestCount) && value.guestCount >= 10
+          {assumptions.minGuests}–{assumptions.maxGuests.toLocaleString("en-US")} guests ·{" "}
+          {Number.isInteger(value.guestCount) && value.guestCount >= assumptions.minGuests
             ? Math.ceil(value.guestCount / assumptions.guestsPerTable)
             : "—"}{" "}
-          tables, allowing 8 guests per table, rounded up.
+          tables, allowing {assumptions.guestsPerTable} guests per table, rounded up.
         </small>
       </div>
       {errors

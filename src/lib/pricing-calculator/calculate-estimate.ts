@@ -1,21 +1,24 @@
+import type { PricingConfiguration } from "./configuration";
 import {
-  assumptions,
+  websitePricing,
   pricingItems,
-  pricingVersion,
   applicable,
-  services,
   type PricingItem,
 } from "../../config/pricing-calculator";
 import { scopeIssues, type Basics, type Selection } from "./validation";
 // Calculate in integer cents. Round percentage fees to cents, endpoints independently.
-export const feeCents = (subtotal: number) =>
-  subtotal <= 2500000
-    ? Math.round((subtotal * 20) / 100)
-    : subtotal <= 5000000
-      ? 500000
-      : Math.round((subtotal * 10) / 100);
-export const feeBracket = (subtotal: number) =>
-  subtotal <= 25000 ? "20%" : subtotal <= 50000 ? "flat $5,000" : "10%";
+export const feeCents = (subtotal: number, fees = websitePricing.fees) =>
+  subtotal <= Math.round(fees.lowerThreshold * 100)
+    ? Math.round((subtotal * fees.lowerPercent) / 100)
+    : subtotal <= Math.round(fees.upperThreshold * 100)
+      ? Math.round(fees.flatAmount * 100)
+      : Math.round((subtotal * fees.upperPercent) / 100);
+export const feeBracket = (subtotal: number, fees = websitePricing.fees) =>
+  subtotal <= fees.lowerThreshold
+    ? `${fees.lowerPercent}%`
+    : subtotal <= fees.upperThreshold
+      ? `flat $${fees.flatAmount.toLocaleString("en-US")}`
+      : `${fees.upperPercent}%`;
 // Display policy from brief: whole dollars; totals over $1,000 to nearest $10.
 export const money = (value: number) =>
   new Intl.NumberFormat("en-US", {
@@ -27,10 +30,17 @@ export const range = (min: number, max: number) => `${money(min)}–${money(max)
 export function calculateEstimate(
   basics: Basics,
   selections: Selection[],
-  options: { allowReferencePrices?: boolean; catalog?: PricingItem[]; version?: string } = {},
+  options: {
+    allowReferencePrices?: boolean;
+    catalog?: PricingItem[];
+    version?: string;
+    configuration?: PricingConfiguration;
+  } = {},
 ) {
-  const catalog = options.catalog ?? pricingItems;
-  const issues = scopeIssues(basics, selections, catalog);
+  const config = options.configuration ?? websitePricing;
+  const { assumptions, services } = config;
+  const catalog = options.catalog ?? (options.configuration ? config.items : pricingItems);
+  const issues = scopeIssues(basics, selections, catalog, config);
   if (issues.length) throw new Error(issues.map((i) => i.message).join(" "));
   const tables = Math.ceil(basics.guestCount / assumptions.guestsPerTable);
   const excluded = selections.filter((s) => {
@@ -43,6 +53,7 @@ export function calculateEstimate(
     if (!applicable(item, basics.audience, basics.service)) return [];
     const tier = item.tiers[s.tier];
     const priced =
+      item.calculationType !== "custom_quote" &&
       !!tier &&
       (item.status === "approved" ||
         (options.allowReferencePrices === true && item.status === "reference"));
@@ -81,14 +92,18 @@ export function calculateEstimate(
     basics.service === "planning" && basics.audience === "planner"
       ? Math.round(basics.ownFeePercent * 100)
       : 0;
-  const feeMin = hasCocoFee ? feeCents(min) : 0,
-    feeMax = hasCocoFee ? feeCents(max) : 0;
+  const feeBase =
+    basics.service === "design" ? rows.filter((r) => r.item.categoryId !== "planning") : rows;
+  const feeLow = feeBase.reduce((n, r) => n + (r.min ?? 0), 0),
+    feeHigh = feeBase.reduce((n, r) => n + (r.max ?? 0), 0);
+  const feeMin = hasCocoFee ? feeCents(feeLow, config.fees) : 0,
+    feeMax = hasCocoFee ? feeCents(feeHigh, config.fees) : 0;
   const ownMin = Math.round((min * own) / 10000),
     ownMax = Math.round((max * own) / 10000);
   const finalMin = min + feeMin + ownMin,
     finalMax = max + feeMax + ownMax;
   return {
-    version: options.version ?? pricingVersion,
+    version: options.version ?? config.catalogVersion,
     tables,
     rows: rows.map((r) => ({
       ...r,
@@ -108,7 +123,7 @@ export function calculateEstimate(
     minimumPerGuest: finalMin / 100 / basics.guestCount,
     maximumPerGuest: finalMax / 100 / basics.guestCount,
     feeLabel: hasCocoFee
-      ? `${basics.service === "design" ? "Design" : "Planning"} fee (${feeBracket(min / 100)}${feeBracket(min / 100) !== feeBracket(max / 100) ? ` → ${feeBracket(max / 100)}` : ""})`
+      ? `${basics.service === "design" ? "Design" : "Planning"} fee (${feeBracket(feeLow / 100, config.fees)}${feeBracket(feeLow / 100, config.fees) !== feeBracket(feeHigh / 100, config.fees) ? ` → ${feeBracket(feeHigh / 100, config.fees)}` : ""})`
       : "Coco Cabana service fee — none",
     reference: rows.some((r) => !r.custom && r.item.status === "reference"),
     pricedCount: rows.filter((r) => !r.custom).length,
@@ -121,7 +136,7 @@ export function calculateEstimate(
       rows.length > 0 &&
       !(basics.audience === "planner" && basics.service === "planning") &&
       finalMax / 100 < services[basics.service].referenceMinimum,
-    categoryTotals: ["planning", "decor", "specialty"].map((id) => ({
+    categoryTotals: config.categories.map(({ id }) => ({
       id,
       min: rows.filter((r) => r.item.categoryId === id).reduce((n, r) => n + (r.min ?? 0), 0) / 100,
       max: rows.filter((r) => r.item.categoryId === id).reduce((n, r) => n + (r.max ?? 0), 0) / 100,
