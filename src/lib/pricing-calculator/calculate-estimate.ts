@@ -1,3 +1,4 @@
+import { scheduledFeeCents } from "./fee-schedule";
 import type { PricingConfiguration } from "./configuration";
 import {
   websitePricing,
@@ -8,11 +9,7 @@ import {
 import { scopeIssues, type Basics, type Selection } from "./validation";
 // Calculate in integer cents. Round percentage fees to cents, endpoints independently.
 export const feeCents = (subtotal: number, fees = websitePricing.fees) =>
-  subtotal <= Math.round(fees.lowerThreshold * 100)
-    ? Math.round((subtotal * fees.lowerPercent) / 100)
-    : subtotal <= Math.round(fees.upperThreshold * 100)
-      ? Math.round(fees.flatAmount * 100)
-      : Math.round((subtotal * fees.upperPercent) / 100);
+  scheduledFeeCents(subtotal, fees);
 export const feeBracket = (subtotal: number, fees = websitePricing.fees) =>
   subtotal <= fees.lowerThreshold
     ? `${fees.lowerPercent}%`

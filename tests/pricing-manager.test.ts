@@ -8,7 +8,7 @@ import {
   pricingDraftKey,
   type PricingDraft,
 } from "../src/lib/pricing-calculator/configuration";
-import { calculateEstimate } from "../src/lib/pricing-calculator/calculate-estimate";
+import { calculateEstimate, feeCents } from "../src/lib/pricing-calculator/calculate-estimate";
 import type { Basics } from "../src/lib/pricing-calculator/validation";
 const fresh = (): PricingDraft => ({
   schemaVersion: 1,
@@ -185,4 +185,94 @@ test("missing/custom quote draft rates stay unpriced and quantity limits use dra
     allowReferencePrices: true,
   });
   assert.equal(quantity.rows[0].quantity, 3);
+});
+
+test("rejects $3,000 flat fee reproduction without writing or altering the draft", () => {
+  const draft = fresh();
+  draft.configuration.fees.flatAmount = 3000;
+  const original = JSON.stringify(draft);
+  // Explicit calculation fixture: no catalog rates are changed to force a match.
+  const fees = draft.configuration.fees;
+  assert.equal(24900 + feeCents(2490000, fees) / 100, 29880);
+  assert.equal(25100 + feeCents(2510000, fees) / 100, 28100);
+  const parsed = configurationSchema.safeParse(draft.configuration);
+  assert.equal(parsed.success, false);
+  if (!parsed.success) {
+    assert.match(parsed.error.message, /lower threshold at \$25,000\.00/);
+    assert.match(parsed.error.message, /lower percentage or middle flat fee/);
+  }
+  let writes = 0;
+  assert.throws(
+    () =>
+      savePricingDraft(
+        {
+          setItem: () => {
+            writes++;
+          },
+        },
+        draft,
+      ),
+    /decreases/,
+  );
+  assert.equal(writes, 0);
+  assert.throws(() => readPricingImport(original), /lower threshold/);
+  assert.equal(JSON.stringify(draft), original);
+});
+
+test("rejects a downward total jump at the upper fee threshold", () => {
+  const draft = fresh();
+  draft.configuration.fees.upperPercent = 5;
+  const parsed = configurationSchema.safeParse(draft.configuration);
+  assert.equal(parsed.success, false);
+  if (!parsed.success) {
+    assert.match(parsed.error.message, /upper threshold at \$50,000\.00/);
+    assert.match(parsed.error.message, /upper percentage or middle flat fee/);
+  }
+  assert.throws(() => readPricingImport(JSON.stringify(draft)), /upper threshold/);
+});
+
+test("valid fee boundaries include cent-level plateaus and shared rounding", () => {
+  for (const fees of [
+    websitePricing.fees,
+    { ...websitePricing.fees, flatAmount: 4999.99 }, // lower total is equal, not decreasing
+    { ...websitePricing.fees, flatAmount: 5000.01 }, // upper total is equal
+    {
+      lowerThreshold: 1.15,
+      upperThreshold: 2.3,
+      lowerPercent: 50,
+      upperPercent: 25,
+      flatAmount: 0.57,
+    },
+    {
+      lowerThreshold: 1.15,
+      upperThreshold: 2.3,
+      lowerPercent: 50,
+      upperPercent: 25,
+      flatAmount: 0.59,
+    },
+  ]) {
+    const config = { ...structuredClone(websitePricing), fees };
+    assert.equal(configurationSchema.safeParse(config).success, true);
+    for (const threshold of [fees.lowerThreshold, fees.upperThreshold]) {
+      const boundary = Math.round(threshold * 100);
+      const totals = [boundary - 1, boundary, boundary + 1].map((c) => c + feeCents(c, fees));
+      assert.ok(totals[0] <= totals[1] && totals[1] <= totals[2]);
+    }
+  }
+  for (const flatAmount of [0.56, 0.6]) {
+    const config = structuredClone(websitePricing);
+    config.fees = {
+      lowerThreshold: 1.15,
+      upperThreshold: 2.3,
+      lowerPercent: 50,
+      upperPercent: 25,
+      flatAmount,
+    };
+    assert.equal(configurationSchema.safeParse(config).success, false);
+  }
+  for (const flatAmount of [4999.98, 5000.02]) {
+    const config = structuredClone(websitePricing);
+    config.fees.flatAmount = flatAmount;
+    assert.equal(configurationSchema.safeParse(config).success, false);
+  }
 });

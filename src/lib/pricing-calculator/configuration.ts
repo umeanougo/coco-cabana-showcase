@@ -1,3 +1,4 @@
+import { scheduledFeeCents, toCents } from "./fee-schedule";
 import { z } from "zod";
 const text = z.string().trim().min(1).max(200);
 const copy = z.string().max(4000);
@@ -155,6 +156,31 @@ export const configurationSchema = z
       fail(["assumptions"], "Minimum quantity must not exceed maximum quantity.");
     if (c.fees.lowerThreshold <= 0 || c.fees.lowerThreshold >= c.fees.upperThreshold)
       fail(["fees"], "Fee thresholds must be positive and strictly increasing.");
+    // Nonnegative percentages make each band nondecreasing. Checking the last
+    // cent in each inclusive band against the first cent in the next is enough
+    // to establish monotonic totals over every possible subtotal range.
+    else if (Object.values(c.fees).every(Number.isFinite)) {
+      for (const [threshold, settings] of [
+        ["lowerThreshold", "the lower threshold, lower percentage or middle flat fee"],
+        ["upperThreshold", "the upper threshold, upper percentage or middle flat fee"],
+      ] as const) {
+        const boundary = toCents(c.fees[threshold]);
+        const before = boundary + scheduledFeeCents(boundary, c.fees);
+        const after = boundary + 1 + scheduledFeeCents(boundary + 1, c.fees);
+        if (after < before) {
+          const dollars = (cents: number) =>
+            new Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: "USD",
+              minimumFractionDigits: 2,
+            }).format(cents / 100);
+          fail(
+            ["fees", threshold],
+            `Final total decreases across the ${threshold === "lowerThreshold" ? "lower" : "upper"} threshold at ${dollars(boundary)}: ${dollars(before)} becomes ${dollars(after)} when the subtotal increases by one cent. Adjust ${settings} so the total does not decrease.`,
+          );
+        }
+      }
+    }
   });
 export type PricingConfiguration = z.infer<typeof configurationSchema>;
 export type ConfiguredItem = z.infer<typeof itemSchema>;
