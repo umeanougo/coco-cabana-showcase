@@ -184,7 +184,7 @@ export function PricingManager() {
   if (!ready) return <div className="container py-20">Loading Pricing Manager…</div>;
   if (!unlocked)
     return (
-      <div className="mx-auto max-w-lg px-5 py-16">
+      <div className="mx-auto max-w-lg px-5 pb-16 pt-28">
         <h1 className="font-display text-3xl">Pricing Manager</h1>
         <p className="my-4">
           Disposable review access only. This frontend code and its checks can be inspected or
@@ -247,7 +247,7 @@ export function PricingManager() {
       </PricingContext.Provider>
     );
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 md:px-8 pricing-manager">
+    <div className="mx-auto max-w-7xl px-4 pb-8 pt-28 md:px-8 pricing-manager">
       <div className="flex justify-between gap-4">
         <h1 className="font-display text-3xl">Pricing Manager</h1>
         <button className="underline" onClick={lock}>
