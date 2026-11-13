@@ -1705,7 +1705,8 @@
 .cc-category .cc-partial {
   display: block;
   max-width: 235px;
-  font-size: 10px;
+  font-size: 13px;
+  line-height: 1.5;
 }
 .cc-save fieldset {
   min-width: 0;
