@@ -47,7 +47,7 @@ const booth = [
   { icon: Camera, t: "Wireless Platform" },
 ];
 
-const specialistOfferings = [
+const occasions = [
   {
     t: "Corporate Events",
     d: "A strategic approach to corporate event planning ensures the event aligns with the company's goals, reinforces its brand, and provides value to attendees. We assist in venue selection, theme and branding, as well as program development.",
@@ -56,10 +56,9 @@ const specialistOfferings = [
     t: "Charity & Non-Profit Events",
     d: "Event planning for charitable and nonprofit organizations that takes into account your mission, goals and resources, built on effective communication, community engagement, and a compelling story that resonates with your supporters.",
   },
-  {
-    t: "Event Design",
-    d: "A creative and strategic process for conceptualizing the aesthetic of your event. Ideal for self-planning clients who have selected vendors and need help developing a look and feel for the occasion.",
-  },
+];
+
+const specialistOfferings = [
   {
     t: "Wedding Coaching",
     d: "Personalized coaching sessions with our seasoned wedding experts, offering insights, tips and industry knowledge so couples can plan their own special day while minimizing stress and maximizing enjoyment.",
@@ -181,9 +180,8 @@ function ServicesPage() {
             subtitle="Our flower walls are more than decorative elements; they are enchanting works of art that transform any space into a floral paradise in an instant. The perfect backdrop for weddings, parties, corporate events and photoshoots."
           />
           <p className="mt-6 text-center text-sm text-muted-foreground">
-            Standalone rentals are separate from the calculator’s Backdrop item. Listed rates and
-            availability require confirmation; the Pricing Manager does not manage these rental
-            offers.
+            Standalone flower-wall rentals are separate from calculator backdrop estimates. Confirm
+            availability and inclusions with our team.
           </p>
           <div className="mt-14 grid grid-cols-2 md:grid-cols-3 gap-4">
             {walls.map((w, i) => (
@@ -248,11 +246,37 @@ function ServicesPage() {
         </div>
       </section>
 
+      <section className="py-16 bg-surface" aria-labelledby="occasions-heading">
+        <div className="container mx-auto px-6">
+          <h2 id="occasions-heading" className="font-display text-4xl text-center">
+            Occasions we support
+          </h2>
+          <p className="mt-4 text-center">
+            Alongside weddings and personal celebrations, our services support corporate and charity
+            events.
+          </p>
+          <div className="mt-8 grid md:grid-cols-2 gap-6">
+            {occasions.map((o) => (
+              <article key={o.t} className="bg-background p-8">
+                <h3 className="font-display text-2xl">{o.t}</h3>
+                <p className="mt-4 text-sm leading-relaxed">{o.d}</p>
+              </article>
+            ))}
+          </div>
+          <p className="mt-6 text-center">
+            Looking for Event Design?{" "}
+            <a href="#service-design" className="text-brand underline underline-offset-4">
+              Explore our Design service
+            </a>
+            .
+          </p>
+        </div>
+      </section>
       <section className="py-24 bg-surface">
         <div className="container mx-auto px-6 max-w-3xl">
           <SectionHeading
             eyebrow="More ways to work together"
-            title="Occasions & specialist offerings"
+            title="Specialist offerings"
             subtitle="These existing offerings are separate from À la carte décor. Ask us about availability and scope; not every service is priced in the calculator."
           />
           <div className="mt-12 space-y-3">

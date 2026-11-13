@@ -1,3 +1,4 @@
+import { validGuestCount } from "@/lib/pricing-calculator/selection-state";
 import { usePricing } from "./PricingContext";
 import type { Basics } from "@/lib/pricing-calculator/validation";
 export function EventBasicsStep({
@@ -64,10 +65,9 @@ export function EventBasicsStep({
         </div>
         <small id="cc-guest-help">
           {assumptions.minGuests}–{assumptions.maxGuests.toLocaleString("en-US")} guests ·{" "}
-          {Number.isInteger(value.guestCount) && value.guestCount >= assumptions.minGuests
-            ? Math.ceil(value.guestCount / assumptions.guestsPerTable)
-            : "—"}{" "}
-          tables, allowing {assumptions.guestsPerTable} guests per table, rounded up.
+          {validGuestCount(value.guestCount, assumptions)
+            ? `${Math.ceil(value.guestCount / assumptions.guestsPerTable)} tables, allowing ${assumptions.guestsPerTable} guests per table, rounded up.`
+            : "Enter a valid guest count to calculate tables."}
         </small>
       </div>
       {errors

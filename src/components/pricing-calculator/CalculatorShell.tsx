@@ -1,6 +1,14 @@
+import { useDialogFocus } from "@/hooks/use-dialog-focus";
+import {
+  selectionState,
+  validGuestCount,
+  pausedSelectionMessage,
+} from "@/lib/pricing-calculator/selection-state";
+import { PausedEstimate } from "./PausedEstimate";
+import { MobileEstimateBar } from "./MobileEstimateBar";
 import { usePricing } from "./PricingContext";
 import { referencePricingEnabled, reviewEnvironment } from "@/config/review-environment";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, type MouseEvent } from "react";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import {
   basicsSchema,
@@ -36,7 +44,6 @@ export function CalculatorShell() {
     pricingItems,
     feeExplanation,
     assumptions,
-    exclusions,
   } = usePricing();
   const key = localPreview ? "coco-budget-admin-preview-v1" : "coco-budget-v2";
   const [basics, setBasics] = useState({
@@ -88,6 +95,13 @@ export function CalculatorShell() {
         setStorageNote("Progress could not be saved in this browser. Print a copy before leaving.");
       }
   }, [basics, selections, stage, ready, key, localPreview]);
+  const builderRef = useRef<HTMLElement>(null);
+  const reviewFocus = useDialogFocus(builderRef);
+  const retained = selectionState(basics, selections, pricingItems, allowReferencePrices);
+  const pausedMessage = pausedSelectionMessage(
+    retained.applicable.length,
+    !validGuestCount(basics.guestCount, assumptions),
+  );
   const issues = scopeIssues(basics, selections, pricingItems, configuration);
   const valid = issues.length === 0;
   const estimate = valid
@@ -101,7 +115,8 @@ export function CalculatorShell() {
     setStage("service");
   };
   const remove = (id: string) => setSelections(selections.filter((s) => s.id !== id));
-  const openReview = () => {
+  const openReview = (event: MouseEvent<HTMLButtonElement>) => {
+    reviewFocus.rememberOpener(event.currentTarget);
     setSaving(false);
     setReview(true);
   };
@@ -133,7 +148,13 @@ export function CalculatorShell() {
           </span>
         </div>
       )}
-      <section id="event-estimator" className="cc-builder" aria-label="Event budget estimator">
+      <section
+        ref={builderRef}
+        tabIndex={-1}
+        id="event-estimator"
+        className="cc-builder"
+        aria-label="Event budget estimator"
+      >
         <nav className="cc-stage-nav" aria-label="Estimator steps">
           <button
             aria-current={stage === "audience" ? "step" : undefined}
@@ -252,6 +273,12 @@ export function CalculatorShell() {
                   Change service
                 </button>
               </div>
+              <MobileEstimateBar
+                estimate={estimate}
+                state={retained}
+                pausedMessage={pausedMessage}
+                onReview={openReview}
+              />
               <EventBasicsStep value={basics} onChange={setBasics} errors={issues} />
               {!valid && (
                 <p role="alert" className="cc-error">
@@ -259,10 +286,11 @@ export function CalculatorShell() {
                   valid.
                 </p>
               )}
-              {estimate && estimate.excluded.length > 0 && (
+              {retained.excluded.length > 0 && (
                 <p role="status" className="cc-note">
-                  {estimate.excluded.length} selection(s) are retained but excluded from this
-                  service’s total. Switch back to Planning / Full event budget to restore them.
+                  {retained.excluded.length} selection(s) are retained but excluded from this
+                  service/audience’s total. Switch back to the original service and audience to
+                  restore them.
                 </p>
               )}
               <p className="cc-instruction">
@@ -292,6 +320,8 @@ export function CalculatorShell() {
                 .sort((a, b) => a.displayOrder - b.displayOrder)
                 .map((c) => {
                   const total = estimate?.categoryTotals.find((t) => t.id === c.id);
+                  const selected = retained.applicable.filter((r) => r.item.categoryId === c.id);
+                  const custom = selected.filter((r) => r.custom).length;
                   return (
                     <details
                       className="cc-category"
@@ -310,30 +340,21 @@ export function CalculatorShell() {
                       >
                         <h3>
                           {c.name}
-                          <small className="cc-category-count">
-                            {estimate?.rows.filter((r) => r.item.categoryId === c.id).length ?? 0}{" "}
-                            selected
-                          </small>
+                          <small className="cc-category-count">{selected.length} selected</small>
                         </h3>
                         <span>
-                          {total &&
-                          estimate?.rows.some((r) => r.item.categoryId === c.id && !r.custom)
-                            ? range(total.min, total.max)
-                            : estimate?.rows.some((r) => r.item.categoryId === c.id)
-                              ? "Pricing to confirm"
-                              : "Explore"}{" "}
-                          {estimate &&
-                            estimate.rows.some((r) => r.item.categoryId === c.id && r.custom) && (
-                              <small className="cc-partial">
-                                Priced items only ·{" "}
-                                {
-                                  estimate.rows.filter(
-                                    (r) => r.item.categoryId === c.id && r.custom,
-                                  ).length
-                                }{" "}
-                                additional requiring a quote
-                              </small>
-                            )}
+                          {!valid
+                            ? "Totals paused"
+                            : total && selected.some((r) => !r.custom)
+                              ? range(total.min, total.max)
+                              : selected.length
+                                ? "Pricing to confirm"
+                                : "Explore"}
+                          {custom > 0 && (
+                            <small className="cc-partial">
+                              {custom} additional requiring a quote
+                            </small>
+                          )}
                           <span aria-hidden="true">⌄</span>
                         </span>
                       </summary>
@@ -357,47 +378,25 @@ export function CalculatorShell() {
               {estimate ? (
                 <>
                   <EstimateSummary estimate={estimate} basics={basics} onRemove={remove} />
-                  <button className="cc-button cc-wide" onClick={openReview}>
+                  <button
+                    className="cc-button cc-wide"
+                    data-review-trigger="desktop"
+                    onClick={openReview}
+                  >
                     Review breakdown
                   </button>
                 </>
               ) : (
-                <p>Enter valid event details to see your estimate.</p>
+                <PausedEstimate state={retained} message={pausedMessage} onRemove={remove} />
               )}
             </aside>
           </div>
         )}
       </section>
       <PricingGuide />
-      {stage === "build" && (
-        <div className="cc-mobile-total">
-          <div aria-live="polite" aria-atomic="true">
-            <small>
-              {estimate?.pricedCount ?? 0} priced selections only
-              {estimate?.reference ? " · reference range" : ""}
-            </small>
-            <strong>
-              {estimate?.pricedCount
-                ? range(estimate.minimumTotal, estimate.maximumTotal)
-                : valid
-                  ? "Pricing to confirm"
-                  : "Check inputs"}
-            </strong>
-            <small>
-              {estimate?.customCount
-                ? `Priced items only · ${estimate.customCount} additional requiring a quote. Estimate, not a quote.`
-                : "Estimate, not a quote."}
-            </small>
-          </div>
-          <p className="cc-mobile-exclusions">{exclusions}</p>
-          <button className="cc-button" disabled={!valid} onClick={openReview}>
-            Review breakdown
-          </button>
-        </div>
-      )}
       <Dialog open={review} onOpenChange={setReview}>
-        <DialogContent className="cc-dialog cc-review">
-          <DialogTitle>Review your estimate</DialogTitle>
+        <DialogContent className="cc-dialog cc-review" {...reviewFocus.contentProps}>
+          <DialogTitle {...reviewFocus.titleProps}>Review your estimate</DialogTitle>
           <DialogDescription>
             Your selected details, their pricing basis, and the next steps.
           </DialogDescription>

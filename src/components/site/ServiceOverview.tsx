@@ -15,7 +15,8 @@ export function ServiceOverview() {
           {Object.entries(websitePricing.services).map(([id, service], i) => (
             <article
               key={id}
-              className={`p-8 ${["bg-tint-blue", "bg-tint-blush", "bg-tint-sage"][i]}`}
+              id={`service-${id}`}
+              className={`scroll-mt-28 p-8 ${["bg-tint-blue", "bg-tint-blush", "bg-tint-sage"][i]}`}
             >
               <h3 className="font-display text-3xl">{service.name}</h3>
               <p className="mt-4 leading-relaxed">{service.description}</p>
