@@ -1,16 +1,10 @@
+import { gallery, homeGallery } from "@/config/gallery";
 import { ServiceOverview } from "@/components/site/ServiceOverview";
 import { reviewEnvironment } from "@/config/review-environment";
 import { CalculatorCTA } from "@/components/site/CalculatorCTA";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowRight, Flower2, Instagram, Heart, Briefcase, Cake, Baby, Star } from "lucide-react";
-import heroImg from "@/assets/hero-event.jpg";
-import p1 from "@/assets/portfolio-1.jpg";
-import p2 from "@/assets/portfolio-2.jpg";
-import p3 from "@/assets/portfolio-3.jpg";
-import p4 from "@/assets/portfolio-4.jpg";
-import p5 from "@/assets/portfolio-5.jpg";
-import p6 from "@/assets/portfolio-6.jpg";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { Reveal } from "@/components/site/Reveal";
 
@@ -44,28 +38,28 @@ const occasions = [
     icon: Briefcase,
     title: "Corporate & Galas",
     text: "A strategic approach that aligns with your company's goals, reinforces your brand and gives real value to attendees, from venue selection to theme, branding and program development.",
-    img: p3,
+    image: gallery[2],
   },
   {
     key: "baby",
     icon: Baby,
     title: "Baby Showers",
     text: "Soft palettes, dreamy dessert tables and picture-perfect backdrops for welcoming the little one.",
-    img: p5,
+    image: gallery[4],
   },
   {
     key: "birthday",
     icon: Cake,
     title: "Birthdays & Milestones",
     text: "Planning and design for birthdays and milestones, shaped around your priorities.",
-    img: p2,
+    image: gallery[1],
   },
   {
     key: "wedding",
     icon: Heart,
     title: "Weddings",
     text: "Whether you envision an intimate gathering or a grand celebration, trust us to be your partner in creating a wedding cherished forever.",
-    img: p1,
+    image: gallery[0],
   },
 ];
 
@@ -111,12 +105,11 @@ function OccasionsSection() {
           ))}
         </div>
         <div key={o.key} className="mt-12 grid md:grid-cols-2 gap-0 items-stretch animate-fade-up">
-          <div className="overflow-hidden aspect-[4/3] md:aspect-auto">
-            <img
-              src={o.img}
-              alt="Event gallery inspiration; not a documented example of this occasion"
-              className="h-full w-full object-cover"
-            />
+          <div className="relative overflow-hidden aspect-[4/3] md:aspect-auto">
+            <img src={o.image.src} alt={o.image.alt} className="h-full w-full object-cover" />
+            <p className="absolute bottom-3 left-3 right-3 bg-background px-4 py-2 text-sm">
+              Design inspiration · {o.image.label}. Event association unconfirmed.
+            </p>
           </div>
           <div className={`${tints[active]} p-10 md:p-16 flex flex-col justify-center`}>
             <span className="font-display italic text-5xl text-brand/40">0{active + 1}</span>
@@ -141,8 +134,8 @@ function HomePage() {
       {/* HERO */}
       <section className="relative pt-28 pb-12 md:pt-32 md:pb-16 flex items-center justify-center overflow-hidden">
         <img
-          src={heroImg}
-          alt="Luxurious event reception"
+          src={gallery[6].src}
+          alt={gallery[6].alt}
           width={1920}
           height={1080}
           className="absolute inset-0 h-full w-full object-cover scale-105 animate-[fade-up_1.6s_ease-out_both]"
@@ -204,8 +197,8 @@ function HomePage() {
               <div className="absolute -top-6 -left-6 w-2/3 h-2/3 bg-tint-blue" />
               <div className="absolute -bottom-6 -right-6 w-1/2 h-1/2 bg-tint-blush" />
               <img
-                src={p4}
-                alt="Coco Cabana event decor"
+                src={gallery[3].src}
+                alt={gallery[3].alt}
                 loading="lazy"
                 className="relative aspect-[4/5] w-full object-cover"
               />
@@ -265,26 +258,22 @@ function HomePage() {
             subtitle="Explore the gallery, then tell us which details you are drawn to. Images are not tier packages or price examples."
           />
           <div className="mt-16 grid grid-cols-2 md:grid-cols-4 grid-rows-2 gap-4 md:h-[640px]">
-            {[
-              { src: p1, t: "Gallery detail 1", c: "md:col-span-2 md:row-span-2" },
-              { src: p2, t: "Gallery detail 2", c: "" },
-              { src: p6, t: "Gallery detail 3", c: "" },
-              { src: p3, t: "Gallery detail 4", c: "" },
-              { src: p5, t: "Gallery detail 5", c: "" },
-            ].map((g) => (
+            {homeGallery.map((g, i) => (
               <Link
                 to="/portfolio"
-                key={g.t}
-                className={`group relative overflow-hidden aspect-square md:aspect-auto ${g.c}`}
+                hash={g.id}
+                aria-label={`View ${g.label} in the portfolio`}
+                key={g.id}
+                className={`group relative overflow-hidden aspect-square md:aspect-auto ${i === 0 ? "md:col-span-2 md:row-span-2" : ""}`}
               >
                 <img
                   src={g.src}
-                  alt={g.t}
+                  alt={g.alt}
                   loading="lazy"
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                <div className="absolute inset-x-3 bottom-3 bg-background px-4 py-3 translate-y-[150%] group-hover:translate-y-0 transition-transform duration-500">
-                  <p className="font-display text-lg text-heading">{g.t}</p>
+                <div className="absolute inset-x-3 bottom-3 bg-background px-4 py-3  transition-transform duration-500">
+                  <p className="font-display text-lg text-heading">{g.label}</p>
                 </div>
               </Link>
             ))}
@@ -378,7 +367,7 @@ function InstagramSection() {
         <div className="mt-12 max-w-5xl mx-auto">
           {/* Instagram widget placeholder: paste a SnapWidget/EmbedSocial iframe here for the live feed. */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {[p1, p2, p3, p4, p5, p6, heroImg, p2].map((src, i) => (
+            {[...gallery, gallery[1]].map((image, i) => (
               <a
                 key={i}
                 href="https://www.instagram.com/cococabana.htx/"
@@ -387,8 +376,8 @@ function InstagramSection() {
                 className={`group relative aspect-square overflow-hidden block ${i % 2 ? "md:translate-y-6" : ""}`}
               >
                 <img
-                  src={src}
-                  alt="Selected event inspiration"
+                  src={image.src}
+                  alt={image.alt}
                   loading="lazy"
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110 group-hover:rotate-1"
                 />

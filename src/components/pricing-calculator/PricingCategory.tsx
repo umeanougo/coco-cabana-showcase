@@ -1,5 +1,7 @@
+import { useDialogFocus } from "@/hooks/use-dialog-focus";
+import { validGuestCount } from "@/lib/pricing-calculator/selection-state";
 import { usePricing } from "./PricingContext";
-import { useState } from "react";
+import { useState, useRef, useId } from "react";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { applicable, type Category, type Tier } from "@/config/pricing-calculator";
 import { range } from "@/lib/pricing-calculator/calculate-estimate";
@@ -27,6 +29,10 @@ export function PricingCategory({
   allowReferencePrices: boolean;
 }) {
   const { pricingItems, tierLabels, tierDescriptions, assumptions } = usePricing();
+  const fallbackRef = useRef<HTMLDivElement>(null);
+  const dialogFocus = useDialogFocus(fallbackRef);
+  const descriptionId = useId();
+  const guestsValid = validGuestCount(basics.guestCount, assumptions);
   const [example, setExample] = useState<string | null>(null);
   const items = pricingItems
     .filter((i) => i.categoryId === categoryId && applicable(i, basics.audience, basics.service))
@@ -45,7 +51,7 @@ export function PricingCategory({
   const sample = items.find((i) => i.id === example);
   return (
     <>
-      <div className="cc-item-list">
+      <div className="cc-item-list" ref={fallbackRef} tabIndex={-1} aria-label="Pricing items">
         {items.map((item) => {
           const selected = selections.find((s) => s.id === item.id);
           const numeric =
@@ -63,12 +69,16 @@ export function PricingCategory({
                       </span>
                     )}
                   </h4>
-                  <small>
+                  <small id={`${descriptionId}-${item.id}-unit`}>
                     {units[item.calculationType]}
                     {item.calculationType === "per_guest"
-                      ? ` · × ${basics.guestCount} guests`
+                      ? guestsValid
+                        ? ` · × ${basics.guestCount} guests`
+                        : " · Enter a valid guest count to calculate this item."
                       : item.calculationType === "per_table"
-                        ? ` · × ${Math.ceil(basics.guestCount / assumptions.guestsPerTable)} tables (${assumptions.guestsPerTable} guests per table, rounded up)`
+                        ? guestsValid
+                          ? ` · × ${Math.ceil(basics.guestCount / assumptions.guestsPerTable)} tables (${assumptions.guestsPerTable} guests per table, rounded up)`
+                          : " · Enter a valid guest count to calculate tables."
                         : item.calculationType === "flat"
                           ? " · counted once"
                           : ""}
@@ -78,7 +88,14 @@ export function PricingCategory({
                   </small>
                 </div>
                 {item.status !== "missing" && (
-                  <button type="button" className="cc-link" onClick={() => setExample(item.id)}>
+                  <button
+                    type="button"
+                    className="cc-link"
+                    onClick={(event) => {
+                      dialogFocus.rememberOpener(event.currentTarget);
+                      setExample(item.id);
+                    }}
+                  >
                     {Object.values(item.examples ?? {}).some((e) => e?.approval === "approved")
                       ? "See examples"
                       : "About tiers"}
@@ -127,11 +144,15 @@ export function PricingCategory({
                       type="button"
                       aria-pressed={selected?.tier === tier}
                       aria-label={`${tierLabels[tier]} ${item.name}`}
+                      aria-describedby={`${descriptionId}-${item.id}-${tier}-price ${descriptionId}-${item.id}-unit ${descriptionId}-${item.id}-${tier}-guide`}
                       key={tier}
                       onClick={() => choose(item.id, tier)}
                     >
                       <strong>{tierLabels[tier]}</strong>
-                      <span className="cc-tier-direction">
+                      <span
+                        className="cc-tier-direction"
+                        id={`${descriptionId}-${item.id}-${tier}-guide`}
+                      >
                         {item.examples?.[tier]?.approval === "approved"
                           ? item.examples[tier]!.description
                           : tier === "economic"
@@ -140,7 +161,7 @@ export function PricingCategory({
                               ? "Middle budget direction"
                               : "Premium budget direction"}
                       </span>
-                      <span>
+                      <span id={`${descriptionId}-${item.id}-${tier}-price`}>
                         {numeric && item.tiers[tier]
                           ? range(item.tiers[tier]!.minimum, item.tiers[tier]!.maximum)
                           : "Price pending"}
@@ -183,8 +204,8 @@ export function PricingCategory({
         })}
       </div>
       <Dialog open={!!sample} onOpenChange={(open) => !open && setExample(null)}>
-        <DialogContent className="cc-dialog">
-          <DialogTitle>{sample?.name}: explore the tiers</DialogTitle>
+        <DialogContent className="cc-dialog" {...dialogFocus.contentProps}>
+          <DialogTitle {...dialogFocus.titleProps}>{sample?.name}: explore the tiers</DialogTitle>
           <DialogDescription>
             Compare the budget direction for {sample?.name.toLowerCase()}. Only approved item
             examples appear here; general tier guidance does not promise specific products or

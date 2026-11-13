@@ -46,3 +46,20 @@ These are distinct promotions, not duplicate prices for a single package. No sec
 - These checks do not establish customer comprehension, conversion lift, a full assistive-technology audit or physical-device compatibility. External delivery/bookings remain disabled. Production content approval and integrations remain outside scope.
 
 Screenshots and deployment observations are stored locally in `docs/coco-cabana-implementation/`, excluded from Git alongside the existing reference packet.
+
+## Focused correction pass — 2026-11-13
+
+Baseline: `044643e4f1ea28342f846cb548319bbfa7678f54` (PR #7). The reviewed selection-count, dialog-focus/close-size and gallery-reference defects were present; no duplicate fixes were skipped.
+
+- Selection identity/counts now survive invalid guest/quantity inputs independently of the calculation. Applicable, additional quote-only and excluded retained selections remain distinct; current money is paused, invalid guest/table multipliers are replaced with guidance, and restoring valid inputs restores the original estimate.
+- A shared controlled-dialog focus helper records the exact opener, focuses the heading initially and restores the opener or a visible fallback. Tier, desktop/mobile breakdown and gallery dialogs use it. Close targets are 44×44 CSS pixels. Tier buttons reference their rendered unit, price and guidance, retaining pressed state.
+- Important pricing guidance is 13–14px and wraps. Mobile clearance measures the actual bar. Below 600px available viewport height it becomes an inline summary above inputs; focus clearance runs after native focus scrolling. The full selected-item summary is also available in the mobile page flow. This adjacent change prevents enlarged qualifiers from obscuring keyboard-focused controls.
+- One shared gallery source preserves Portfolio references 1–7 and maps Home's third image to image 6. Labels remain visible, links target matching portfolio anchors, alt text describes visible image content, and occasion images visibly disclose unconfirmed associations.
+- Services separates Corporate/Charity occasions from retained specialist offerings, links duplicate Event Design to the canonical Design section, and uses customer-facing rental clarification. Rental amounts/promotions are untouched.
+- A private approval worksheet covers all twelve requested item-tier combinations, candle overlap, rates/minima/exclusions, eight missing FAQ topics, verified examples, image rights, offers and specialist/timeline decisions. It is in the existing ignored implementation documentation directory, not public source.
+
+Validation: 32 tests pass (three focused regressions added); typecheck and production build pass; lint has zero errors and the same seven existing Fast Refresh warnings. Existing toolchain build warnings remain (Node module registration deprecation, dependency unused imports, Wrangler main override). Catalog, fee engine, pricing configuration validation, Manager storage/import/export/version logic and integration settings have no changes.
+
+Local browser evidence confirms the exact $20,250–$40,000 subtotal + $4,050–$5,000 fee = $24,300–$45,000 reference, clear/zero/restore continuity, service switches, planner fee separation, custom scope, tier/removal updates, focus return including hidden desktop-opener fallback, 44px close targets, associated tier descriptions, matching gallery anchors and Services grouping. Mobile sizes checked: 390×844, 360×740, short 390×500; tablet 768×1024. Measured 390px bar with one custom item: 239.375px, with dynamic page clearance. No horizontal overflow in these checked states. Native mobile keyboard and a full assistive-technology audit are not established by these checks.
+
+Manager save/reload, preview isolation, downloaded JSON export, rejected invalid JSON and reviewed valid reimport passed using a disposable local draft. Native reset confirmation stalled the browser automation; its cleanup result must be checked separately and is not inferred from the click. Private final verification/deployment observations and screenshots are recorded in `docs/coco-cabana-implementation/ux-corrections/README.md`.
