@@ -126,7 +126,7 @@ function AboutPage() {
 
       <section className="py-24 bg-surface">
         <div className="container mx-auto px-6 text-center max-w-2xl">
-          <p className="divider-gold text-[11px] tracking-luxe uppercase mb-5">Featured Event</p>
+          <p className="divider-gold text-[11px] tracking-luxe uppercase mb-5">Your next event</p>
           <h2 className="font-display text-4xl md:text-5xl">
             Love is <span className="italic text-brand-gradient">in the air</span>
           </h2>

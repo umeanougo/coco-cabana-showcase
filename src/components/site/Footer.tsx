@@ -1,3 +1,4 @@
+import { reviewEnvironment } from "@/config/review-environment";
 import { Link } from "@tanstack/react-router";
 import { Mail, Clock } from "lucide-react";
 import logo from "@/assets/coco-cabana-logo.png";
@@ -65,7 +66,8 @@ export function Footer() {
           <ul className="space-y-3 text-sm">
             <li>
               <a
-                href="mailto:hello@cococabana.us"
+                href={reviewEnvironment.enabled ? undefined : "mailto:hello@cococabana.us"}
+                aria-disabled={reviewEnvironment.enabled}
                 className="flex items-center gap-2 hover:text-brand transition"
               >
                 <Mail size={16} />

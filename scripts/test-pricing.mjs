@@ -9,17 +9,29 @@ const { build } = viteRequire("esbuild");
 const directory = await mkdtemp(join(tmpdir(), "coco-tests-"));
 try {
   await build({
-    entryPoints: ["tests/pricing.test.ts", "tests/pricing-manager.test.ts"],
+    entryPoints: [
+      "tests/pricing.test.ts",
+      "tests/pricing-manager.test.ts",
+      "tests/pricing-ux.test.ts",
+    ],
     bundle: true,
     platform: "node",
     format: "esm",
+    banner: {
+      js: 'import { createRequire as testCreateRequire } from "node:module"; const require = testCreateRequire(import.meta.url);',
+    },
     define: { "import.meta.env": "{}" },
     outdir: directory,
     outExtension: { ".js": ".mjs" },
   });
   const result = spawnSync(
     process.execPath,
-    ["--test", join(directory, "pricing.test.mjs"), join(directory, "pricing-manager.test.mjs")],
+    [
+      "--test",
+      join(directory, "pricing.test.mjs"),
+      join(directory, "pricing-manager.test.mjs"),
+      join(directory, "pricing-ux.test.mjs"),
+    ],
     { stdio: "inherit" },
   );
   process.exitCode = result.status ?? 1;

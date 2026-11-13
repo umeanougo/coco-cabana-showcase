@@ -1,4 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import p1 from "@/assets/portfolio-1.jpg";
 import p2 from "@/assets/portfolio-2.jpg";
@@ -29,23 +30,14 @@ export const Route = createFileRoute("/portfolio")({
   component: PortfolioPage,
 });
 
-const projects = [
-  { src: p1, title: "Mara Villa Katy", category: "Wedding" },
-  { src: p2, title: "Emeka's Lavish 30th", category: "Birthday" },
-  { src: p3, title: "Hotel Laura Gala", category: "Corporate" },
-  { src: p4, title: "Adrianne Michelle Bridal", category: "Bridal Shower" },
-  { src: p5, title: "Soft Pastels Baby Shower", category: "Baby Shower" },
-  { src: p6, title: "Rossy's Birthday Bash", category: "Birthday" },
-  { src: heroImg, title: "Moyi & Josh", category: "Wedding" },
-  { src: p1, title: "Flower Wall Series", category: "Rentals" },
-];
-
-const tints = ["bg-tint-blue", "bg-tint-blush", "bg-tint-sage", "bg-tint-tan"];
+// Asset-to-event associations are not verified. Do not attach client names or budgets.
+const projects = [p1, p2, p3, p4, p5, p6, heroImg].map((src, i) => ({
+  src,
+  title: `Gallery image ${i + 1}`,
+}));
 
 function PortfolioPage() {
-  const cats = ["All", ...Array.from(new Set(projects.map((p) => p.category)))];
-  const [cat, setCat] = useState("All");
-  const shown = cat === "All" ? projects : projects.filter((p) => p.category === cat);
+  const [selected, setSelected] = useState<number | null>(null);
   return (
     <>
       <section className="relative pt-40 pb-20 overflow-hidden">
@@ -56,29 +48,32 @@ function PortfolioPage() {
             Our <span className="italic text-brand-gradient">Portfolio</span>
           </h1>
           <p className="mt-6 max-w-2xl mx-auto text-muted-foreground">
-            Our gallery highlights some of our memorable moments, encapsulating our journey through
-            a multitude of events, each unique in its purpose, scale, and impact, yet all sharing
-            the common thread of our unwavering commitment to excellence.
+            Explore the existing image collection and open a detail to look closer. Bring the image
+            number to your inquiry so we can discuss the look you have in mind. Images do not define
+            a tier package or an investment range.
           </p>
         </div>
       </section>
 
       <section className="py-16 bg-surface">
         <div className="container mx-auto px-6">
-          <div className="flex flex-wrap justify-center gap-3 mb-12">
-            {cats.map((c, i) => (
-              <button
-                key={c}
-                onClick={() => setCat(c)}
-                className={`px-5 py-2.5 text-[11px] tracking-[0.2em] uppercase transition ${cat === c ? "bg-brand text-primary-foreground" : `${tints[i % 4]} text-brand hover:opacity-80`}`}
-              >
-                {c}
-              </button>
-            ))}
+          <div className="flex flex-wrap justify-center gap-6 mb-10">
+            <Link to="/services" className="text-brand underline">
+              Compare our services
+            </Link>
+            <Link to="/pricing" className="text-brand underline">
+              Explore a starting budget
+            </Link>
+            <Link to="/contact" className="text-brand underline">
+              Start an inquiry
+            </Link>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {shown.map((p) => (
-              <figure
+            {projects.map((p, i) => (
+              <button
+                type="button"
+                onClick={() => setSelected(i)}
+                aria-label={`Open ${p.title}`}
                 key={p.title}
                 className="group relative overflow-hidden aspect-[4/5] animate-fade-up"
               >
@@ -88,17 +83,34 @@ function PortfolioPage() {
                   loading="lazy"
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <figcaption className="absolute inset-x-4 bottom-4 bg-background p-5 transition-transform duration-500 group-hover:-translate-y-2">
-                  <p className="text-[10px] tracking-luxe uppercase text-brand mb-1">
-                    {p.category}
-                  </p>
-                  <p className="font-display text-2xl">{p.title}</p>
-                </figcaption>
-              </figure>
+                <span className="absolute inset-x-4 bottom-4 bg-background p-5 transition-transform duration-500 group-hover:-translate-y-2">
+                  <span className="block text-xs text-brand mb-1">View detail →</span>
+                  <span className="block font-display text-2xl">{p.title}</span>
+                </span>
+              </button>
             ))}
           </div>
         </div>
       </section>
+      <Dialog open={selected !== null} onOpenChange={(open) => !open && setSelected(null)}>
+        <DialogContent className="max-w-3xl max-h-[90dvh] overflow-y-auto">
+          <DialogTitle>{selected !== null ? projects[selected].title : "Gallery"}</DialogTitle>
+          <DialogDescription>
+            Inspiration to discuss with our team, not a priced package. Image numbers are not
+            automatically sent with your inquiry.
+          </DialogDescription>
+          {selected !== null && (
+            <img
+              src={projects[selected].src}
+              alt={projects[selected].title}
+              className="w-full max-h-[60dvh] object-contain"
+            />
+          )}
+          <Link to="/contact" className="text-brand underline">
+            Discuss your event →
+          </Link>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

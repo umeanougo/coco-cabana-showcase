@@ -32,12 +32,11 @@ function ContactPage() {
           Let's <span className="italic text-brand-gradient">create together</span>
         </h1>
         <p className="mt-6 max-w-2xl mx-auto text-muted-foreground">
-          Share a few details and we'll be in touch within 1–2 business days to begin designing your
-          celebration.
+          Tell us what you are planning and the support you need: Planning, Design or À la carte
+          décor.
         </p>
       </section>
 
-      <CalculatorCTA compact />
       <section className="py-20 bg-surface">
         <div className="container mx-auto px-6">
           <div className="max-w-2xl mx-auto text-center mb-12">
@@ -47,45 +46,37 @@ function ContactPage() {
               discuss the details.
             </p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid md:grid-cols-3 gap-5">
             {[
               {
-                t: "General Contact",
-                d: "Would you like us to handle planning or decor for your upcoming event?",
+                t: "Planning or design for my event",
+                d: "For personal celebrations and corporate organisers. Tell us whether you need Planning, Design or À la carte décor.",
                 c: "bg-tint-blue",
               },
               {
-                t: "Luxury Candle Staging",
-                d: "Just interested in our candle staging service? Use our form or visit luxurycandlestaging.com.",
+                t: "Planner collaboration",
+                d: "For professional planners seeking Design or À la carte décor support for a client.",
                 c: "bg-tint-blush",
               },
               {
-                t: "360 Photo Booth",
-                d: "Just interested in our photo booth? Fill out the form or email 360photobooth@cococabana.us.",
+                t: "Rentals & specialist services",
+                d: "Ask about flower walls, the 360 photo booth, candle staging or another specific offering.",
                 c: "bg-tint-sage",
               },
-              {
-                t: "Flower Wall Rental",
-                d: "Renting a flower wall and possibly adding on a neon sign? Use this form.",
-                c: "bg-tint-tan",
-              },
             ].map((f) => (
-              <a
-                key={f.t}
-                href={reviewEnvironment.enabled ? undefined : site.honeybook}
-                aria-disabled={reviewEnvironment.enabled}
-                target="_blank"
-                rel="noreferrer"
-                className={`group block p-8 ${f.c} lift`}
-              >
+              <a key={f.t} href="#inquiry-form" className={`group block p-8 ${f.c} lift`}>
                 <h3 className="font-display text-2xl mb-3">{f.t}</h3>
                 <p className="text-sm text-foreground/80 leading-relaxed">{f.d}</p>
                 <span className="mt-5 inline-block text-[10px] tracking-[0.25em] uppercase text-brand border-b border-brand/40 group-hover:border-brand">
-                  {reviewEnvironment.enabled ? "Forms disabled in review" : "Open form →"}
+                  View inquiry options →
                 </span>
               </a>
             ))}
           </div>
+          <p className="mt-6 text-sm text-center text-muted-foreground">
+            All three routes use the same general HoneyBook inquiry form. Please describe your
+            service there; your selection and calculator details are not automatically transferred.
+          </p>
         </div>
       </section>
 
@@ -98,7 +89,11 @@ function ContactPage() {
               <ul className="space-y-5 text-sm">
                 <li className="flex items-start gap-3">
                   <Mail className="text-brand mt-0.5 shrink-0" size={18} />
-                  <a href="mailto:hello@cococabana.us" className="hover:text-brand transition">
+                  <a
+                    href={reviewEnvironment.enabled ? undefined : "mailto:hello@cococabana.us"}
+                    aria-disabled={reviewEnvironment.enabled}
+                    className="hover:text-brand transition"
+                  >
                     hello@cococabana.us
                   </a>
                 </li>
@@ -133,22 +128,22 @@ function ContactPage() {
             <div className="p-8 bg-tint-blush">
               <p className="divider-gold text-[10px] tracking-luxe uppercase mb-4">A note</p>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                We respond to every inquiry personally. Once submitted, you'll receive a
-                confirmation and we'll follow up to schedule a discovery call.
+                An inquiry starts a conversation about your event. A consultation is a separate next
+                step; opening this page does not reserve a date or book an appointment.
               </p>
             </div>
           </aside>
 
           {/* HoneyBook contact form — opens in new tab (HoneyBook blocks iframe embedding) */}
-          <div className="lg:col-span-2">
+          <div id="inquiry-form" className="lg:col-span-2 scroll-mt-28">
             <div className="bg-surface p-10 md:p-16 shadow-luxe text-center">
               <p className="divider-gold text-[11px] tracking-luxe uppercase mb-5">Inquiry form</p>
               <h2 className="font-display text-3xl md:text-4xl mb-5">
                 Tell us about your <span className="italic text-brand-gradient">event</span>
               </h2>
               <p className="text-sm text-muted-foreground max-w-md mx-auto mb-8 leading-relaxed">
-                Click below to open our full inquiry form. You'll share details about your date,
-                guest count, vision, and budget — it takes just a few minutes.
+                The general inquiry form opens in HoneyBook. Include your service, date, guest count
+                and priorities, along with any selections you want to discuss.
               </p>
               <a
                 href={reviewEnvironment.enabled ? undefined : site.honeybook}
@@ -168,6 +163,7 @@ function ContactPage() {
           </div>
         </div>
       </section>
+      <CalculatorCTA compact />
     </>
   );
 }

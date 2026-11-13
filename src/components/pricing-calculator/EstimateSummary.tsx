@@ -18,13 +18,17 @@ export function EstimateSummary({
       <p className="cc-eyebrow">
         {serviceName(basics.audience, basics.service)} · {basics.guestCount} guests
       </p>
-      <h2>Your event estimate</h2>
+      <h2>Estimated cost of your selected items</h2>
       <p className="cc-total">
         {estimate.pricedCount
           ? range(estimate.minimumTotal, estimate.maximumTotal)
           : estimate.rows.length
             ? "Pricing to confirm"
             : "Choose your first detail"}
+      </p>
+      <p className="cc-scope">
+        <strong>{estimate.pricedCount} priced selections only.</strong> Other event elements are not
+        included. {exclusions}
       </p>
       <p className="cc-partial">{partialContext(estimate)}</p>
       <p className="cc-estimate-caption">
@@ -123,7 +127,6 @@ export function EstimateSummary({
           rounded up. Displayed amounts are rounded to whole dollars, or the nearest $10 above
           $1,000; calculations retain cents.
         </p>
-        <p>{exclusions}</p>
       </details>
       {estimate.reference && estimate.underReferenceMinimum && (
         <p className="cc-note">
