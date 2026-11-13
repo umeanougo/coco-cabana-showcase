@@ -65,6 +65,13 @@ export function PricingCategory({
                   </h4>
                   <small>
                     {units[item.calculationType]}
+                    {item.calculationType === "per_guest"
+                      ? ` · × ${basics.guestCount} guests`
+                      : item.calculationType === "per_table"
+                        ? ` · × ${Math.ceil(basics.guestCount / assumptions.guestsPerTable)} tables (${assumptions.guestsPerTable} guests per table, rounded up)`
+                        : item.calculationType === "flat"
+                          ? " · counted once"
+                          : ""}
                     {item.status === "reference" && allowReferencePrices
                       ? " · reference prices"
                       : ""}
@@ -80,6 +87,16 @@ export function PricingCategory({
                 )}
               </div>
               {item.description && <p className="cc-fine">{item.description}</p>}
+              {item.inclusions && <p className="cc-fine">Established scope: {item.inclusions}</p>}
+              {item.pricingNotes && <p className="cc-fine">Price guidance: {item.pricingNotes}</p>}
+              {!item.inclusions &&
+                !item.pricingNotes &&
+                item.calculationType !== "custom_quote" && (
+                  <p className="cc-fine">
+                    Compare budget levels for {item.name.toLowerCase()}. Specific tier inclusions
+                    are not yet confirmed; the range is not a defined package.
+                  </p>
+                )}
               {(item.inclusions || item.exclusions || item.pricingNotes) && (
                 <details className="cc-help">
                   <summary>Item details</summary>
@@ -114,6 +131,15 @@ export function PricingCategory({
                       onClick={() => choose(item.id, tier)}
                     >
                       <strong>{tierLabels[tier]}</strong>
+                      <span className="cc-tier-direction">
+                        {item.examples?.[tier]?.approval === "approved"
+                          ? item.examples[tier]!.description
+                          : tier === "economic"
+                            ? "Basic budget direction"
+                            : tier === "average"
+                              ? "Middle budget direction"
+                              : "Premium budget direction"}
+                      </span>
                       <span>
                         {numeric && item.tiers[tier]
                           ? range(item.tiers[tier]!.minimum, item.tiers[tier]!.maximum)
@@ -160,9 +186,15 @@ export function PricingCategory({
         <DialogContent className="cc-dialog">
           <DialogTitle>{sample?.name}: explore the tiers</DialogTitle>
           <DialogDescription>
-            Compare the direction for each tier. Item-specific inspiration photos are awaiting
-            approval; these descriptions are not a promise of particular products.
+            Compare the budget direction for {sample?.name.toLowerCase()}. Only approved item
+            examples appear here; general tier guidance does not promise specific products or
+            inclusions.
           </DialogDescription>
+          {sample?.description && <p>{sample.description}</p>}
+          <p className="cc-fine">
+            {sample?.inclusions || "Item-specific inclusions need confirmation."}{" "}
+            {sample?.pricingNotes || "Final scope depends on your date, venue and design."}
+          </p>
           <div className="cc-example-list">
             {(Object.keys(tierLabels) as Tier[]).map((t) => (
               <div key={t}>

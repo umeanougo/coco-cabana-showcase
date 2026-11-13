@@ -112,7 +112,7 @@ export function PricingGuide() {
       </section>
       <section className="cc-guide-section cc-fee-guide">
         <div>
-          <p className="cc-eyebrow">Every number, upfront</p>
+          <p className="cc-eyebrow">Fees shown separately</p>
           <h2>How our fees work.</h2>
           <p>
             Planning uses the selected vendors and décor subtotal. Design uses décor only. Each end

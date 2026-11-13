@@ -7,7 +7,7 @@ export const Route = createFileRoute("/pricing")({
       {
         name: "description",
         content:
-          "See what your Houston wedding or event really costs. Build a free estimate for planning, design and decor. Every number, upfront.",
+          "Explore a starting budget for selected wedding or event elements in Houston. Planning, Design and À la carte décor, with fees shown separately.",
       },
       { name: "robots", content: "noindex, nofollow" },
     ],

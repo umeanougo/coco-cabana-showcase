@@ -36,6 +36,7 @@ export function CalculatorShell() {
     pricingItems,
     feeExplanation,
     assumptions,
+    exclusions,
   } = usePricing();
   const key = localPreview ? "coco-budget-admin-preview-v1" : "coco-budget-v2";
   const [basics, setBasics] = useState({
@@ -45,6 +46,7 @@ export function CalculatorShell() {
     }),
     [selections, setSelections] = useState<Selection[]>([]),
     [stage, setStage] = useState<"audience" | "service" | "build">("audience");
+  const [openCategories, setOpenCategories] = useState<string[]>([]);
   const [ready, setReady] = useState(false),
     [storageNote, setStorageNote] = useState("");
   const [review, setReview] = useState(false),
@@ -108,12 +110,13 @@ export function CalculatorShell() {
       <header className="cc-hero">
         <p className="cc-eyebrow">Coco Cabana · Houston event pricing</p>
         <h1>
-          What will your Houston
-          <br className="hidden sm:block" /> event really cost?
+          Build a starting budget
+          <br className="hidden sm:block" /> for your event.
         </h1>
         <p>
-          Every number, upfront. Explore the details, find your range,
-          <br className="hidden sm:block" /> and take the next step when you’re ready.
+          Explore ranges for the elements you choose, with fees shown separately.
+          <br className="hidden sm:block" /> Add what matters to you; no email needed to see the
+          total.
         </p>
         <a className="cc-button" href="#event-estimator">
           Start my estimate <span aria-hidden="true">↘</span>
@@ -158,14 +161,14 @@ export function CalculatorShell() {
             <div className="cc-choice-list">
               <button onClick={() => pickAudience("client")}>
                 <span>
-                  <strong>I’m planning my own event</strong>
-                  <small>Weddings, birthdays, showers and celebrations.</small>
+                  <strong>I’m planning an event for myself or my organisation.</strong>
+                  <small>Personal celebrations and corporate events.</small>
                 </span>
                 <span aria-hidden="true">→</span>
               </button>
               <button onClick={() => pickAudience("planner")}>
                 <span>
-                  <strong>I’m a planner or event pro</strong>
+                  <strong>I’m a professional planner working with clients.</strong>
                   <small>Budget your clients’ events for free.</small>
                 </span>
                 <span aria-hidden="true">→</span>
@@ -185,45 +188,54 @@ export function CalculatorShell() {
                 ? "Budget your clients’ events in minutes."
                 : "How would you like to work with us?"}
             </h2>
-            <p>Explore a service to see what it includes and how its fee works.</p>
+            <p>Choose your service below. Open the details if you need more guidance.</p>
             <div className="cc-service-list">
               {(Object.keys(services) as Service[]).map((id) => (
-                <details key={id}>
-                  <summary>
-                    <span>
-                      <strong>{serviceName(basics.audience, id)}</strong>
-                      <small>
-                        {basics.audience === "planner" && id === "planning"
-                          ? "Every vendor plus décor, for your own planning."
-                          : services[id].description}
-                      </small>
-                    </span>
-                    <span aria-hidden="true">+</span>
-                  </summary>
-                  <div>
+                <article key={id} className="cc-service-card">
+                  <h3>
+                    {services[id].name}
+                    {basics.audience === "planner" && id === "planning"
+                      ? " · Full event budget"
+                      : ""}
+                  </h3>
+                  <p>
+                    {basics.audience === "planner" && id === "planning"
+                      ? "Budget vendors and décor for your client. You remain the planner."
+                      : services[id].description}
+                  </p>
+                  <p className="cc-fee-copy">
+                    {id === "alacarte"
+                      ? "No planning or design fee; selected décor only."
+                      : basics.audience === "planner" && id === "planning"
+                        ? "No Coco Cabana planning fee. Add your own optional percentage."
+                        : "Selected items plus the tiered service fee."}
+                  </p>
+                  <button
+                    className="cc-button"
+                    onClick={() => {
+                      setBasics({ ...basics, service: id });
+                      setStage("build");
+                    }}
+                  >
+                    Continue with {serviceName(basics.audience, id)}
+                  </button>
+                  <details className="cc-help">
+                    <summary>Scope and fee details · {services[id].name}</summary>
                     <p>
                       {basics.audience === "planner" && id === "planning"
-                        ? "No Coco Cabana planning fee. Add your own percentage if you want to see your client’s full budget."
+                        ? "This is a free budgeting tool for your own planning. Your optional fee applies only to Full event budget."
                         : services[id].detail}
                     </p>
-                    <p className="cc-fee-copy">
-                      {id === "alacarte"
-                        ? "No planning or design fee. Pay only for the pieces you pick."
-                        : basics.audience === "planner" && id === "planning"
-                          ? "Your optional fee applies only to Full event budget."
-                          : feeExplanation}
+                    {!(
+                      id === "alacarte" ||
+                      (basics.audience === "planner" && id === "planning")
+                    ) && <p>{feeExplanation}</p>}
+                    <p>
+                      The estimate covers selected items, not every event cost. Service scope and
+                      final inclusions are agreed separately.
                     </p>
-                    <button
-                      className="cc-button"
-                      onClick={() => {
-                        setBasics({ ...basics, service: id });
-                        setStage("build");
-                      }}
-                    >
-                      Continue with {serviceName(basics.audience, id)}
-                    </button>
-                  </div>
-                </details>
+                  </details>
+                </article>
               ))}
             </div>
           </div>
@@ -256,6 +268,17 @@ export function CalculatorShell() {
               <p className="cc-instruction">
                 Tap a tier to add an item, again to remove it. Mix tiers to suit your priorities.
               </p>
+              <div className="cc-category-actions" aria-label="Category controls">
+                <button
+                  className="cc-link"
+                  onClick={() => setOpenCategories(categories.map((c) => c.id))}
+                >
+                  Expand all categories
+                </button>
+                <button className="cc-link" onClick={() => setOpenCategories([])}>
+                  Collapse all categories
+                </button>
+              </div>
               {categories
                 .filter((c) =>
                   pricingItems.some(
@@ -270,9 +293,28 @@ export function CalculatorShell() {
                 .map((c) => {
                   const total = estimate?.categoryTotals.find((t) => t.id === c.id);
                   return (
-                    <details className="cc-category" open key={c.id}>
-                      <summary>
-                        <h3>{c.name}</h3>
+                    <details
+                      className="cc-category"
+                      open={openCategories.includes(c.id)}
+                      key={c.id}
+                    >
+                      <summary
+                        onClick={(event) => {
+                          event.preventDefault();
+                          setOpenCategories((current) =>
+                            current.includes(c.id)
+                              ? current.filter((id) => id !== c.id)
+                              : [...current, c.id],
+                          );
+                        }}
+                      >
+                        <h3>
+                          {c.name}
+                          <small className="cc-category-count">
+                            {estimate?.rows.filter((r) => r.item.categoryId === c.id).length ?? 0}{" "}
+                            selected
+                          </small>
+                        </h3>
                         <span>
                           {total &&
                           estimate?.rows.some((r) => r.item.categoryId === c.id && !r.custom)
@@ -316,7 +358,7 @@ export function CalculatorShell() {
                 <>
                   <EstimateSummary estimate={estimate} basics={basics} onRemove={remove} />
                   <button className="cc-button cc-wide" onClick={openReview}>
-                    See my estimate
+                    Review breakdown
                   </button>
                 </>
               ) : (
@@ -331,7 +373,7 @@ export function CalculatorShell() {
         <div className="cc-mobile-total">
           <div aria-live="polite" aria-atomic="true">
             <small>
-              {estimate?.rows.length ?? 0} selections
+              {estimate?.pricedCount ?? 0} priced selections only
               {estimate?.reference ? " · reference range" : ""}
             </small>
             <strong>
@@ -347,8 +389,9 @@ export function CalculatorShell() {
                 : "Estimate, not a quote."}
             </small>
           </div>
+          <p className="cc-mobile-exclusions">{exclusions}</p>
           <button className="cc-button" disabled={!valid} onClick={openReview}>
-            See my estimate
+            Review breakdown
           </button>
         </div>
       )}

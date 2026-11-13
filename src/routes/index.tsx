@@ -1,19 +1,9 @@
+import { ServiceOverview } from "@/components/site/ServiceOverview";
 import { reviewEnvironment } from "@/config/review-environment";
 import { CalculatorCTA } from "@/components/site/CalculatorCTA";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import {
-  ArrowRight,
-  Sparkles,
-  Flower2,
-  Crown,
-  Instagram,
-  Heart,
-  Briefcase,
-  Cake,
-  Baby,
-  Star,
-} from "lucide-react";
+import { ArrowRight, Flower2, Instagram, Heart, Briefcase, Cake, Baby, Star } from "lucide-react";
 import heroImg from "@/assets/hero-event.jpg";
 import p1 from "@/assets/portfolio-1.jpg";
 import p2 from "@/assets/portfolio-2.jpg";
@@ -48,29 +38,6 @@ export const Route = createFileRoute("/")({
 
 const tints = ["bg-tint-blue", "bg-tint-blush", "bg-tint-sage", "bg-tint-tan"];
 
-const services = [
-  {
-    icon: Heart,
-    title: "Weddings",
-    text: "Extraordinary wedding experiences that capture the essence of your love and reflect your distinct style.",
-  },
-  {
-    icon: Sparkles,
-    title: "Events",
-    text: "Corporate gatherings, milestone celebrations and themed parties made seamless, stylish and extraordinary.",
-  },
-  {
-    icon: Crown,
-    title: "Rentals",
-    text: "High-quality flower walls and our 360 photo booth that elevate the look and experience of your event.",
-  },
-  {
-    icon: Flower2,
-    title: "Luxury Candle Staging",
-    text: "Captivating candle setups that bathe your venue in a warm, unforgettable glow.",
-  },
-];
-
 const occasions = [
   {
     key: "corporate",
@@ -90,7 +57,7 @@ const occasions = [
     key: "birthday",
     icon: Cake,
     title: "Birthdays & Milestones",
-    text: "From Rossy's Birthday Bash to Emeka's Lavish 30th, milestone celebrations styled with personality and a little Coco dust.",
+    text: "Planning and design for birthdays and milestones, shaped around your priorities.",
     img: p2,
   },
   {
@@ -131,6 +98,7 @@ function OccasionsSection() {
           {occasions.map((x, i) => (
             <button
               key={x.key}
+              aria-pressed={i === active}
               onClick={() => setActive(i)}
               className={`inline-flex items-center gap-2 px-5 py-3 text-[11px] tracking-[0.2em] uppercase border transition-all ${
                 i === active
@@ -144,7 +112,11 @@ function OccasionsSection() {
         </div>
         <div key={o.key} className="mt-12 grid md:grid-cols-2 gap-0 items-stretch animate-fade-up">
           <div className="overflow-hidden aspect-[4/3] md:aspect-auto">
-            <img src={o.img} alt={o.title} className="h-full w-full object-cover" />
+            <img
+              src={o.img}
+              alt="Event gallery inspiration; not a documented example of this occasion"
+              className="h-full w-full object-cover"
+            />
           </div>
           <div className={`${tints[active]} p-10 md:p-16 flex flex-col justify-center`}>
             <span className="font-display italic text-5xl text-brand/40">0{active + 1}</span>
@@ -167,7 +139,7 @@ function HomePage() {
   return (
     <>
       {/* HERO */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative pt-28 pb-12 md:pt-32 md:pb-16 flex items-center justify-center overflow-hidden">
         <img
           src={heroImg}
           alt="Luxurious event reception"
@@ -175,25 +147,27 @@ function HomePage() {
           height={1080}
           className="absolute inset-0 h-full w-full object-cover scale-105 animate-[fade-up_1.6s_ease-out_both]"
         />
-        <div className="relative z-10 mx-4 max-w-4xl bg-background border border-gold-soft px-8 py-14 md:px-16 text-center mt-24 animate-fade-up shadow-luxe">
+        <div className="relative z-10 mx-4 max-w-4xl bg-background border border-gold-soft px-6 py-8 md:px-12 md:py-12 text-center animate-fade-up shadow-luxe">
           <Star
             className="absolute -top-5 left-1/2 -translate-x-1/2 text-gold bg-background p-2 rounded-full animate-float"
             size={40}
           />
           <p className="divider-gold text-[11px] tracking-luxe uppercase mb-6">Coco Cabana</p>
-          <h1 className="font-display text-5xl sm:text-6xl md:text-7xl leading-[1.05]">
-            Your vision, <span className="text-brand-gradient italic">our expertise</span>
+          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl leading-[1.1]">
+            Event planning and design in Houston,{" "}
+            <span className="text-brand-gradient italic">shaped around your celebration.</span>
           </h1>
           <p className="mt-8 max-w-xl mx-auto text-base md:text-lg text-foreground/80 leading-relaxed">
-            Thoughtfully planned celebrations. Beautifully considered details. From weddings to
-            milestones, we bring your event together so you can be present for every moment.
+            From weddings and birthdays to showers and corporate gatherings: choose full planning,
+            design support or the décor pieces you need. Explore a starting budget before you
+            inquire.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              to="/contact"
+              to="/pricing"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 text-xs tracking-[0.25em] uppercase bg-gradient-brand text-primary-foreground shadow-gold hover:-translate-y-0.5 transition"
             >
-              Contact Us <ArrowRight size={14} />
+              Explore your event budget <ArrowRight size={14} />
             </Link>
             <Link
               to="/portfolio"
@@ -202,6 +176,9 @@ function HomePage() {
               View Gallery
             </Link>
           </div>
+          <Link to="/contact" className="inline-block mt-6 text-brand underline underline-offset-4">
+            Ready to talk? Start an inquiry
+          </Link>
         </div>
       </section>
 
@@ -253,9 +230,9 @@ function HomePage() {
             </p>
             <div className="mt-10 grid grid-cols-3 gap-4 text-center">
               {[
-                ["Planning", "9-12+ mo"],
-                ["Design", "4-9 mo"],
-                ["Execution", "Event day"],
+                ["Planning", "Organise"],
+                ["Design", "Shape the look"],
+                ["À la carte", "Your vision"],
               ].map(([t, d], i) => (
                 <div key={t} className={`${tints[i]} p-4 lift`}>
                   <p className="font-display text-xl text-heading">{t}</p>
@@ -277,28 +254,7 @@ function HomePage() {
 
       <OccasionsSection />
 
-      {/* SERVICES */}
-      <section className="py-28 bg-surface">
-        <div className="container mx-auto px-6">
-          <SectionHeading eyebrow="What we bring" title="What do we bring to your special day?" />
-          <div className="mt-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {services.map((s, i) => (
-              <Reveal key={s.title} delay={i * 100}>
-                <Link to="/services" className={`group block h-full p-8 ${tints[i]} lift`}>
-                  <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-background text-brand mb-6 transition-transform duration-500 group-hover:rotate-[360deg]">
-                    <s.icon size={24} strokeWidth={1.4} />
-                  </span>
-                  <h3 className="font-display text-2xl mb-3">{s.title}</h3>
-                  <p className="text-sm text-foreground/75 leading-relaxed">{s.text}</p>
-                  <span className="mt-6 inline-flex items-center gap-2 text-[10px] tracking-[0.25em] uppercase text-brand opacity-0 group-hover:opacity-100 transition">
-                    Learn more <ArrowRight size={12} />
-                  </span>
-                </Link>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ServiceOverview />
 
       {/* GALLERY PREVIEW */}
       <section className="py-28 bg-background">
@@ -306,15 +262,15 @@ function HomePage() {
           <SectionHeading
             eyebrow="Event Gallery"
             title="A glimpse of our world"
-            subtitle="Memorable moments, each unique in purpose, scale and impact, all sharing our unwavering commitment to excellence."
+            subtitle="Explore the gallery, then tell us which details you are drawn to. Images are not tier packages or price examples."
           />
           <div className="mt-16 grid grid-cols-2 md:grid-cols-4 grid-rows-2 gap-4 md:h-[640px]">
             {[
-              { src: p1, t: "Mara Villa Katy", c: "md:col-span-2 md:row-span-2" },
-              { src: p2, t: "Emeka's Lavish 30th", c: "" },
-              { src: p6, t: "Rossy's Birthday Bash", c: "" },
-              { src: p3, t: "Hotel Laura Gala", c: "" },
-              { src: p5, t: "Baby Shower", c: "" },
+              { src: p1, t: "Gallery detail 1", c: "md:col-span-2 md:row-span-2" },
+              { src: p2, t: "Gallery detail 2", c: "" },
+              { src: p6, t: "Gallery detail 3", c: "" },
+              { src: p3, t: "Gallery detail 4", c: "" },
+              { src: p5, t: "Gallery detail 5", c: "" },
             ].map((g) => (
               <Link
                 to="/portfolio"
@@ -361,7 +317,7 @@ function HomePage() {
               <h2 className="font-display text-4xl leading-tight">$50 off a flower wall rental</h2>
               <p className="mt-4 text-foreground/80">
                 Sign up for $50 off a flower wall rental, along with our latest pictures and
-                updates.
+                updates. Offer eligibility and current availability need confirmation.
               </p>
               <form
                 onSubmit={(e) => {
@@ -416,8 +372,8 @@ function InstagramSection() {
       <div className="container mx-auto px-6">
         <SectionHeading
           eyebrow="@cococabana.htx"
-          title="Live from our feed"
-          subtitle="Follow along for behind-the-scenes magic, fresh inspiration and recent celebrations."
+          title="A little inspiration"
+          subtitle="A selected image gallery, not a live feed. Visit Instagram for current posts."
         />
         <div className="mt-12 max-w-5xl mx-auto">
           {/* Instagram widget placeholder: paste a SnapWidget/EmbedSocial iframe here for the live feed. */}
@@ -432,7 +388,7 @@ function InstagramSection() {
               >
                 <img
                   src={src}
-                  alt="Instagram post"
+                  alt="Selected event inspiration"
                   loading="lazy"
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110 group-hover:rotate-1"
                 />
