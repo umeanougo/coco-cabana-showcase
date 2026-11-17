@@ -26,7 +26,7 @@ const fresh = (): PricingDraft => ({
   configuration: clone(websitePricing),
 });
 const inputClass =
-  "w-full rounded-md border border-border bg-[#faf8f4] text-stone-900 px-3 py-2 text-sm";
+  "w-full rounded-md border border-border bg-background text-foreground px-3 py-2 text-sm";
 function Field({
   label,
   value,
@@ -581,7 +581,7 @@ export function PricingManager() {
           if (!open) closeItem();
         }}
       >
-        <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-3xl">
+        <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-3xl bg-surface">
           <DialogTitle>Edit pricing item</DialogTitle>
           <DialogDescription>
             Approval status belongs to this local draft. Saving does not publish it.
@@ -769,7 +769,7 @@ export function PricingManager() {
         </DialogContent>
       </Dialog>
       <Dialog open={importOpen} onOpenChange={setImportOpen}>
-        <DialogContent>
+        <DialogContent className="bg-surface">
           <DialogTitle>Import pricing</DialogTitle>
           <DialogDescription>
             Choose an exported JSON file, or paste its contents. Validation and a change summary
@@ -835,7 +835,7 @@ export function PricingManager() {
           if (!open) setIncoming(null);
         }}
       >
-        <DialogContent>
+        <DialogContent className="bg-surface">
           <DialogTitle>Replace local draft?</DialogTitle>
           <DialogDescription>
             {incoming ? pricingChanges(config, incoming.configuration) : ""} This replaces your

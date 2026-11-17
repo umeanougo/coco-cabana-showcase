@@ -6,7 +6,7 @@ import belemaImg from "@/assets/team-belema.avif";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { Reveal } from "@/components/site/Reveal";
 
-const tints = ["bg-tint-blue", "bg-tint-blush", "bg-tint-sage", "bg-tint-tan"];
+const tints = ["bg-accent", "bg-surface", "bg-surface", "bg-background"];
 
 export const Route = createFileRoute("/about")({
   head: () => ({

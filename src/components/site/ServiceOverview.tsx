@@ -16,7 +16,7 @@ export function ServiceOverview() {
             <article
               key={id}
               id={`service-${id}`}
-              className={`scroll-mt-28 p-8 ${["bg-tint-blue", "bg-tint-blush", "bg-tint-sage"][i]}`}
+              className={`scroll-mt-28 p-8 ${["bg-accent", "bg-surface", "bg-surface"][i]}`}
             >
               <h3 className="font-display text-3xl">{service.name}</h3>
               <p className="mt-4 leading-relaxed">{service.description}</p>

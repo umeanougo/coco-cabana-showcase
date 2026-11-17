@@ -15,7 +15,7 @@ export function Footer() {
               alt="Coco Cabana"
               width={56}
               height={56}
-              className="h-16 w-16 object-contain rounded-full bg-brand-deep p-1 ring-2 ring-gold/60"
+              className="h-16 w-16 object-contain rounded-full bg-surface p-1 ring-1 ring-gold"
             />
             <div>
               <p className="font-display text-xl">Coco Cabana</p>

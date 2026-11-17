@@ -51,17 +51,17 @@ function ContactPage() {
               {
                 t: "Planning or design for my event",
                 d: "For personal celebrations and corporate organisers. Tell us whether you need Planning, Design or À la carte décor.",
-                c: "bg-tint-blue",
+                c: "bg-accent",
               },
               {
                 t: "Planner collaboration",
                 d: "For professional planners seeking Design or À la carte décor support for a client.",
-                c: "bg-tint-blush",
+                c: "bg-surface",
               },
               {
                 t: "Rentals & specialist services",
                 d: "Ask about flower walls, the 360 photo booth, candle staging or another specific offering.",
-                c: "bg-tint-sage",
+                c: "bg-surface",
               },
             ].map((f) => (
               <a key={f.t} href="#inquiry-form" className={`group block p-8 ${f.c} lift`}>
@@ -84,7 +84,7 @@ function ContactPage() {
         <div className="grid lg:grid-cols-3 gap-10">
           {/* Contact info */}
           <aside className="lg:col-span-1 space-y-8">
-            <div className="p-8 bg-tint-blue">
+            <div className="p-8 bg-accent">
               <h3 className="font-display text-2xl mb-6">Get in touch</h3>
               <ul className="space-y-5 text-sm">
                 <li className="flex items-start gap-3">
@@ -125,7 +125,7 @@ function ContactPage() {
               </div>
             </div>
 
-            <div className="p-8 bg-tint-blush">
+            <div className="p-8 bg-surface">
               <p className="divider-gold text-[10px] tracking-luxe uppercase mb-4">A note</p>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 An inquiry starts a conversation about your event. A consultation is a separate next
