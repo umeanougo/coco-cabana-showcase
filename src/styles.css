@@ -40,23 +40,13 @@
   --color-ring: var(--ring);
 
   --color-gold: var(--gold);
-  --color-gold-bright: var(--gold-bright);
-  --color-gold-dark: var(--gold-dark);
   --color-cream: var(--cream);
-  --color-babyblue: var(--babyblue);
-  --color-babyblue-light: var(--babyblue-light);
   --color-tan: var(--tan);
   --color-tan-dark: var(--tan-dark);
   --color-brand: var(--brand);
   --color-heading: var(--heading);
   --color-surface: var(--surface);
-  --color-tint-blue: var(--tint-blue);
-  --color-tint-blush: var(--tint-blush);
-  --color-tint-sage: var(--tint-sage);
-  --color-tint-tan: var(--tint-tan);
   --color-brand-deep: var(--brand-deep);
-  --color-blush: var(--blush);
-  --color-tan-light: var(--tan-light);
 
   --font-display: "Playfair Display", Georgia, serif;
   --font-sans: "Raleway", system-ui, sans-serif;
@@ -64,72 +54,52 @@
 
 :root {
   --radius: 0.125rem;
-  --brand: oklch(0.36 0.04 55); /* espresso brown accents (blue reserved for headings) */
-  --heading: oklch(0.6 0.075 272); /* periwinkle blue from the HoneyBook proposal, headings only */
-  --surface: oklch(0.99 0.006 85); /* soft white for alternating sections */
-  --tint-blue: oklch(0.93 0.03 260);
-  --tint-blush: oklch(0.93 0.035 25);
-  --tint-sage: oklch(0.93 0.03 150);
-  --tint-tan: oklch(0.91 0.035 70);
-  --brand-deep: oklch(0.3 0.04 55);
-  --blush: oklch(0.93 0.04 15);
-  --tan-light: oklch(0.93 0.025 70);
+  /* Approved team palette. No alternate blue, taupe or metallic shades. */
+  --dusty-blue: #858EAE;
+  --warm-taupe: #B5A293;
+  --soft-ivory: #F7F4F0;
+  --warm-white: #FFFFFF;
+  --mist-blue: #E5E9F0;
+  --warm-charcoal: #403D3A;
+  --champagne-gold: #C9B477;
 
-  /* Brand */
-  --babyblue: oklch(0.83 0.045 235); /* soft baby blue */
-  --babyblue-light: oklch(0.93 0.025 235);
-  --tan: oklch(0.82 0.045 70); /* light brown */
-  --tan-dark: oklch(0.4 0.05 60);
-  --gold: oklch(0.72 0.1 80); /* champagne gold */
-  --gold-bright: oklch(0.82 0.14 90);
-  --gold-dark: oklch(0.5 0.11 75);
-  --cream: oklch(0.97 0.015 80);
-
-  --background: oklch(0.945 0.022 78); /* warm beige canvas */
-  --foreground: oklch(0.29 0.02 45); /* espresso brown text */
-
-  --card: oklch(0.965 0.016 80);
-  --card-foreground: oklch(0.29 0.02 45);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.29 0.02 45);
-
-  --primary: oklch(0.36 0.04 55);
-  --primary-foreground: oklch(0.99 0 0);
-
-  --secondary: var(--babyblue); /* baby blue surfaces */
-  --secondary-foreground: oklch(0.3 0.04 250);
-
-  --muted: oklch(0.94 0.02 240); /* light baby-blue gray */
-  --muted-foreground: oklch(0.42 0.025 50); /* warm brown body copy */
-
-  --accent: var(--tan); /* light brown accent */
-  --accent-foreground: oklch(0.2 0.03 60);
-
-  --destructive: oklch(0.6 0.22 25);
-  --destructive-foreground: oklch(0.98 0 0);
-
-  --border: oklch(0.74 0.06 70 / 30%); /* soft tan border */
-  --input: oklch(0.74 0.06 70 / 40%);
-  --ring: oklch(0.36 0.04 55 / 50%);
-
-  --gradient-gold: linear-gradient(
-    135deg,
-    oklch(0.55 0.11 75),
-    oklch(0.88 0.14 90),
-    oklch(0.55 0.11 75)
-  );
-  --gradient-brand: linear-gradient(oklch(0.36 0.04 55), oklch(0.36 0.04 55));
-  --gradient-brand-text: linear-gradient(120deg, oklch(0.55 0.08 272), oklch(0.66 0.07 255));
-  --gradient-gold-text: linear-gradient(
-    135deg,
-    oklch(0.42 0.1 75),
-    oklch(0.62 0.12 85),
-    oklch(0.42 0.1 75)
-  );
+  /* Small text needs charcoal: blue/white is 3.24:1, taupe/white lower. */
+  --brand: var(--warm-charcoal);
+  --heading: var(--warm-charcoal);
+  --surface: var(--warm-white);
+  --brand-deep: var(--mist-blue);
+  --tan: var(--warm-taupe);
+  --tan-dark: var(--warm-charcoal);
+  --gold: var(--champagne-gold);
+  --cream: var(--soft-ivory);
+  --background: var(--soft-ivory);
+  --foreground: var(--warm-charcoal);
+  --card: var(--warm-white);
+  --card-foreground: var(--warm-charcoal);
+  --popover: var(--warm-white);
+  --popover-foreground: var(--warm-charcoal);
+  --primary: var(--mist-blue);
+  --primary-foreground: var(--warm-charcoal);
+  --secondary: var(--soft-ivory);
+  --secondary-foreground: var(--warm-charcoal);
+  --muted: var(--soft-ivory);
+  --muted-foreground: var(--warm-charcoal);
+  --accent: var(--mist-blue);
+  --accent-foreground: var(--warm-charcoal);
+  /* Errors retain explicit text and borders rather than relying on a new hue. */
+  --destructive: var(--warm-charcoal);
+  --destructive-foreground: var(--warm-white);
+  --border: var(--warm-taupe);
+  --input: var(--dusty-blue);
+  --ring: var(--warm-charcoal);
+  --gradient-brand: linear-gradient(var(--mist-blue), var(--mist-blue));
+  --gradient-brand-text: linear-gradient(var(--warm-charcoal), var(--warm-charcoal));
+  --gradient-gold-text: var(--gradient-brand-text);
+  --gradient-gold: var(--gradient-brand);
   --gradient-onyx: var(--background);
   --gradient-sky: var(--background);
-  --shadow-gold: 0 6px 16px -8px oklch(0.36 0.04 55 / 25%);
-  --shadow-luxe: 0 8px 24px -12px oklch(0.4 0.05 60 / 18%);
+  --shadow-gold: 0 6px 16px -8px rgb(64 61 58 / 12%);
+  --shadow-luxe: 0 8px 24px -12px rgb(64 61 58 / 12%);
 
   --sidebar: var(--card);
   --sidebar-foreground: var(--foreground);
@@ -144,6 +114,10 @@
 @layer base {
   * {
     border-color: var(--color-border);
+  }
+  input[type="checkbox"],
+  input[type="radio"] {
+    accent-color: var(--warm-charcoal);
   }
   html {
     scroll-behavior: smooth;
@@ -206,7 +180,7 @@
     box-shadow: var(--shadow-luxe);
   }
   .border-gold-soft {
-    border-color: oklch(0.74 0.06 70 / 35%);
+    border-color: var(--gold);
   }
   .tracking-luxe {
     letter-spacing: 0.32em;
@@ -378,8 +352,8 @@
   color: var(--brand);
 }
 .calc-progress button[aria-current] > span:first-child {
-  background: var(--brand);
-  color: white;
+  background: var(--primary);
+  color: var(--foreground);
 }
 .calc-panel {
   background: var(--surface);
@@ -440,7 +414,7 @@
   align-items: center;
   justify-content: center;
   gap: 12px;
-  background: var(--brand);
+  background: var(--primary);
   color: var(--primary-foreground);
   padding: 14px 20px;
   font-size: 12px;
@@ -452,7 +426,7 @@
 }
 .calc-button:hover {
   background: var(--brand-deep);
-  color: white;
+  color: var(--foreground);
 }
 .calc-button.secondary {
   background: transparent;
@@ -543,7 +517,7 @@
 }
 .tier-options .chosen {
   border-color: var(--brand);
-  background: var(--tint-tan);
+  background: var(--background);
 }
 .calculator-summary {
   position: sticky;
@@ -567,7 +541,7 @@
   color: var(--muted-foreground);
 }
 .estimate-notice {
-  background: var(--tint-blue);
+  background: var(--accent);
   font-size: 12px;
   line-height: 1.7;
   padding: 14px;
@@ -703,7 +677,7 @@
   max-width: 1200px;
   margin: 64px auto;
   padding: 48px;
-  background: var(--tint-sage);
+  background: var(--surface);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -920,8 +894,8 @@
   align-items: center;
   justify-content: center;
   gap: 12px;
-  background: var(--brand);
-  color: white;
+  background: var(--primary);
+  color: var(--foreground);
   border: 1px solid var(--brand);
   border-radius: 3px;
   padding: 14px 22px;
@@ -938,7 +912,7 @@
 }
 .cc-button:hover {
   background: var(--brand-deep);
-  color: white;
+  color: var(--foreground);
 }
 .cc-button:disabled {
   opacity: 0.5;
@@ -962,7 +936,7 @@
   align-items: center;
   gap: 18px;
   border: 1px solid var(--border);
-  background: var(--tint-tan);
+  background: var(--background);
   font-size: 12px;
 }
 .cc-preview-note strong {
@@ -1195,7 +1169,7 @@
 .cc-tiers button[aria-pressed="true"] {
   border: 2px solid var(--brand);
   padding: 9px 4px;
-  background: var(--tint-tan);
+  background: var(--background);
 }
 .cc-quantity {
   display: flex;
@@ -1292,8 +1266,8 @@
 }
 .cc-error {
   padding: 12px;
-  border: 1px solid #a23b32;
-  color: #862d25;
+  border: 2px solid var(--foreground);
+  color: var(--foreground);
   font-size: 13px;
   margin: 16px 0;
 }
@@ -1329,7 +1303,7 @@
   margin-bottom: 12px;
 }
 .cc-tinted {
-  background: var(--tint-sage);
+  background: var(--surface);
   padding: 50px 40px;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1545,8 +1519,8 @@
     justify-content: space-between;
     align-items: center;
     background: var(--brand-deep);
-    color: white;
-    box-shadow: 0 -2px 12px #0001;
+    color: var(--foreground);
+    box-shadow: 0 -2px 12px rgb(64 61 58 / 10%);
   }
   .cc-mobile-total small,
   .cc-mobile-total strong {
@@ -1926,4 +1900,21 @@
   .cc-side-summary > .cc-button {
     display: none;
   }
+}
+
+/* Signature blue is reserved for large titles on white (3.24:1).
+   Smaller headings and controls use the guide's readable charcoal fallback. */
+.cc-hero, .calculator-heading {
+  background: var(--surface);
+}
+.cc-hero h1, .calculator-heading h1, .calculator-heading h1 em,
+.calc-panel h2 {
+  color: var(--dusty-blue);
+}
+.brand-title-panel h1, .brand-title-panel h1 .text-brand-gradient {
+  color: var(--dusty-blue);
+  background: none;
+}
+.cc-button:hover, .calc-button:hover {
+  background: var(--soft-ivory);
 }

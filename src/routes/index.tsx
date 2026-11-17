@@ -30,7 +30,7 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
-const tints = ["bg-tint-blue", "bg-tint-blush", "bg-tint-sage", "bg-tint-tan"];
+const tints = ["bg-accent", "bg-surface", "bg-surface", "bg-background"];
 
 const occasions = [
   {
@@ -96,7 +96,7 @@ function OccasionsSection() {
               onClick={() => setActive(i)}
               className={`inline-flex items-center gap-2 px-5 py-3 text-[11px] tracking-[0.2em] uppercase border transition-all ${
                 i === active
-                  ? "bg-brand text-primary-foreground border-brand"
+                  ? "bg-primary text-primary-foreground border-brand"
                   : `${tints[i]} border-transparent text-brand hover:border-brand`
               }`}
             >
@@ -140,7 +140,7 @@ function HomePage() {
           height={1080}
           className="absolute inset-0 h-full w-full object-cover scale-105 animate-[fade-up_1.6s_ease-out_both]"
         />
-        <div className="relative z-10 mx-4 max-w-4xl bg-background border border-gold-soft px-6 py-8 md:px-12 md:py-12 text-center animate-fade-up shadow-luxe">
+        <div className="relative z-10 mx-4 max-w-4xl brand-title-panel bg-surface border border-gold-soft px-6 py-8 md:px-12 md:py-12 text-center animate-fade-up shadow-luxe">
           <Star
             className="absolute -top-5 left-1/2 -translate-x-1/2 text-gold bg-background p-2 rounded-full animate-float"
             size={40}
@@ -164,7 +164,7 @@ function HomePage() {
             </Link>
             <Link
               to="/portfolio"
-              className="inline-flex items-center justify-center px-8 py-4 text-xs tracking-[0.25em] uppercase border border-brand text-brand hover:bg-brand hover:text-primary-foreground transition"
+              className="inline-flex items-center justify-center px-8 py-4 text-xs tracking-[0.25em] uppercase border border-brand text-brand hover:bg-primary hover:text-primary-foreground transition"
             >
               View Gallery
             </Link>
@@ -194,8 +194,8 @@ function HomePage() {
         <div className="container mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
           <Reveal>
             <div className="relative">
-              <div className="absolute -top-6 -left-6 w-2/3 h-2/3 bg-tint-blue" />
-              <div className="absolute -bottom-6 -right-6 w-1/2 h-1/2 bg-tint-blush" />
+              <div className="absolute -top-6 -left-6 w-2/3 h-2/3 bg-accent" />
+              <div className="absolute -bottom-6 -right-6 w-1/2 h-1/2 bg-surface" />
               <img
                 src={gallery[3].src}
                 alt={gallery[3].alt}
@@ -295,7 +295,7 @@ function HomePage() {
       <section className="py-28 bg-surface">
         <div className="container mx-auto px-6 grid md:grid-cols-2 gap-6">
           <Reveal className="h-full">
-            <div className="h-full bg-tint-blush p-12 md:p-16 relative overflow-hidden">
+            <div className="h-full bg-surface p-12 md:p-16 relative overflow-hidden">
               <Flower2
                 className="absolute -right-6 -bottom-6 text-brand/10 animate-float"
                 size={180}
@@ -326,7 +326,7 @@ function HomePage() {
                 />
                 <button
                   disabled={reviewEnvironment.enabled}
-                  className="px-8 py-4 text-xs tracking-[0.25em] uppercase bg-brand text-primary-foreground hover:opacity-90 transition"
+                  className="px-8 py-4 text-xs tracking-[0.25em] uppercase bg-primary text-primary-foreground hover:opacity-90 transition"
                 >
                   {reviewEnvironment.enabled ? "Signup disabled in review" : "Join"}
                 </button>
@@ -334,7 +334,7 @@ function HomePage() {
             </div>
           </Reveal>
           <Reveal delay={150} className="h-full">
-            <div className="h-full bg-tint-blue p-12 md:p-16 flex flex-col justify-center">
+            <div className="h-full bg-accent p-12 md:p-16 flex flex-col justify-center">
               <p className="divider-gold text-[11px] tracking-luxe uppercase mb-5">
                 Ready to start planning?
               </p>

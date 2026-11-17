@@ -38,7 +38,7 @@ export function Header() {
             alt="Coco Cabana"
             width={44}
             height={44}
-            className="h-12 w-12 object-contain shrink-0 rounded-full bg-brand-deep p-1 ring-2 ring-gold/60 transition-transform duration-500 group-hover:rotate-12"
+            className="h-12 w-12 object-contain shrink-0 rounded-full bg-surface p-1 ring-1 ring-gold transition-transform duration-500 group-hover:rotate-12"
           />
           <span className="hidden sm:block min-w-0">
             <span className="block font-display text-base lg:text-lg tracking-wide text-foreground leading-tight whitespace-nowrap">
@@ -66,7 +66,7 @@ export function Header() {
 
         <Link
           to="/contact"
-          className="hidden xl:inline-flex items-center px-4 py-2.5 text-[11px] tracking-[0.25em] uppercase border border-brand text-brand hover:bg-brand hover:text-primary-foreground transition-all whitespace-nowrap shrink-0"
+          className="hidden xl:inline-flex items-center px-4 py-2.5 text-[11px] tracking-[0.25em] uppercase border border-brand text-brand hover:bg-primary hover:text-primary-foreground transition-all whitespace-nowrap shrink-0"
         >
           Start an inquiry
         </Link>

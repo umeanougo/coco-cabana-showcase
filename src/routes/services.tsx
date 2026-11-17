@@ -29,7 +29,7 @@ export const Route = createFileRoute("/services")({
   component: ServicesPage,
 });
 
-const tints = ["bg-tint-blue", "bg-tint-blush", "bg-tint-sage", "bg-tint-tan"];
+const tints = ["bg-accent", "bg-surface", "bg-surface", "bg-background"];
 
 const walls = [
   "White Rose Wall",
@@ -116,7 +116,7 @@ function ServicesPage() {
     <>
       <section className="relative pt-40 pb-20 overflow-hidden">
         <img src={heroImg} alt="" className="absolute inset-0 h-full w-full object-cover" />
-        <div className="relative mx-4 md:mx-auto max-w-3xl bg-background border border-gold-soft px-8 py-12 text-center shadow-luxe animate-fade-up">
+        <div className="relative mx-4 md:mx-auto max-w-3xl brand-title-panel bg-surface border border-gold-soft px-8 py-12 text-center shadow-luxe animate-fade-up">
           <p className="divider-gold text-[11px] tracking-luxe uppercase mb-5">Our Services</p>
           <h1 className="font-display text-5xl md:text-6xl">
             What do we bring to{" "}
@@ -145,7 +145,7 @@ function ServicesPage() {
                 key={p.step}
                 aria-pressed={phase === i}
                 onClick={() => setPhase(i)}
-                className={`px-6 py-3 text-[11px] tracking-[0.2em] uppercase transition ${i === phase ? "bg-brand text-primary-foreground" : `${tints[i]} text-brand hover:opacity-80`}`}
+                className={`px-6 py-3 text-[11px] tracking-[0.2em] uppercase transition ${i === phase ? "bg-primary text-primary-foreground" : `${tints[i]} text-brand hover:opacity-80`}`}
               >
                 Phase {p.step}
               </button>
