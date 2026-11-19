@@ -7,7 +7,7 @@ import {
 import { PausedEstimate } from "./PausedEstimate";
 import { MobileEstimateBar } from "./MobileEstimateBar";
 import { usePricing } from "./PricingContext";
-import { referencePricingEnabled, reviewEnvironment } from "@/config/review-environment";
+import { referencePricingEnabled } from "@/config/review-environment";
 import { useEffect, useState, useRef, type MouseEvent } from "react";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import {
@@ -140,8 +140,8 @@ export function CalculatorShell() {
       </header>
       {allowReferencePrices && (
         <div className="cc-preview-note">
-          <strong>Review preview</strong>
-          <small> · {reviewEnvironment.revision} · Email, marketing and bookings disabled.</small>
+          <strong>Review website</strong>
+          <small>Email, marketing and bookings are unavailable here.</small>{" "}
           <span>
             Reference prices from Christine’s brief. Rates, minimums and inclusions need approval
             before publication.

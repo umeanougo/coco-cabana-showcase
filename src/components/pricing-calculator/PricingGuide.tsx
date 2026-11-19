@@ -146,8 +146,8 @@ export function PricingGuide() {
         <p className="cc-eyebrow">From possibility to a plan</p>
         <h2>Explore our work.</h2>
         <p>
-          Browse Coco Cabana’s portfolio for inspiration. Event-specific budget examples will be
-          added only after the team verifies the scope, figures and permission to share them.
+          Browse Coco Cabana’s portfolio for inspiration. Gallery images show design details, not
+          priced packages or confirmed event budgets.
         </p>
         <Link to="/portfolio" className="cc-link">
           View the portfolio →

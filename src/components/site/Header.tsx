@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
 import logo from "@/assets/coco-cabana-logo.png";
 
@@ -8,6 +8,7 @@ const links = [
   { to: "/services", label: "Services" },
   { to: "/portfolio", label: "Portfolio" },
   { to: "/about", label: "About" },
+  { to: "/blog", label: "Blog" },
   { to: "/contact", label: "Contact" },
   { to: "/pricing", label: "Pricing" },
 ] as const;
@@ -15,6 +16,18 @@ const links = [
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const menuButton = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (!open) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        menuButton.current?.focus();
+      }
+    };
+    document.addEventListener("keydown", closeOnEscape);
+    return () => document.removeEventListener("keydown", closeOnEscape);
+  }, [open]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -50,13 +63,15 @@ export function Header() {
           </span>
         </Link>
 
-        <nav className="hidden xl:flex items-center gap-5 lg:gap-8 flex-1 justify-center">
+        <nav className="hidden xl:flex items-center gap-5 flex-1 justify-center">
           {links.map((l) => (
             <Link
               key={l.to}
               to={l.to}
               className="text-[11px] lg:text-xs tracking-[0.2em] uppercase text-foreground/80 hover:text-brand transition-colors whitespace-nowrap"
-              activeProps={{ className: "text-brand" }}
+              activeProps={{
+                className: "text-brand font-semibold underline underline-offset-8 decoration-2",
+              }}
               activeOptions={{ exact: l.to === "/" }}
             >
               {l.label}
@@ -72,6 +87,7 @@ export function Header() {
         </Link>
 
         <button
+          ref={menuButton}
           onClick={() => setOpen((v) => !v)}
           className="xl:hidden text-brand p-3"
           aria-label="Toggle menu"
@@ -83,7 +99,10 @@ export function Header() {
       </div>
 
       {open && (
-        <div id="mobile-navigation" className="xl:hidden border-t border-gold-soft bg-background">
+        <div
+          id="mobile-navigation"
+          className="xl:hidden border-t border-gold-soft bg-background max-h-[calc(100dvh-88px)] overflow-y-auto"
+        >
           <nav className="container mx-auto px-6 py-6 flex flex-col gap-5">
             {links.map((l) => (
               <Link
@@ -91,7 +110,9 @@ export function Header() {
                 to={l.to}
                 onClick={() => setOpen(false)}
                 className="text-sm tracking-[0.2em] uppercase text-foreground/80 hover:text-brand"
-                activeProps={{ className: "text-brand" }}
+                activeProps={{
+                  className: "text-brand font-semibold underline underline-offset-8 decoration-2",
+                }}
                 activeOptions={{ exact: l.to === "/" }}
               >
                 {l.label}

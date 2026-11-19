@@ -17,6 +17,7 @@ export default defineConfig({
           "**/.git/**",
           "**/.local/**",
           "**/docs/coco-cabana-claude-reference/**",
+          "**/docs/site-final-review/**",
         ],
       },
     },

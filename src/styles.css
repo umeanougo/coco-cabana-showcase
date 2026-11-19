@@ -1918,3 +1918,45 @@
 .cc-button:hover, .calc-button:hover {
   background: var(--soft-ivory);
 }
+
+/* Shared editorial selection states: colour never depends on item index. */
+.selection-control {
+  background: var(--surface);
+  color: var(--foreground);
+  border: 1px solid var(--brand);
+  min-height: 44px;
+  cursor: pointer;
+}
+.selection-control:hover:not([aria-pressed="true"]):not(.is-selected) { background: var(--background); }
+.selection-control[aria-pressed="true"], .selection-control.is-selected {
+  background: var(--mist-blue);
+  box-shadow: inset 0 -3px 0 var(--brand);
+  font-weight: 700;
+}
+.selection-control:focus-visible { outline: 2px dashed var(--brand); outline-offset: 4px; }
+.article-copy { font-size: 1.0625rem; line-height: 1.85; overflow-wrap: anywhere; }
+.article-copy p { margin-block: 1.1em; }
+.article-copy h2 { font-size: 1.75rem; line-height: 1.3; margin-block: 1.8em .6em; }
+.article-copy h3 { font-size: 1.4rem; line-height: 1.4; margin-block: 1.5em .5em; }
+.article-copy h4 { font-size: 1.2rem; margin-block: 1.3em .5em; }
+.article-copy ul { list-style: disc; padding-left: 1.5em; margin-block: 1em; }
+.article-copy ol { list-style: decimal; padding-left: 1.5em; margin-block: 1em; }
+.article-copy li { margin-block: .5em; }
+.article-copy a { text-decoration: underline; text-underline-offset: 3px; }
+.article-copy blockquote { border-left: 3px solid var(--gold); padding-left: 1.5em; margin-block: 1.5em; }
+.article-copy br + br { display: none; }
+.journal-card { background: var(--background); }
+/* Content must remain readable before intersection observers fire or at reduced motion. */
+.reveal { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+
+/* Essential guidance and controls stay readable at narrow widths. */
+.cc-eyebrow, .cc-hero-note, .cc-stage-nav, .cc-item-heading small,
+.cc-tiers button strong, .cc-tiers button span, .cc-mobile-total small,
+.cc-mobile-total .cc-button { font-size: 12px; }
+.cc-tiers button[aria-pressed="true"] { background: var(--mist-blue); }
+.cc-tiers button:hover:not([aria-pressed="true"]) { background: var(--background); }

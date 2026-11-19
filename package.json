@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "test": "node scripts/test-pricing.mjs",
+    "test": "node scripts/test-pricing.mjs && node --test scripts/test-content.mjs",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

@@ -43,3 +43,6 @@ docs/coco-cabana-implementation-review.zip
 !.env.example
 *.sqlite
 *.sqlite-*
+
+# Private meeting audit and source captures
+docs/site-final-review/

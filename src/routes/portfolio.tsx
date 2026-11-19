@@ -1,3 +1,4 @@
+import { OriginalCollections } from "@/components/site/OriginalCollections";
 import { useDialogFocus } from "@/hooks/use-dialog-focus";
 import { gallery as projects } from "@/config/gallery";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -38,9 +39,9 @@ function PortfolioPage() {
             Our <span className="italic text-brand-gradient">Portfolio</span>
           </h1>
           <p className="mt-6 max-w-2xl mx-auto text-muted-foreground">
-            Explore the existing image collection and open a detail to look closer. Bring the image
-            number to your inquiry so we can discuss the look you have in mind. Images do not define
-            a tier package or an investment range.
+            Explore floral details, tablescapes and celebration settings. Bring the image title to
+            your inquiry so we can discuss the look you have in mind. Images do not define a tier
+            package or an investment range.
           </p>
         </div>
       </section>
@@ -86,6 +87,7 @@ function PortfolioPage() {
           </div>
         </div>
       </section>
+      <OriginalCollections />
       <Dialog open={selected !== null} onOpenChange={(open) => !open && setSelected(null)}>
         <DialogContent
           className="max-w-3xl max-h-[90dvh] overflow-y-auto"
@@ -95,7 +97,7 @@ function PortfolioPage() {
             {selected !== null ? projects[selected].label : "Gallery"}
           </DialogTitle>
           <DialogDescription>
-            Inspiration to discuss with our team, not a priced package. Image numbers are not
+            Inspiration to discuss with our team, not a priced package. Image details are not
             automatically sent with your inquiry.
           </DialogDescription>
           {selected !== null && (

@@ -1,3 +1,4 @@
+import { ServiceDetails } from "@/components/site/ServiceDetails";
 import { ServiceOverview } from "@/components/site/ServiceOverview";
 import { reviewEnvironment } from "@/config/review-environment";
 import { CalculatorCTA } from "@/components/site/CalculatorCTA";
@@ -130,6 +131,7 @@ function ServicesPage() {
       </section>
 
       <ServiceOverview />
+      <ServiceDetails />
       <CalculatorCTA compact />
 
       <section className="py-24 bg-surface">
@@ -139,22 +141,19 @@ function ServicesPage() {
             title="Phases of the planning process"
             subtitle="We approach every event, intimate or grand, like it's ours. You'll work hand in hand with us from start to finish."
           />
-          <div className="mt-12 flex justify-center gap-3">
+          <div className="mt-12 flex flex-wrap justify-center gap-3">
             {phases.map((p, i) => (
               <button
                 key={p.step}
                 aria-pressed={phase === i}
                 onClick={() => setPhase(i)}
-                className={`px-6 py-3 text-[11px] tracking-[0.2em] uppercase transition ${i === phase ? "bg-primary text-primary-foreground" : `${tints[i]} text-brand hover:opacity-80`}`}
+                className="selection-control px-5 py-3 text-xs tracking-[0.15em] uppercase"
               >
                 Phase {p.step}
               </button>
             ))}
           </div>
-          <div
-            key={phase}
-            className={`mt-8 max-w-3xl mx-auto p-10 md:p-14 ${tints[phase]} animate-fade-up`}
-          >
+          <div key={phase} className="mt-8 max-w-3xl mx-auto p-6 md:p-12 bg-background">
             <p className="text-[11px] tracking-luxe uppercase text-brand mb-2">
               Illustrative timing · {phases[phase].time}
             </p>
@@ -172,7 +171,7 @@ function ServicesPage() {
         </div>
       </section>
 
-      <section className="py-24 bg-surface">
+      <section id="rentals" className="py-20 bg-surface scroll-mt-28">
         <div className="container mx-auto px-6">
           <SectionHeading
             eyebrow="Event Rentals"
@@ -185,7 +184,7 @@ function ServicesPage() {
           </p>
           <div className="mt-14 grid grid-cols-2 md:grid-cols-3 gap-4">
             {walls.map((w, i) => (
-              <div key={w} className={`group p-8 text-center ${tints[i % 4]} lift`}>
+              <div key={w} className={`group p-4 sm:p-8 text-center ${tints[i % 4]} lift`}>
                 <Flower2
                   className="mx-auto text-brand mb-4 transition-transform duration-700 group-hover:rotate-180"
                   size={32}
@@ -199,7 +198,7 @@ function ServicesPage() {
         </div>
       </section>
 
-      <section className="py-24 bg-surface">
+      <section id="photo-booth" className="py-20 bg-surface scroll-mt-28">
         <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
           <Reveal>
             <p className="divider-gold text-[11px] tracking-luxe uppercase mb-5">
@@ -283,7 +282,7 @@ function ServicesPage() {
             {specialistOfferings.map((a, i) => (
               <div
                 key={a.t}
-                className={`${open === i ? tints[i % 4] : "bg-background"} transition-colors`}
+                className={`${open === i ? "bg-accent border-l-4 border-brand" : "bg-background border-l-4 border-transparent"} transition-colors`}
               >
                 <button
                   aria-expanded={open === i}

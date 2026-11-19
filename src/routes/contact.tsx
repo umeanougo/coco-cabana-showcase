@@ -42,8 +42,8 @@ function ContactPage() {
           <div className="max-w-2xl mx-auto text-center mb-12">
             <h2 className="font-display text-4xl">Ready to inquire?</h2>
             <p className="mt-4 text-foreground/80 leading-relaxed">
-              Share your date, vision and priorities through our inquiry form. We’ll follow up to
-              discuss the details.
+              An inquiry starts with your date, vision and priorities. Online inquiries are
+              unavailable on this review website; no message or booking will be submitted.
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-5">
@@ -74,8 +74,9 @@ function ContactPage() {
             ))}
           </div>
           <p className="mt-6 text-sm text-center text-muted-foreground">
-            All three routes use the same general HoneyBook inquiry form. Please describe your
-            service there; your selection and calculator details are not automatically transferred.
+            All three inquiry options lead to our general inquiry form when submissions are
+            available. Your service selection and calculator details are not automatically
+            transferred.
           </p>
         </div>
       </section>
@@ -120,7 +121,7 @@ function ContactPage() {
                 </li>
               </ul>
               <div className="mt-8 pt-6 border-t border-gold-soft/50">
-                <p className="text-[10px] tracking-luxe uppercase text-brand/70 mb-4">Follow us</p>
+                <p className="text-[10px] tracking-luxe uppercase text-brand mb-4">Follow us</p>
                 <SocialLinks iconSize={20} />
               </div>
             </div>
@@ -142,8 +143,8 @@ function ContactPage() {
                 Tell us about your <span className="italic text-brand-gradient">event</span>
               </h2>
               <p className="text-sm text-muted-foreground max-w-md mx-auto mb-8 leading-relaxed">
-                The general inquiry form opens in HoneyBook. Include your service, date, guest count
-                and priorities, along with any selections you want to discuss.
+                When inquiries open, include your service, date, guest count and priorities, along
+                with any selections you want to discuss.
               </p>
               <a
                 href={reviewEnvironment.enabled ? undefined : site.honeybook}
@@ -156,7 +157,7 @@ function ContactPage() {
               </a>
               <p className="mt-6 text-xs text-muted-foreground">
                 {reviewEnvironment.enabled
-                  ? "Test website: no inquiry or booking will be submitted."
+                  ? "Inquiries and bookings are unavailable on this review website."
                   : "Powered by HoneyBook · Submissions go straight to our inbox"}
               </p>
             </div>
