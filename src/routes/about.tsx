@@ -45,7 +45,7 @@ const pillars = [
   },
   {
     t: "Attention to Detail",
-    d: "A great event is a symphony of crucial little parts moving in harmony. We listen carefully to our clients' desires and bring every tittle to life.",
+    d: "A great event is a symphony of crucial little parts moving in harmony. We listen carefully to our clients' desires and bring every detail to life.",
   },
 ];
 
@@ -91,7 +91,9 @@ function AboutPage() {
             {pillars.map((v, i) => (
               <Reveal key={v.t} delay={(i % 2) * 120}>
                 <div className={`h-full p-10 ${tints[i]} lift`}>
-                  <p className="font-display italic text-4xl text-brand/30 mb-2">0{i + 1}</p>
+                  <p aria-hidden="true" className="font-display italic text-4xl text-brand/30 mb-2">
+                    0{i + 1}
+                  </p>
                   <p className="font-display text-2xl text-heading mb-3">{v.t}</p>
                   <p className="text-foreground/80 leading-relaxed">{v.d}</p>
                 </div>

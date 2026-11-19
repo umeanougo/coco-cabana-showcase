@@ -21,8 +21,8 @@ export function ConsultationCTA({ planner = false }: { planner?: boolean }) {
         </a>
       ) : (
         <p className="cc-note">
-          Online consultation scheduling is not connected in this preview. No appointment has been
-          booked.
+          Online consultation scheduling is unavailable on this review website. No appointment has
+          been booked.
         </p>
       )}
     </section>

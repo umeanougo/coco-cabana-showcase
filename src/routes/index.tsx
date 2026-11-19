@@ -94,25 +94,23 @@ function OccasionsSection() {
               key={x.key}
               aria-pressed={i === active}
               onClick={() => setActive(i)}
-              className={`inline-flex items-center gap-2 px-5 py-3 text-[11px] tracking-[0.2em] uppercase border transition-all ${
-                i === active
-                  ? "bg-primary text-primary-foreground border-brand"
-                  : `${tints[i]} border-transparent text-brand hover:border-brand`
-              }`}
+              className="selection-control inline-flex items-center gap-2 px-5 py-3 text-xs tracking-[0.15em] uppercase"
             >
               <x.icon size={14} /> {x.title}
             </button>
           ))}
         </div>
-        <div key={o.key} className="mt-12 grid md:grid-cols-2 gap-0 items-stretch animate-fade-up">
+        <div key={o.key} className="mt-12 grid md:grid-cols-2 gap-0 items-stretch">
           <div className="relative overflow-hidden aspect-[4/3] md:aspect-auto">
             <img src={o.image.src} alt={o.image.alt} className="h-full w-full object-cover" />
             <p className="absolute bottom-3 left-3 right-3 bg-background px-4 py-2 text-sm">
-              Design inspiration · {o.image.label}. Event association unconfirmed.
+              Design inspiration · {o.image.label}
             </p>
           </div>
           <div className={`${tints[active]} p-10 md:p-16 flex flex-col justify-center`}>
-            <span className="font-display italic text-5xl text-brand/40">0{active + 1}</span>
+            <span aria-hidden="true" className="font-display italic text-5xl text-brand/40">
+              0{active + 1}
+            </span>
             <h3 className="font-display text-4xl mt-2 mb-5">{o.title}</h3>
             <p className="text-foreground/80 leading-relaxed">{o.text}</p>
             <Link
@@ -183,7 +181,10 @@ function HomePage() {
               key={i}
               className="flex items-center gap-6 px-6 font-display italic text-xl whitespace-nowrap"
             >
-              {m} <span className="text-gold not-italic text-sm">✦</span>
+              {m}{" "}
+              <span aria-hidden="true" className="text-gold not-italic text-sm">
+                ✦
+              </span>
             </span>
           ))}
         </div>
@@ -362,7 +363,7 @@ function InstagramSection() {
         <SectionHeading
           eyebrow="@cococabana.htx"
           title="A little inspiration"
-          subtitle="A selected image gallery, not a live feed. Visit Instagram for current posts."
+          subtitle="Details from our gallery. Visit Instagram for current posts."
         />
         <div className="mt-12 max-w-5xl mx-auto">
           {/* Instagram widget placeholder: paste a SnapWidget/EmbedSocial iframe here for the live feed. */}

@@ -49,6 +49,11 @@ export function Footer() {
               </Link>
             </li>
             <li>
+              <Link to="/blog" search={{ page: 1 }} className="hover:underline">
+                Blog
+              </Link>
+            </li>
+            <li>
               <Link to="/about" className="hover:text-brand transition">
                 About
               </Link>
@@ -81,7 +86,7 @@ export function Footer() {
             </li>
           </ul>
           <div className="mt-6">
-            <p className="text-[10px] tracking-luxe uppercase text-brand/70 mb-3">Follow</p>
+            <p className="text-[10px] tracking-luxe uppercase text-brand mb-3">Follow</p>
             <SocialLinks iconSize={18} />
           </div>
         </div>
@@ -89,7 +94,7 @@ export function Footer() {
       <div className="border-t border-gold-soft">
         <div className="container mx-auto px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
           <p>© {new Date().getFullYear()} Coco Cabana. All rights reserved.</p>
-          <p className="tracking-luxe uppercase text-brand/70">Designed with intention</p>
+          <p className="tracking-luxe uppercase text-brand">Designed with intention</p>
         </div>
       </div>
     </footer>
